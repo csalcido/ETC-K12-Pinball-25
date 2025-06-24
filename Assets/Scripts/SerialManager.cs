@@ -1,0 +1,242 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.IO.Ports;
+using System.Threading;
+using System.Drawing.Text;
+
+public class SerialManager : MonoBehaviour
+{
+
+    public string portNameL = "COM3";
+    public string portNameR = "COM4";
+    public int baudRate = 9600;
+
+    private SerialPort serialPortL;
+    private SerialPort serialPortR;
+    private Thread readThreadL;
+    private Thread writeThreadL;
+    private Thread readThreadR;
+    private Thread writeThreadR;
+    private bool isRunningL = false;
+    private bool isRunningR = false;
+    private float distanceCML = 0f;
+    private float distanceCMR = 0f;
+
+    public BallSwitchLeft leftBall;
+    public LeftPlunger leftLaunch;
+    public BallSwitchRight rightBall;
+    public RightPlunger rightLaunch;
+
+    public float DistanceCML => distanceCML;
+    public float DistanceCMR => distanceCMR;
+
+    void Start()
+    {
+        serialPortL = new SerialPort(portNameL, baudRate);
+        serialPortR = new SerialPort(portNameR, baudRate);
+        serialPortL.ReadTimeout = 100;
+        serialPortR.ReadTimeout = 100;
+
+        try
+        {
+            serialPortL.Open();
+            serialPortR.Open();
+            isRunningL = true;
+            isRunningR = true;
+
+            readThreadL = new Thread(ReadSerialDataL);
+            readThreadL.Start();
+            writeThreadL = new Thread(WriteSerialDataL);
+            writeThreadL.Start();
+            readThreadR = new Thread(ReadSerialDataR);
+            readThreadR.Start();
+            writeThreadR = new Thread(WriteSerialDataR);
+            writeThreadR.Start();
+            Debug.Log("Both serial port opened successfully.");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Failed to open serial port: " + e.Message);
+        }
+    }
+
+    void Update()
+    {
+        Debug.Log("Left distance: " + distanceCML + " cm");
+        Debug.Log("Right distance: " + distanceCMR + " cm");
+    }
+
+    void OnDestroy()
+    {
+        isRunningL = false;
+        isRunningR = false;
+
+        if (readThreadL != null && readThreadL.IsAlive)
+        {
+            readThreadL.Join();
+        }
+
+        if (serialPortL != null && serialPortL.IsOpen)
+        {
+            serialPortL.Close();
+            Debug.Log("Serial port closed.");
+        }
+
+        if (readThreadR != null && readThreadR.IsAlive)
+        {
+            readThreadR.Join();
+        }
+
+        if (serialPortR != null && serialPortR.IsOpen)
+        {
+            serialPortR.Close();
+            Debug.Log("Serial port closed.");
+        }
+    }
+
+    private void ReadSerialDataL()
+    {
+        while (isRunningL)
+        {
+            try
+            {
+                string data = serialPortL.ReadLine();
+
+                if (float.TryParse(data, out float parsedDistance))
+                {
+                    distanceCML = parsedDistance;
+                }
+                else
+                {
+                    Debug.LogWarning("Failed to parse data: " + data);
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning("Error reading serial data: " + e.Message);
+            }
+        }
+    }
+    private void ReadSerialDataR()
+    {
+        while (isRunningR)
+        {
+            try
+            {
+                string data = serialPortR.ReadLine();
+
+                if (float.TryParse(data, out float parsedDistance))
+                {
+                    distanceCMR = parsedDistance;
+                }
+                else
+                {
+                    Debug.LogWarning("Failed to parse data: " + data);
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning("Error reading serial data: " + e.Message);
+            }
+        }
+    }
+
+    private void WriteSerialDataL()
+    {
+        int colorCache = -1;
+        bool accumulatedLaunch = false;
+        int launchSent = 0;
+        while (isRunningL)
+        {
+            while (leftLaunch.isLaunching)
+            {
+                accumulatedLaunch = true;
+            }
+
+            if (accumulatedLaunch == false)
+            {
+                if (colorCache != leftBall.currentMaterialIndex)
+                {
+                    colorCache = leftBall.currentMaterialIndex;
+                    try
+                    {
+                        string data = (colorCache.ToString() + "\n");
+                        serialPortL.Write(data);
+                        Debug.Log("Color data sent: " + data);
+                    }
+                    catch (System.Exception e)
+                    {
+                        Debug.LogWarning("Error writing serial data: " + e.Message);
+                    }
+                }
+            }
+            else
+            {
+                colorCache = leftBall.currentMaterialIndex + 3;
+                accumulatedLaunch = false;
+                try
+                {
+                    string data = (colorCache.ToString() + "\n");
+                    serialPortL.Write(data);
+                    launchSent++;
+                    Debug.Log("Launch data sent: " + data + "*" + launchSent);
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogWarning("Error writing serial data: " + e.Message);
+                }
+                
+            }
+        }
+    }
+    private void WriteSerialDataR()
+    {
+        int colorCache = -1;
+        bool accumulatedLaunch = false;
+        int launchSent = 0;
+        while (isRunningR)
+        {
+            while (rightLaunch.isLaunching)
+            {
+                accumulatedLaunch = true;
+            }
+
+            if (accumulatedLaunch == false)
+            {
+                if (colorCache != rightBall.currentMaterialIndex)
+                {
+                    colorCache = rightBall.currentMaterialIndex;
+                    try
+                    {
+                        string data = (colorCache.ToString() + "\n");
+                        serialPortR.Write(data);
+                        Debug.Log("Color data sent: " + data);
+                    }
+                    catch (System.Exception e)
+                    {
+                        Debug.LogWarning("Error writing serial data: " + e.Message);
+                    }
+                }
+            }
+            else
+            {
+                colorCache = rightBall.currentMaterialIndex + 3;
+                accumulatedLaunch = false;
+                try
+                {
+                    string data = (colorCache.ToString() + "\n");
+                    serialPortR.Write(data);
+                    launchSent++;
+                    Debug.Log("Launch data sent: " + data + "*" + launchSent);
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogWarning("Error writing serial data: " + e.Message);
+                }
+
+            }
+        }
+    }
+}
+
