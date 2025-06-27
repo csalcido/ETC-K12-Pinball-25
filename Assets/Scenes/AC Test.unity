@@ -6664,8 +6664,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 500
   field of view: 50.3
-  orthographic: 0
-  orthographic size: 8.05
+  orthographic: 1
+  orthographic size: 24.9
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -6690,7 +6690,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.6946606, y: -0, z: -0, w: 0.7193377}
-  m_LocalPosition: {x: 0, y: 52.8, z: 6}
+  m_LocalPosition: {x: 0, y: 66.9, z: 6.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25761,7 +25761,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 1.79
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1322554901
 MeshRenderer:
@@ -36757,7 +36757,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 1.79
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1839830350
 MeshRenderer:
@@ -40804,7 +40804,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 1.79
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2145441872
 MeshRenderer:
