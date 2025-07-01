@@ -1,37 +1,68 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BuffEffect : MonoBehaviour
 {
-    private Vector3 originalScale;
-    private bool isBuffed = false;
+    private Dictionary<BuffType, Coroutine> buffCoroutines = new Dictionary<BuffType, Coroutine>();
     
-    void Start()
+    public void ApplyBuff(BuffType buffType, float buffValue, float duration)
     {
-        // save original size
-        originalScale = transform.localScale;
-    }
-    
-    public void ApplyBuff(float sizeMultiplier, float duration)
-    {
-        if (!isBuffed)
+        if (buffCoroutines.ContainsKey(buffType))
         {
-            StartCoroutine(BuffCoroutine(sizeMultiplier, duration));
+            return; // buff already active
+        }
+        
+        BuffBase newBuff = CreateBuff(buffType, buffValue, duration);
+        if (newBuff != null)
+        {
+            newBuff.Apply();
+            
+            Coroutine buffCoroutine = StartCoroutine(BuffTimer(newBuff, buffType, duration));
+            buffCoroutines[buffType] = buffCoroutine;
         }
     }
     
-    private IEnumerator BuffCoroutine(float sizeMultiplier, float duration)
+    private BuffBase CreateBuff(BuffType buffType, float value, float duration)
     {
-        isBuffed = true;
-        
-        // make ball bigger
-        transform.localScale = originalScale * sizeMultiplier;
-        
-        // wait for buff to end
+        switch (buffType)
+        {
+            case BuffType.Size:
+                return new SizeBuff(gameObject, value, duration);
+            case BuffType.Speed:
+                return new SpeedBuff(gameObject, value, duration);
+            case BuffType.SpawnBalls:
+                return new SpawnBallsBuff(gameObject, value, duration);
+            case BuffType.SlowMotion:
+                return new SlowMotionBuff(gameObject, value, duration);
+            default:
+                Debug.LogWarning($"Buff type {buffType} not implemented");
+                return null;
+        }
+    }
+    
+    private IEnumerator BuffTimer(BuffBase buff, BuffType buffType, float duration)
+    {
         yield return new WaitForSeconds(duration);
-        
-        // make ball normal size again
-        transform.localScale = originalScale;
-        isBuffed = false;
+        RemoveBuff(buffType);
+    }
+    
+    private void RemoveBuff(BuffType buffType)
+    {        
+        if (buffCoroutines.ContainsKey(buffType))
+        {
+            StopCoroutine(buffCoroutines[buffType]);
+            buffCoroutines.Remove(buffType);
+        }
+    }
+    
+    private void OnDestroy()
+    {
+        // Clean up any active buffs
+        foreach (var buffCoroutine in buffCoroutines.Values)
+        {
+            StopCoroutine(buffCoroutine);
+        }
+        buffCoroutines.Clear();
     }
 }
