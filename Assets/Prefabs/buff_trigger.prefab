@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8802870021278407673}
   - component: {fileID: 1302537394885395226}
   - component: {fileID: 2473336691257916157}
+  - component: {fileID: -2324322195298387661}
   m_Layer: 0
   m_Name: buff_trigger
   m_TagString: Untagged
@@ -108,3 +109,20 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-2324322195298387661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5679112124027733372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 128c600249a5341ce9f5729ce7c9a21a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buffType: 1
+  buffDuration: 5
+  buffValue: 1.5
+  disableAfterUse: 0
+  respawnTime: 10
