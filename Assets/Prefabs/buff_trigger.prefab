@@ -118,10 +118,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5679112124027733372}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 128c600249a5341ce9f5729ce7c9a21a, type: 3}
+  m_Script: {fileID: 11500000, guid: f3d837a2c3c614c7c8031e035ef6585f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffType: 1
+  buffType: 0
   buffDuration: 5
   buffValue: 1.5
   disableAfterUse: 0

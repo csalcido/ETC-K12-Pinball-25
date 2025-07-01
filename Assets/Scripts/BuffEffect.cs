@@ -29,12 +29,10 @@ public class BuffEffect : MonoBehaviour
         {
             case BuffType.Size:
                 return new SizeBuff(gameObject, value, duration);
-            case BuffType.Speed:
-                return new SpeedBuff(gameObject, value, duration);
             case BuffType.SpawnBalls:
                 return new SpawnBallsBuff(gameObject, value, duration);
-            case BuffType.SlowMotion:
-                return new SlowMotionBuff(gameObject, value, duration);
+            case BuffType.SpeedMultiplier:
+                return new SpeedMultiplier(gameObject, value, duration);
             default:
                 Debug.LogWarning($"Buff type {buffType} not implemented");
                 return null;

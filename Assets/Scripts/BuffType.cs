@@ -3,9 +3,8 @@ using UnityEngine;
 public enum BuffType
 {
     Size,
-    Speed,
     SpawnBalls,
-    SlowMotion
+    SpeedMultiplier,
 }
 
 public abstract class BuffBase
@@ -45,25 +44,6 @@ public class SizeBuff : BuffBase
     }
 }
 
-public class SpeedBuff : BuffBase
-{
-    public SpeedBuff(GameObject target, float value, float duration) : base(target, value, duration) { }
-    
-    public override void Apply()
-    {
-        Rigidbody rb = target.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.linearVelocity *= value;
-        }
-    }
-
-    public override void Remove()
-    {
-        // Since this prototype doesn't store original speed, we can't revert it
-    }
-}
-
 public class SpawnBallsBuff : BuffBase
 {
     public SpawnBallsBuff(GameObject target, float value, float duration) : base(target, value, duration) { }
@@ -85,13 +65,13 @@ public class SpawnBallsBuff : BuffBase
     }
 }
 
-public class SlowMotionBuff : BuffBase
+public class SpeedMultiplier : BuffBase
 {
     private Rigidbody ballRb;
     private float originalDrag;
     private float originalAngularDrag;
     
-    public SlowMotionBuff(GameObject target, float value, float duration) : base(target, value, duration)
+    public SpeedMultiplier(GameObject target, float value, float duration) : base(target, value, duration)
     {
         ballRb = target.GetComponent<Rigidbody>();
         if (ballRb != null)
@@ -105,9 +85,9 @@ public class SlowMotionBuff : BuffBase
     {
         if (ballRb != null)
         {
-            // Increase drag to slow down the ball
-            // TODO: Appears that other collisions affect this, so
-            // the slow motion effect does not persist.
+            // Modify drag to affect speed
+            // TODO: This is not a perfect way to handle speed; maybe
+            // modify game speed?
             ballRb.linearDamping = originalDrag + (1f - value) * 5f;
             ballRb.angularDamping = originalAngularDrag + (1f - value) * 5f;
         }
