@@ -18,6 +18,12 @@ public class BuffEffect : MonoBehaviour
         {
             newBuff.Apply();
             
+            // Show buff popup
+            if (BuffPopupManager.instance != null)
+            {
+                BuffPopupManager.instance.ShowBuffPopup(buffType);
+            }
+            
             Coroutine buffCoroutine = StartCoroutine(BuffTimer(newBuff, buffType, duration));
             buffCoroutines[buffType] = buffCoroutine;
         }
