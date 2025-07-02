@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class BuffTrigger : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class BuffTrigger : MonoBehaviour
         }
     }
     
-    private System.Collections.IEnumerator DisableTemporarily()
+    private IEnumerator DisableTemporarily()
     {
         isActive = false;
         GetComponent<Renderer>().enabled = false;
