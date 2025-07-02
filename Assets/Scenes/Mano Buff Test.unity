@@ -7284,9 +7284,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2324322195298387661, guid: 683b1f99a5aeb41adad6b80ed0b1aa76, type: 3}
+      propertyPath: buffType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2324322195298387661, guid: 683b1f99a5aeb41adad6b80ed0b1aa76, type: 3}
+      propertyPath: buffValue
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5679112124027733372, guid: 683b1f99a5aeb41adad6b80ed0b1aa76, type: 3}
       propertyPath: m_Name
-      value: buff_trigger
+      value: BuffTrigger
       objectReference: {fileID: 0}
     - target: {fileID: 5866408286204824648, guid: 683b1f99a5aeb41adad6b80ed0b1aa76, type: 3}
       propertyPath: m_LocalScale.x
@@ -7302,7 +7310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5866408286204824648, guid: 683b1f99a5aeb41adad6b80ed0b1aa76, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.5439963
+      value: -2.18
       objectReference: {fileID: 0}
     - target: {fileID: 5866408286204824648, guid: 683b1f99a5aeb41adad6b80ed0b1aa76, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7310,7 +7318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5866408286204824648, guid: 683b1f99a5aeb41adad6b80ed0b1aa76, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6
+      value: 7.23
       objectReference: {fileID: 0}
     - target: {fileID: 5866408286204824648, guid: 683b1f99a5aeb41adad6b80ed0b1aa76, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8676,6 +8684,52 @@ VisualEffect:
       m_Array: []
     m_Bool:
       m_Array: []
+--- !u!1 &663593480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 663593482}
+  - component: {fileID: 663593483}
+  m_Layer: 0
+  m_Name: BuffPopupManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &663593482
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663593480}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -350, y: -175, z: 0}
+  m_LocalScale: {x: 16.80754, y: 16.80754, z: 16.80754}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 681796706}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &663593483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663593480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b60d80333efac40889959023d552777a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buffPopupPrefab: {fileID: 1160613972748660658, guid: f3c59e930e7da4b10867d73bf7dd9944, type: 3}
+  gameCanvas: {fileID: 681796705}
 --- !u!1 &666014321
 GameObject:
   m_ObjectHideFlags: 0
@@ -8912,6 +8966,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 663593482}
   - {fileID: 249823040}
   - {fileID: 900827004}
   - {fileID: 1341261861}
