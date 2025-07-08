@@ -28,6 +28,12 @@ public class TakePhotos : MonoBehaviour
     [Header("3D Plane Display")]
     [SerializeField] private GameObject displayPlane; // 3D plane to display the photo
     [SerializeField] private Material planeMaterial; // Material for the plane
+    
+    [Header("Color Channel Control")]
+    [SerializeField] private bool enableChannelSwitching = true; // Enable color channel switching
+    private enum ColorChannel { Full, Red, Green, Blue }
+    private ColorChannel currentChannel = ColorChannel.Full;
+    private Texture2D originalTexture; // Store the original full-color texture
 
     private void Start()
     {
@@ -46,6 +52,27 @@ public class TakePhotos : MonoBehaviour
             else
             {
                 RemovePhoto();
+            }
+        }
+        
+        // Handle color channel switching
+        if (enableChannelSwitching && displayPlane != null && displayPlane.activeInHierarchy)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SwitchToColorChannel(ColorChannel.Red);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SwitchToColorChannel(ColorChannel.Green);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                SwitchToColorChannel(ColorChannel.Blue);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                SwitchToColorChannel(ColorChannel.Full);
             }
         }
     }
@@ -101,10 +128,22 @@ public class TakePhotos : MonoBehaviour
 
     void DisplayPhotoOnPlane()
     {
-        // Create or update the material
+        // Store the original texture
+        originalTexture = screenCapture;
+        
+        // Create or update the material with custom shader
         if (planeMaterial == null)
         {
-            planeMaterial = new Material(Shader.Find("Unlit/Texture"));
+            Shader colorChannelShader = Shader.Find("Custom/ColorChannelShader");
+            if (colorChannelShader != null)
+            {
+                planeMaterial = new Material(colorChannelShader);
+            }
+            else
+            {
+                // Fallback to Unlit/Texture if custom shader not found
+                planeMaterial = new Material(Shader.Find("Unlit/Texture"));
+            }
         }
 
         // Set the captured texture to the material
@@ -115,6 +154,42 @@ public class TakePhotos : MonoBehaviour
         planeRenderer.material = planeMaterial;
 
         displayPlane.SetActive(true);
+        
+        // Reset to full color channel
+        currentChannel = ColorChannel.Full;
+        SetChannelMask(ColorChannel.Full);
+    }
+
+    void SwitchToColorChannel(ColorChannel channel)
+    {
+        if (originalTexture == null || displayPlane == null || planeMaterial == null) return;
+        
+        currentChannel = channel;
+        SetChannelMask(channel);
+    }
+
+    void SetChannelMask(ColorChannel channel)
+    {
+        Vector4 channelMask;
+        
+        switch (channel)
+        {
+            case ColorChannel.Red:
+                channelMask = new Vector4(1, 0, 0, 1);
+                break;
+            case ColorChannel.Green:
+                channelMask = new Vector4(0, 1, 0, 1);
+                break;
+            case ColorChannel.Blue:
+                channelMask = new Vector4(0, 0, 1, 1);
+                break;
+            case ColorChannel.Full:
+            default:
+                channelMask = new Vector4(1, 1, 1, 1);
+                break;
+        }
+        
+        planeMaterial.SetVector("_ChannelMask", channelMask);
     }
 
     IEnumerator CameraFlashEffect()
