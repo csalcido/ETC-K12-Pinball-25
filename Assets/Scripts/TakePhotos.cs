@@ -28,7 +28,6 @@ public class TakePhotos : MonoBehaviour
     [Header("3D Plane Display")]
     [SerializeField] private GameObject displayPlane; // 3D plane to display the photo
     [SerializeField] private Material planeMaterial; // Material for the plane
-    [SerializeField] private bool showPlaneOnCapture = true; // Whether to show plane when photo is taken
 
     private void Start()
     {
@@ -97,10 +96,7 @@ public class TakePhotos : MonoBehaviour
         slidingAnimation.Play("PhotoSlideUp");
 
         // Display photo on 3D plane
-        if (showPlaneOnCapture)
-        {
-            DisplayPhotoOnPlane();
-        }
+        DisplayPhotoOnPlane();
     }
 
     void DisplayPhotoOnPlane()
