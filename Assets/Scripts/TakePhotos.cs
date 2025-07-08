@@ -25,6 +25,11 @@ public class TakePhotos : MonoBehaviour
     [SerializeField] private Animator fadingAnimation;
     [SerializeField] private Animator slidingAnimation;
 
+    [Header("3D Plane Display")]
+    [SerializeField] private GameObject displayPlane; // 3D plane to display the photo
+    [SerializeField] private Material planeMaterial; // Material for the plane
+    [SerializeField] private bool showPlaneOnCapture = true; // Whether to show plane when photo is taken
+
     private void Start()
     {
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
@@ -91,6 +96,29 @@ public class TakePhotos : MonoBehaviour
         fadingAnimation.Play("PhotoFade");
         slidingAnimation.Play("PhotoSlideUp");
 
+        // Display photo on 3D plane
+        if (showPlaneOnCapture)
+        {
+            DisplayPhotoOnPlane();
+        }
+    }
+
+    void DisplayPhotoOnPlane()
+    {
+        // Create or update the material
+        if (planeMaterial == null)
+        {
+            planeMaterial = new Material(Shader.Find("Unlit/Texture"));
+        }
+
+        // Set the captured texture to the material
+        planeMaterial.mainTexture = screenCapture;
+        
+        // Apply the material to the plane
+        Renderer planeRenderer = displayPlane.GetComponent<Renderer>();
+        planeRenderer.material = planeMaterial;
+
+        displayPlane.SetActive(true);
     }
 
     IEnumerator CameraFlashEffect()
