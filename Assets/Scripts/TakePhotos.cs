@@ -18,7 +18,7 @@ public class TakePhotos : MonoBehaviour
     [Header("Flash Effect")]
     [SerializeField] private GameObject cameraFlash; // point light for the flash
     [SerializeField] private float flashTime;
-    private Texture2D screenCapture;
+    public Texture2D screenCapture;
     private bool viewingPhoto; //this sets the photo to active 
 
     [Header("Photo Fader Effect")]
