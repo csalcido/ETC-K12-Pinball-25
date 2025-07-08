@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class BuffEffect : MonoBehaviour
 {
     private Dictionary<BuffType, Coroutine> buffCoroutines = new Dictionary<BuffType, Coroutine>();
+    private Dictionary<BuffType, BuffBase> activeBuffs = new Dictionary<BuffType, BuffBase>();
     
     public void ApplyBuff(BuffType buffType, float buffValue, float duration)
     {
@@ -17,7 +18,8 @@ public class BuffEffect : MonoBehaviour
         if (newBuff != null)
         {
             newBuff.Apply();
-            
+            activeBuffs[buffType] = newBuff;
+
             // Show buff popup
             if (BuffPopupManager.instance != null)
             {
@@ -57,6 +59,13 @@ public class BuffEffect : MonoBehaviour
         {
             StopCoroutine(buffCoroutines[buffType]);
             buffCoroutines.Remove(buffType);
+        }
+        
+        // Remove the buff from the active buffs
+        if (activeBuffs.ContainsKey(buffType))
+        {
+            activeBuffs[buffType].Remove();
+            activeBuffs.Remove(buffType);
         }
     }
     
