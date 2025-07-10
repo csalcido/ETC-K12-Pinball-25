@@ -27,18 +27,64 @@ public class TakePhotos : MonoBehaviour
 
     [Header("3D Plane Display")]
     [SerializeField] private GameObject displayPlane; // 3D plane to display the photo
-    [SerializeField] private Material planeMaterial; // Material for the plane
+    [SerializeField] private Material planeMaterial; // material for the plane (this is set automatically)
     
-    [Header("Color Channel Control")]
-    [SerializeField] private bool enableChannelSwitching = true; // Enable color channel switching
-    private enum ColorChannel { Full, Red, Green, Blue }
-    private ColorChannel currentChannel = ColorChannel.Full;
-    private Texture2D originalTexture; // Store the original full-color texture
+    [Header("Pinball Tracking")]
+    [SerializeField] private bool enablePinballTracking = true;
+    [SerializeField] private float trackingRadius = 10f; // radius around pinball to mark as visited (in pixels)
+    [SerializeField] private Material trackingMaterial; // material with tracking fragment shader
+
+    private RenderTexture trackingRenderTexture; // texture with tracking data
+    private RenderTexture tempRenderTexture; // temp texture for ping-pong rendering
+    private GameObject[] pinballs; // array to store all pinball references
+
+    // GPU tracking variables
+    // max is 32 pinballs; this is hardcoded because the shader also expects
+    // a fixed size array.
+    private Vector4[] pinballPositions = new Vector4[32];
+    private Vector4[] previousPinballPositions = new Vector4[32];
 
     private void Start()
     {
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+        
+        if (enablePinballTracking)
+        {   
+            if (trackingMaterial != null)
+            {
+                InitializeGPUTracking();
+            }
+            else
+            {
+                Debug.LogWarning("Pinball Tracker material not assigned");
+            }
+        }
+    }
+    
+    void InitializeGPUTracking()
+    {
+        // Create render textures
+        trackingRenderTexture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
+        trackingRenderTexture.Create();
+        
+        tempRenderTexture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
+        tempRenderTexture.Create();
+        
+        // Clear both textures
+        RenderTexture.active = trackingRenderTexture;
+        GL.Clear(true, true, Color.black);
+        RenderTexture.active = tempRenderTexture;
+        GL.Clear(true, true, Color.black);
+        RenderTexture.active = null;
+        
+        // Set texture size in the shader
+        trackingMaterial.SetVector("_TextureSize", new Vector2(Screen.width, Screen.height));
 
+        // Init pinball positions
+        for (int i = 0; i < 32; i++)
+        {
+            previousPinballPositions[i] = Vector4.zero;
+        }
     }
 
     private void Update()
@@ -55,24 +101,18 @@ public class TakePhotos : MonoBehaviour
             }
         }
         
-        // Handle color channel switching
-        if (enableChannelSwitching && displayPlane != null && displayPlane.activeInHierarchy)
+        if (enablePinballTracking && trackingMaterial != null && trackingRenderTexture != null)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            UpdatePinballTracking();
+        }
+
+        // TODO: only for development/debug
+        if (displayPlane != null && displayPlane.activeInHierarchy)
+        {
+            // Press T to toggle between photo and tracking mask
+            if (Input.GetKeyDown(KeyCode.T))
             {
-                SwitchToColorChannel(ColorChannel.Red);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                SwitchToColorChannel(ColorChannel.Green);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                SwitchToColorChannel(ColorChannel.Blue);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                SwitchToColorChannel(ColorChannel.Full);
+                ToggleDisplayMode();
             }
         }
     }
@@ -128,22 +168,10 @@ public class TakePhotos : MonoBehaviour
 
     void DisplayPhotoOnPlane()
     {
-        // Store the original texture
-        originalTexture = screenCapture;
-        
-        // Create or update the material with custom shader
+        // Create or update the material with basic shader
         if (planeMaterial == null)
         {
-            Shader colorChannelShader = Shader.Find("Custom/ColorChannelShader");
-            if (colorChannelShader != null)
-            {
-                planeMaterial = new Material(colorChannelShader);
-            }
-            else
-            {
-                // Fallback to Unlit/Texture if custom shader not found
-                planeMaterial = new Material(Shader.Find("Unlit/Texture"));
-            }
+            planeMaterial = new Material(Shader.Find("Unlit/Texture"));
         }
 
         // Set the captured texture to the material
@@ -154,42 +182,71 @@ public class TakePhotos : MonoBehaviour
         planeRenderer.material = planeMaterial;
 
         displayPlane.SetActive(true);
-        
-        // Reset to full color channel
-        currentChannel = ColorChannel.Full;
-        SetChannelMask(ColorChannel.Full);
     }
 
-    void SwitchToColorChannel(ColorChannel channel)
+    void UpdatePinballTracking()
     {
-        if (originalTexture == null || displayPlane == null || planeMaterial == null) return;
-        
-        currentChannel = channel;
-        SetChannelMask(channel);
-    }
-
-    void SetChannelMask(ColorChannel channel)
-    {
-        Vector4 channelMask;
-        
-        switch (channel)
+        // Find all pinballs
+        pinballs = GameObject.FindGameObjectsWithTag("Ball");
+        System.Array.Copy(pinballPositions, previousPinballPositions, 32);
+        for (int i = 0; i < 32; i++)
         {
-            case ColorChannel.Red:
-                channelMask = new Vector4(1, 0, 0, 1);
-                break;
-            case ColorChannel.Green:
-                channelMask = new Vector4(0, 1, 0, 1);
-                break;
-            case ColorChannel.Blue:
-                channelMask = new Vector4(0, 0, 1, 1);
-                break;
-            case ColorChannel.Full:
-            default:
-                channelMask = new Vector4(1, 1, 1, 1);
-                break;
+            pinballPositions[i] = Vector4.zero;
         }
         
-        planeMaterial.SetVector("_ChannelMask", channelMask);
+        // Convert to plane-relative coords
+        int activePinballs = 0;
+        for (int i = 0; i < pinballs.Length && i < 32; i++)
+        {
+            if (pinballs[i] != null && pinballs[i].activeInHierarchy && displayPlane != null)
+            {
+                // Project the ball's position onto the plane
+                Vector3 ballWorldPos = pinballs[i].transform.position;
+                Vector3 planeLocalPos = displayPlane.transform.InverseTransformPoint(ballWorldPos);
+                
+                // Convert local plane coords to texture coords
+                float planeSize = 10f; // default for now TODO: make this dynamic based on plane size
+                float textureX = (1.0f - (planeLocalPos.x / planeSize + 0.5f)) * trackingRenderTexture.width;
+                float textureY = (1.0f - (planeLocalPos.z / planeSize + 0.5f)) * trackingRenderTexture.height;
+                
+                // Bounds check
+                if (textureX >= 0 && textureX < trackingRenderTexture.width && 
+                    textureY >= 0 && textureY < trackingRenderTexture.height)
+                {
+                    // Use ball's InstanceID as a unique id for shader
+                    // so that balls are not overwritten
+                    int ballID = pinballs[i].GetInstanceID();
+                    
+                    pinballPositions[activePinballs] = new Vector4(
+                        textureX, 
+                        textureY,
+                        1.0f, // Active flag necessary for shader to know this ball is a real pinball
+                        ballID 
+                    );
+                    activePinballs++;
+                }
+            }
+        }
+        
+        // Send data to fragment shader
+        trackingMaterial.SetVectorArray("_PinballPositions", pinballPositions);
+        trackingMaterial.SetVectorArray("_PreviousPositions", previousPinballPositions);
+        trackingMaterial.SetInt("_PinballCount", activePinballs);
+        trackingMaterial.SetFloat("_TrackingRadius", trackingRadius);
+        trackingMaterial.SetVector("_TextureSize", new Vector2(trackingRenderTexture.width, trackingRenderTexture.height));
+        
+        // Ping-pong rendering
+        Graphics.Blit(trackingRenderTexture, tempRenderTexture, trackingMaterial);
+        
+        // Swap the textures
+        RenderTexture temp = trackingRenderTexture;
+        trackingRenderTexture = tempRenderTexture;
+        tempRenderTexture = temp;
+    }
+    
+    public Texture GetTrackingMask()
+    {
+        return trackingRenderTexture;
     }
 
     IEnumerator CameraFlashEffect()
@@ -207,8 +264,55 @@ public class TakePhotos : MonoBehaviour
         photoFrame.SetActive(false);
     }
 
-   
+    public void DisplayTrackingMaskOnPlane()
+    {
+        if (displayPlane == null) return;
+        
+        Texture maskTexture = GetTrackingMask();
+        if (maskTexture == null) return;
+        
+        if (planeMaterial == null)
+        {
+            planeMaterial = new Material(Shader.Find("Unlit/Texture"));
+        }
+
+        // display mask
+        planeMaterial.mainTexture = maskTexture;
+        Renderer planeRenderer = displayPlane.GetComponent<Renderer>();
+        planeRenderer.material = planeMaterial;
+        displayPlane.SetActive(true);
+    }
     
+    public void ToggleDisplayMode()
+    {
+        if (displayPlane == null || !displayPlane.activeInHierarchy) return;
+        
+        Texture currentMask = GetTrackingMask();
+        
+        // Toggle between showing the photo and tracking mask
+        if (planeMaterial.mainTexture == screenCapture)
+        {
+            DisplayTrackingMaskOnPlane();
+        }
+        else
+        {
+            DisplayPhotoOnPlane();
+        }
+    }
 
-
+    private void OnDestroy()
+    {
+        // Clean up GPU textures
+        if (trackingRenderTexture != null)
+        {
+            trackingRenderTexture.Release();
+            trackingRenderTexture = null;
+        }
+        
+        if (tempRenderTexture != null)
+        {
+            tempRenderTexture.Release();
+            tempRenderTexture = null;
+        }
+    }
 }
