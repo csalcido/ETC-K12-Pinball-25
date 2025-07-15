@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Klak.Ndi;
 
 
 public class TakePhotos : MonoBehaviour
@@ -33,6 +34,11 @@ public class TakePhotos : MonoBehaviour
     [SerializeField] private bool enablePinballTracking = true;
     [SerializeField] private float trackingRadius = 10f; // radius around pinball to mark as visited (in pixels)
     [SerializeField] private Material trackingMaterial; // material with tracking fragment shader
+
+    [Header("NDI Output")]
+    [SerializeField] private NdiSender ndiSender; // NDI sender component
+    [SerializeField] private bool enableNDIOutput = true;
+    [SerializeField] private string ndiStreamName = "PinballTracking";
 
     private RenderTexture trackingRenderTexture; // texture with tracking data
     private RenderTexture tempRenderTexture; // temp texture for ping-pong rendering
@@ -84,6 +90,14 @@ public class TakePhotos : MonoBehaviour
         for (int i = 0; i < 32; i++)
         {
             previousPinballPositions[i] = Vector4.zero;
+        }
+        
+        // Initialize NDI sender
+        if (enableNDIOutput && ndiSender != null)
+        {
+            ndiSender.captureMethod = CaptureMethod.Texture;
+            ndiSender.ndiName = ndiStreamName;
+            ndiSender.sourceTexture = trackingRenderTexture;
         }
     }
 
@@ -242,6 +256,12 @@ public class TakePhotos : MonoBehaviour
         RenderTexture temp = trackingRenderTexture;
         trackingRenderTexture = tempRenderTexture;
         tempRenderTexture = temp;
+        
+        // Update NDI sender texture
+        if (enableNDIOutput && ndiSender != null)
+        {
+            ndiSender.sourceTexture = trackingRenderTexture;
+        }
     }
     
     public Texture GetTrackingMask()
@@ -299,9 +319,24 @@ public class TakePhotos : MonoBehaviour
             DisplayPhotoOnPlane();
         }
     }
+    
+    public void SetNDIStreamName(string newName)
+    {
+        ndiStreamName = newName;
+        if (ndiSender != null)
+        {
+            ndiSender.ndiName = ndiStreamName;
+        }
+    }
 
     private void OnDestroy()
     {
+        // Clean up NDI sender
+        if (ndiSender != null)
+        {
+            ndiSender.sourceTexture = null;
+        }
+        
         // Clean up GPU textures
         if (trackingRenderTexture != null)
         {
