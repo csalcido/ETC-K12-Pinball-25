@@ -25,6 +25,8 @@ public class TakePhotos : MonoBehaviour
     [SerializeField] private Animator fadingAnimation;
     [SerializeField] private Animator slidingAnimation;
 
+    public Animator cameraAnimator;
+
     private void Start()
     {
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
@@ -42,6 +44,7 @@ public class TakePhotos : MonoBehaviour
             else
             {
                 RemovePhoto();
+                
             }
         }
     }
@@ -100,12 +103,16 @@ public class TakePhotos : MonoBehaviour
         yield return new WaitForSeconds(flashTime);
         cameraFlash.SetActive(false);
 
-    }   
-    
+    }
+
     void RemovePhoto()
     {
         viewingPhoto = false;
         photoFrame.SetActive(false);
+
+        //play camera transition to board
+        cameraAnimator.SetBool("playAnim", true);
+        
     }
 
    
