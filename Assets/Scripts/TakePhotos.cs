@@ -2,8 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using Klak.Ndi;
 
 
@@ -35,10 +33,10 @@ public class TakePhotos : MonoBehaviour
     [SerializeField] private float trackingRadius = 10f; // radius around pinball to mark as visited (in pixels)
     [SerializeField] private Material trackingMaterial; // material with tracking fragment shader
 
-    [Header("NDI Output")]
+    [Header("NDI")]
     [SerializeField] private NdiSender ndiSender; // NDI sender component
-    [SerializeField] private bool enableNDIOutput = true;
-    [SerializeField] private string ndiStreamName = "PinballTracking";
+    [SerializeField] private NdiReceiver ndiReceiver; // NDI receiver component
+    [SerializeField] private bool showRawTrackingTexture = false; // show tracking texture instead of NDI input
 
     private RenderTexture trackingRenderTexture; // texture with tracking data
     private RenderTexture tempRenderTexture; // temp texture for ping-pong rendering
@@ -92,13 +90,14 @@ public class TakePhotos : MonoBehaviour
             previousPinballPositions[i] = Vector4.zero;
         }
         
-        // Initialize NDI sender
-        if (enableNDIOutput && ndiSender != null)
+        // Initialize NDI sender - always send tracking texture
+        if (ndiSender != null)
         {
             ndiSender.captureMethod = CaptureMethod.Texture;
-            ndiSender.ndiName = ndiStreamName;
             ndiSender.sourceTexture = trackingRenderTexture;
         }
+        
+        // NDI receiver is configured in its own component - no setup needed here
     }
 
     private void Update()
@@ -128,6 +127,19 @@ public class TakePhotos : MonoBehaviour
             {
                 ToggleDisplayMode();
             }
+        }
+        
+        // Press R to toggle raw tracking texture display
+        // skip ndi receiving (debug)
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            showRawTrackingTexture = !showRawTrackingTexture;
+        }
+        
+        // Press C to clear/reset tracking texture
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            ResetTrackingTexture();
         }
     }
 
@@ -188,8 +200,11 @@ public class TakePhotos : MonoBehaviour
             planeMaterial = new Material(Shader.Find("Unlit/Texture"));
         }
 
-        // Set the captured texture to the material
-        planeMaterial.mainTexture = screenCapture;
+        // Choose texture source based on NDI input settings
+        Texture textureToDisplay = GetDisplayTexture();
+        
+        // Set the texture to the material
+        planeMaterial.mainTexture = textureToDisplay;
         
         // Apply the material to the plane
         Renderer planeRenderer = displayPlane.GetComponent<Renderer>();
@@ -202,7 +217,7 @@ public class TakePhotos : MonoBehaviour
     {
         // Find all pinballs
         pinballs = GameObject.FindGameObjectsWithTag("Ball");
-        System.Array.Copy(pinballPositions, previousPinballPositions, 32);
+        Array.Copy(pinballPositions, previousPinballPositions, 32);
         for (int i = 0; i < 32; i++)
         {
             pinballPositions[i] = Vector4.zero;
@@ -257,10 +272,54 @@ public class TakePhotos : MonoBehaviour
         trackingRenderTexture = tempRenderTexture;
         tempRenderTexture = temp;
         
-        // Update NDI sender texture
-        if (enableNDIOutput && ndiSender != null)
+        // Update NDI sender texture (always send tracking data)
+        if (ndiSender != null)
         {
             ndiSender.sourceTexture = trackingRenderTexture;
+        }
+    }
+    
+    Texture GetDisplayTexture()
+    {
+        // If debug mode is enabled, show raw tracking texture
+        if (showRawTrackingTexture)
+        {
+            return trackingRenderTexture;
+        }
+        
+        // If we have NDI input, use it; otherwise fall back to screen capture
+        if (ndiReceiver != null && ndiReceiver.texture != null)
+        {
+            return ndiReceiver.texture;
+        }
+        
+        // Default to screen capture
+        return screenCapture;
+    }
+    
+    public void ResetTrackingTexture()
+    {
+        if (trackingRenderTexture != null)
+        {
+            // Clear the tracking texture to black
+            RenderTexture.active = trackingRenderTexture;
+            GL.Clear(true, true, Color.black);
+            RenderTexture.active = null;
+            
+            // Also clear the temp texture
+            if (tempRenderTexture != null)
+            {
+                RenderTexture.active = tempRenderTexture;
+                GL.Clear(true, true, Color.black);
+                RenderTexture.active = null;
+            }
+            
+            // Reset pinball position history
+            for (int i = 0; i < 32; i++)
+            {
+                pinballPositions[i] = Vector4.zero;
+                previousPinballPositions[i] = Vector4.zero;
+            }
         }
     }
     
@@ -288,6 +347,7 @@ public class TakePhotos : MonoBehaviour
     {
         if (displayPlane == null) return;
         
+        // Always show the tracking mask
         Texture maskTexture = GetTrackingMask();
         if (maskTexture == null) return;
         
@@ -307,10 +367,12 @@ public class TakePhotos : MonoBehaviour
     {
         if (displayPlane == null || !displayPlane.activeInHierarchy) return;
         
-        Texture currentMask = GetTrackingMask();
+        // Get current textures for comparison
+        Texture currentTrackingMask = GetTrackingMask();
+        Texture currentDisplayTexture = GetDisplayTexture();
         
-        // Toggle between showing the photo and tracking mask
-        if (planeMaterial.mainTexture == screenCapture)
+        // Toggle between showing the photo/NDI input and tracking mask
+        if (planeMaterial.mainTexture == currentDisplayTexture)
         {
             DisplayTrackingMaskOnPlane();
         }
@@ -320,15 +382,6 @@ public class TakePhotos : MonoBehaviour
         }
     }
     
-    public void SetNDIStreamName(string newName)
-    {
-        ndiStreamName = newName;
-        if (ndiSender != null)
-        {
-            ndiSender.ndiName = ndiStreamName;
-        }
-    }
-
     private void OnDestroy()
     {
         // Clean up NDI sender
