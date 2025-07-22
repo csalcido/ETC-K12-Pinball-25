@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 
 
 public class TakePhotos : MonoBehaviour
@@ -18,12 +19,18 @@ public class TakePhotos : MonoBehaviour
     [Header("Flash Effect")]
     [SerializeField] private GameObject cameraFlash; // point light for the flash
     [SerializeField] private float flashTime;
+    [SerializeField] public SoundController flashSound;
     public Texture2D screenCapture;
     private bool viewingPhoto; //this sets the photo to active 
 
     [Header("Photo Fader Effect")]
     [SerializeField] private Animator fadingAnimation;
     [SerializeField] private Animator slidingAnimation;
+
+    [Header("Countdown Display")]//text display for picture countdown
+    [SerializeField] public int countdownTime;
+    [SerializeField] public TextMeshProUGUI countdownDisplay;
+    [SerializeField] public SoundController countdownSound;
 
     public Animator cameraAnimator;
 
@@ -39,7 +46,8 @@ public class TakePhotos : MonoBehaviour
         {
             if (!viewingPhoto)
             {
-                StartCoroutine(CapturePhoto());
+                StartCoroutine(CountdownToPhoto());
+                
             }
             else
             {
@@ -58,6 +66,7 @@ public class TakePhotos : MonoBehaviour
 
     IEnumerator CapturePhoto()
     {
+        flashSound.PlaySound();
         viewingPhoto = true;
         yield return new WaitForEndOfFrame();
 
@@ -81,6 +90,23 @@ public class TakePhotos : MonoBehaviour
 
                 */
 
+    }
+
+    IEnumerator CountdownToPhoto()
+    {
+        while (countdownTime > 0)
+        {
+            countdownSound.PlaySound();
+            countdownDisplay.text = countdownTime.ToString();
+            yield return new WaitForSeconds(1f);
+            countdownTime--;
+            
+        }
+        StartCoroutine(CapturePhoto());
+        //countdownDisplay.text = "Snap!";
+        
+
+        
     }
 
     void ShowPhoto()
