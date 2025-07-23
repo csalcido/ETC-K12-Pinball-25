@@ -30,6 +30,7 @@ public class TakePhotos : MonoBehaviour
     [Header("Countdown Display")]//text display for picture countdown
     [SerializeField] public int countdownTime;
     [SerializeField] public TextMeshProUGUI countdownDisplay;
+    [SerializeField] public GameObject countdownDisplayBackground;
     [SerializeField] public SoundController countdownSound;
 
     public Animator cameraAnimator;
@@ -46,6 +47,7 @@ public class TakePhotos : MonoBehaviour
         {
             if (!viewingPhoto)
             {
+                countdownDisplayBackground.SetActive(true);
                 StartCoroutine(CountdownToPhoto());
                 
             }
@@ -100,13 +102,14 @@ public class TakePhotos : MonoBehaviour
             countdownDisplay.text = countdownTime.ToString();
             yield return new WaitForSeconds(1f);
             countdownTime--;
-            
+
         }
         StartCoroutine(CapturePhoto());
+        countdownDisplayBackground.SetActive(false);
         //countdownDisplay.text = "Snap!";
-        
 
-        
+
+
     }
 
     void ShowPhoto()

@@ -1603,7 +1603,7 @@ GameObject:
   - component: {fileID: 34829643}
   - component: {fileID: 34829642}
   m_Layer: 5
-  m_Name: Cube
+  m_Name: CountDownBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1616,16 +1616,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 34829640}
-  m_LocalRotation: {x: -0.03747853, y: -0, z: -0, w: 0.99929744}
+  m_LocalRotation: {x: -0.03724432, y: -0.0041835005, z: 0.111545496, w: 0.9930524}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 383.2646, y: 383.2646, z: 383.2646}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 681796706}
-  m_LocalEulerAnglesHint: {x: -4.296, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -4.188, y: -0.955, z: 12.853}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 645, y: 301}
+  m_AnchoredPosition: {x: 618, y: 301}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!65 &34829642
@@ -1672,7 +1672,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 8c01d0306d0fd354c90ea755d194993e, type: 2}
+  - {fileID: 2100000, guid: e55a629376087884f8eb7e45b1435e9f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -34744,6 +34745,7 @@ MonoBehaviour:
   slidingAnimation: {fileID: 32133865}
   countdownTime: 3
   countdownDisplay: {fileID: 1491257520}
+  countdownDisplayBackground: {fileID: 34829640}
   countdownSound: {fileID: 831782323}
   cameraAnimator: {fileID: 330585548}
 --- !u!4 &1483407585
