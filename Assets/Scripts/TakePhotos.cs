@@ -17,6 +17,7 @@ public class TakePhotos : MonoBehaviour
     [Header("Flash Effect")]
     [SerializeField] private GameObject cameraFlash; // point light for the flash
     [SerializeField] private float flashTime;
+    [SerializeField] public SoundController flashSound;
     public Texture2D screenCapture;
     private bool viewingPhoto; //this sets the photo to active 
 
@@ -47,6 +48,13 @@ public class TakePhotos : MonoBehaviour
     // a fixed size array.
     private Vector4[] pinballPositions = new Vector4[32];
     private Vector4[] previousPinballPositions = new Vector4[32];
+    [Header("Countdown Display")]//text display for picture countdown
+    [SerializeField] public int countdownTime;
+    [SerializeField] public TextMeshProUGUI countdownDisplay;
+    [SerializeField] public GameObject countdownDisplayBackground;
+    [SerializeField] public SoundController countdownSound;
+
+    public Animator cameraAnimator;
 
     private void Start()
     {
@@ -106,12 +114,43 @@ public class TakePhotos : MonoBehaviour
         {
             if (!viewingPhoto)
             {
-                StartCoroutine(CapturePhoto());
+                countdownDisplayBackground.SetActive(true);
+                StartCoroutine(CountdownToPhoto());
+                
             }
             else
             {
                 RemovePhoto();
+                
             }
+        }
+        
+        if (enablePinballTracking && trackingMaterial != null && trackingRenderTexture != null)
+        {
+            UpdatePinballTracking();
+        }
+
+        // TODO: only for development/debug
+        if (displayPlane != null && displayPlane.activeInHierarchy)
+        {
+            // Press T to toggle between photo and tracking mask
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                ToggleDisplayMode();
+            }
+        }
+        
+        // Press R to toggle raw tracking texture display
+        // skip ndi receiving (debug)
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            showRawTrackingTexture = !showRawTrackingTexture;
+        }
+        
+        // Press C to clear/reset tracking texture
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            ResetTrackingTexture();
         }
         
         if (enablePinballTracking && trackingMaterial != null && trackingRenderTexture != null)
@@ -152,6 +191,7 @@ public class TakePhotos : MonoBehaviour
 
     IEnumerator CapturePhoto()
     {
+        flashSound.PlaySound();
         viewingPhoto = true;
         yield return new WaitForEndOfFrame();
 
@@ -174,6 +214,24 @@ public class TakePhotos : MonoBehaviour
                 //Destroy(screenCapture);
 
                 */
+
+    }
+
+    IEnumerator CountdownToPhoto()
+    {
+        while (countdownTime > 0)
+        {
+            countdownSound.PlaySound();
+            countdownDisplay.text = countdownTime.ToString();
+            yield return new WaitForSeconds(1f);
+            countdownTime--;
+
+        }
+        StartCoroutine(CapturePhoto());
+        countdownDisplayBackground.SetActive(false);
+        //countdownDisplay.text = "Snap!";
+
+
 
     }
 
@@ -335,8 +393,8 @@ public class TakePhotos : MonoBehaviour
         yield return new WaitForSeconds(flashTime);
         cameraFlash.SetActive(false);
 
-    }   
-    
+    }
+
     void RemovePhoto()
     {
         viewingPhoto = false;

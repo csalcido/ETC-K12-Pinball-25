@@ -7,22 +7,32 @@ public class BuffTrigger : MonoBehaviour
     public BuffType buffType = BuffType.Size;
     public float buffDuration = 5f;
     public float buffValue = 1.5f;
-    
+
     [Header("Visual Feedback")]
+
+    Animator buffAnimator;
     public bool disableAfterUse = false;
     public float respawnTime = 10f;
     
     private bool isActive = true;
-    
+
+    private void Start()
+    {
+        buffAnimator = GetComponent<Animator>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!isActive) return;
-        
+
         BuffEffect ballBuff = other.GetComponent<BuffEffect>();
         if (ballBuff != null)
         {
             ballBuff.ApplyBuff(buffType, buffValue, buffDuration);
-            
+            buffAnimator.SetBool("IsTriggered", true);
+
+            Debug.Log("triggered!");
+
             if (disableAfterUse)
             {
                 StartCoroutine(DisableTemporarily());
