@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1291609401560781402}
   - component: {fileID: 6476106636728142386}
   - component: {fileID: 1864919659640279656}
-  - component: {fileID: 1719455052791897247}
   m_Layer: 0
   m_Name: BubbleStar
   m_TagString: Untagged
@@ -97,18 +96,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1719455052791897247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1730311334970707776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d50b68b2dec4429bbe44329a82ac957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6742801113345531259
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 using Klak.Ndi;
+using TMPro;
 
 
 public class TakePhotos : MonoBehaviour
@@ -24,6 +25,10 @@ public class TakePhotos : MonoBehaviour
     [Header("Photo Fader Effect")]
     [SerializeField] private Animator fadingAnimation;
     [SerializeField] private Animator slidingAnimation;
+    public Animator cameraAnimator;
+
+    public GameObject gumballManager; //this while be set to active and start the gumball sequence after the photo is taken
+    
 
     [Header("3D Plane Display")]
     [SerializeField] private GameObject displayPlane; // 3D plane to display the photo
@@ -54,7 +59,7 @@ public class TakePhotos : MonoBehaviour
     [SerializeField] public GameObject countdownDisplayBackground;
     [SerializeField] public SoundController countdownSound;
 
-    public Animator cameraAnimator;
+    
 
     private void Start()
     {
@@ -116,12 +121,14 @@ public class TakePhotos : MonoBehaviour
             {
                 countdownDisplayBackground.SetActive(true);
                 StartCoroutine(CountdownToPhoto());
-                
+
             }
             else
             {
                 RemovePhoto();
-                
+                cameraAnimator.SetBool("playGumballAnim", true);
+                gumballManager.SetActive(true);
+
             }
         }
         
