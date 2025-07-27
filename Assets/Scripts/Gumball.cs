@@ -6,7 +6,7 @@ public class Gumball : MonoBehaviour
 
     public GameObject[] spawnBuffs; //public array of prefabs to instantiate
     public Animator mainCameraAnimator;//Main camera animator
-    public Animator gumballAnimator;
+    public Animator leverAnimator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
