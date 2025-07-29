@@ -2958,13 +2958,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 102875308}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.7911987, y: -1.06, z: 8.9}
-  m_LocalScale: {x: 4.7359, y: 4.7359, z: 4.7359}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000001490116}
+  m_LocalPosition: {x: -0.10159819, y: -1.06, z: 9.990502}
+  m_LocalScale: {x: 2.733156, y: 4.7359, z: 4.3500047}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &109031055
 GameObject:
   m_ObjectHideFlags: 0
@@ -37334,7 +37334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a09ab5fc64402d49b12d170a7577986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ndiName: FAST (TouchDesigner)
+  _ndiName: ETC-PLATFORM-07 (TouchDesigner)
   _targetTexture: {fileID: 0}
   _targetRenderer: {fileID: 0}
   _targetMaterialProperty: 
