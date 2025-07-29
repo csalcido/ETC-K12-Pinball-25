@@ -137,35 +137,7 @@ public class TakePhotos : MonoBehaviour
             UpdatePinballTracking();
         }
 
-        // TODO: only for development/debug
-        if (displayPlane != null && displayPlane.activeInHierarchy)
-        {
-            // Press T to toggle between photo and tracking mask
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                ToggleDisplayMode();
-            }
-        }
-        
-        // Press R to toggle raw tracking texture display
-        // skip ndi receiving (debug)
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            showRawTrackingTexture = !showRawTrackingTexture;
-        }
-        
-        // Press C to clear/reset tracking texture
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            ResetTrackingTexture();
-        }
-        
-        if (enablePinballTracking && trackingMaterial != null && trackingRenderTexture != null)
-        {
-            UpdatePinballTracking();
-        }
-
-        // TODO: only for development/debug
+        // Debug controls
         if (displayPlane != null && displayPlane.activeInHierarchy)
         {
             // Press T to toggle between photo and tracking mask
