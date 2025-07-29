@@ -40,7 +40,8 @@ public class TakePhotos : MonoBehaviour
     [SerializeField] private Material trackingMaterial; // material with tracking fragment shader
 
     [Header("NDI")]
-    [SerializeField] private NdiSender ndiSender; // NDI sender component
+    [SerializeField] private NdiSender ndiSender; // NDI sender component for tracking data
+    [SerializeField] private NdiSender ndiSenderPhoto; // NDI sender component for full color photo
     [SerializeField] private NdiReceiver ndiReceiver; // NDI receiver component
     [SerializeField] private bool showRawTrackingTexture = false; // show tracking texture instead of NDI input
 
@@ -108,6 +109,12 @@ public class TakePhotos : MonoBehaviour
         {
             ndiSender.captureMethod = CaptureMethod.Texture;
             ndiSender.sourceTexture = trackingRenderTexture;
+        }
+        
+        // Initialize NDI sender for photo
+        if (ndiSenderPhoto != null)
+        {
+            ndiSenderPhoto.captureMethod = CaptureMethod.Texture;
         }
         
         // NDI receiver is configured in its own component - no setup needed here
@@ -178,6 +185,13 @@ public class TakePhotos : MonoBehaviour
 
         screenCapture.ReadPixels(regionToRead, 0, 0, false);
         screenCapture.Apply();
+        
+        // Send captured photo immediately via NDI
+        if (ndiSenderPhoto != null)
+        {
+            ndiSenderPhoto.sourceTexture = screenCapture;
+        }
+        
         ShowPhoto();
         webCameraFeed.SetActive(false);
 
@@ -425,6 +439,11 @@ public class TakePhotos : MonoBehaviour
         if (ndiSender != null)
         {
             ndiSender.sourceTexture = null;
+        }
+        
+        if (ndiSenderPhoto != null)
+        {
+            ndiSenderPhoto.sourceTexture = null;
         }
         
         // Clean up GPU textures
