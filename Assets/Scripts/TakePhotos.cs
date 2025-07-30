@@ -134,11 +134,9 @@ public class TakePhotos : MonoBehaviour
         // NDI receiver is configured in its own component - no setup needed here
     }
 
-    private void Update()
+    private void ClickButton()
     {
-        if (Input.GetMouseButtonDown(0)) //input TBD by hardware 
-        {
-            if (!viewingPhoto)
+        if (!viewingPhoto)
             {
                 countdownDisplayBackground.SetActive(true);
                 StartCoroutine(CountdownToPhoto());
@@ -151,8 +149,12 @@ public class TakePhotos : MonoBehaviour
                 gumballManager.SetActive(true);
 
             }
-        }
+    }
+
+    private void Update()
+    {
         
+
         if (enablePinballTracking && trackingMaterial != null && trackingRenderTexture != null)
         {
             UpdatePinballTracking();
@@ -167,14 +169,14 @@ public class TakePhotos : MonoBehaviour
                 ToggleDisplayMode();
             }
         }
-        
+
         // Press R to toggle raw tracking texture display
         // skip ndi receiving (debug)
         if (Input.GetKeyDown(KeyCode.R))
         {
             showRawTrackingTexture = !showRawTrackingTexture;
         }
-        
+
         // Press C to clear/reset tracking texture
         if (Input.GetKeyDown(KeyCode.C))
         {
