@@ -4,7 +4,7 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    public float countdownTime = 300f;
+    public float countdownTime = 100f;
     public TextMeshProUGUI countdownText;
     public GameObject resultPanel;
 
