@@ -53,7 +53,7 @@ public class Gumball : MonoBehaviour
             obj.transform.localScale = Vector3.one;
             
             yield return new WaitForSeconds(2.5f);
-            Destroy(obj, 0.5f);
+            Destroy(obj, 0.2f);
             gumballAnimator.Rebind();
             
         }
