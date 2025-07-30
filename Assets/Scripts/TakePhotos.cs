@@ -134,7 +134,7 @@ public class TakePhotos : MonoBehaviour
         // NDI receiver is configured in its own component - no setup needed here
     }
 
-    private void ClickButton()
+     public void ClickButton()
     {
         if (!viewingPhoto)
             {
