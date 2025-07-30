@@ -29,7 +29,7 @@ public class Gumball : MonoBehaviour
 
         //play lever animation
         leverAnimator.SetBool("playAnim", true);
-        leverAnimator.SetBool( "playAnim", false);
+        leverAnimator.Rebind();
 
         //play lever sound
         lever.GetComponent<AudioSource>().Play();
