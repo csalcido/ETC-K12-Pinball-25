@@ -35,9 +35,11 @@ Shader "Custom/PinballTracker"
             sampler2D _MainTex;
             float4 _PinballPositions[32];
             float4 _PreviousPositions[32];
+            fixed4 _PinballColors[32];
             int _PinballCount;
             float2 _TextureSize;
             float _TrackingRadius;
+            fixed4 _TrackingColor;
             
             v2f vert (appdata v)
             {
@@ -111,7 +113,16 @@ Shader "Custom/PinballTracker"
                     // Pinball affects this pixel
                     if (shouldMark)
                     {
-                        result = fixed4(1, 1, 1, 1);
+                        // Use individual pinball color, fallback to _TrackingColor if not set
+                        fixed4 pinballColor = _PinballColors[j];
+                        if (pinballColor.a <= 0.0 || (pinballColor.r + pinballColor.g + pinballColor.b) <= 0.0)
+                        {
+                            pinballColor = _TrackingColor; // Fallback to global tracking color
+                        }
+                        
+                        // Additive blending with the pinball's individual color
+                        result.rgb = saturate(result.rgb + pinballColor.rgb);
+                        result.a = 1.0; // Keep alpha at 1
                         break; // No need to check other pinballs
                     }
                 }

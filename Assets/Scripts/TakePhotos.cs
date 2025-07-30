@@ -54,6 +54,15 @@ public class TakePhotos : MonoBehaviour
     // a fixed size array.
     private Vector4[] pinballPositions = new Vector4[32];
     private Vector4[] previousPinballPositions = new Vector4[32];
+    private Color[] pinballColors = new Color[32]; // individual colors for each pinball
+    
+    // Tracking color variables
+    public enum TrackingColor { Red, Green, Blue }
+    private TrackingColor currentTrackingColor = TrackingColor.Red;
+    private Color redColor = new Color(1f, 0f, 0f, 1f);
+    private Color greenColor = new Color(0f, 1f, 0f, 1f);
+    private Color blueColor = new Color(0f, 0f, 1f, 1f);
+    
     [Header("Countdown Display")]//text display for picture countdown
     [SerializeField] public int countdownTime;
     [SerializeField] public TextMeshProUGUI countdownDisplay;
@@ -97,11 +106,16 @@ public class TakePhotos : MonoBehaviour
         
         // Set texture size in the shader
         trackingMaterial.SetVector("_TextureSize", new Vector2(Screen.width, Screen.height));
+        trackingMaterial.SetFloat("_TrackingRadius", trackingRadius);
 
-        // Init pinball positions
+        // Initialize tracking color to red
+        UpdateTrackingColor();
+
+        // Init pinball positions and colors
         for (int i = 0; i < 32; i++)
         {
             previousPinballPositions[i] = Vector4.zero;
+            pinballColors[i] = Color.clear;
         }
         
         // Initialize NDI sender - always send tracking texture
@@ -272,6 +286,7 @@ public class TakePhotos : MonoBehaviour
         for (int i = 0; i < 32; i++)
         {
             pinballPositions[i] = Vector4.zero;
+            pinballColors[i] = Color.clear;
         }
         
         // Convert to plane-relative coords
@@ -297,12 +312,17 @@ public class TakePhotos : MonoBehaviour
                     // so that balls are not overwritten
                     int ballID = pinballs[i].GetInstanceID();
                     
+                    // Get the pinball's individual color from DynamicColor component
+                    DynamicColor dynamicColor = pinballs[i].GetComponent<DynamicColor>();
+                    Color ballColor = (dynamicColor != null) ? dynamicColor.color : GetPinballColor();
+                    
                     pinballPositions[activePinballs] = new Vector4(
                         textureX, 
                         textureY,
                         1.0f, // Active flag necessary for shader to know this ball is a real pinball
                         ballID 
                     );
+                    pinballColors[activePinballs] = ballColor;
                     activePinballs++;
                 }
             }
@@ -311,6 +331,7 @@ public class TakePhotos : MonoBehaviour
         // Send data to fragment shader
         trackingMaterial.SetVectorArray("_PinballPositions", pinballPositions);
         trackingMaterial.SetVectorArray("_PreviousPositions", previousPinballPositions);
+        trackingMaterial.SetColorArray("_PinballColors", pinballColors);
         trackingMaterial.SetInt("_PinballCount", activePinballs);
         trackingMaterial.SetFloat("_TrackingRadius", trackingRadius);
         trackingMaterial.SetVector("_TextureSize", new Vector2(trackingRenderTexture.width, trackingRenderTexture.height));
@@ -328,6 +349,36 @@ public class TakePhotos : MonoBehaviour
         {
             ndiSender.sourceTexture = trackingRenderTexture;
         }
+    }
+    
+    void UpdateTrackingColor()
+    {
+        if (trackingMaterial == null) return;
+        
+        Color colorToSet;
+        string colorName;
+        switch (currentTrackingColor)
+        {
+            case TrackingColor.Red:
+                colorToSet = redColor;
+                colorName = "Red";
+                break;
+            case TrackingColor.Green:
+                colorToSet = greenColor;
+                colorName = "Green";
+                break;
+            case TrackingColor.Blue:
+                colorToSet = blueColor;
+                colorName = "Blue";
+                break;
+            default:
+                colorToSet = redColor;
+                colorName = "Red";
+                break;
+        }
+        
+        trackingMaterial.SetColor("_TrackingColor", colorToSet);
+        Debug.Log($"Tracking color changed to: {colorName}");
     }
     
     Texture GetDisplayTexture()
@@ -365,11 +416,12 @@ public class TakePhotos : MonoBehaviour
                 RenderTexture.active = null;
             }
             
-            // Reset pinball position history
+            // Reset pinball position and color history
             for (int i = 0; i < 32; i++)
             {
                 pinballPositions[i] = Vector4.zero;
                 previousPinballPositions[i] = Vector4.zero;
+                pinballColors[i] = Color.clear;
             }
         }
     }
@@ -430,6 +482,102 @@ public class TakePhotos : MonoBehaviour
         else
         {
             DisplayPhotoOnPlane();
+        }
+    }
+    
+    public Color GetPinballColor()
+    {
+        if (trackingRenderTexture == null || IsTrackingTextureEmpty())
+        {
+            return RandomColor();
+        }
+        return GetLeastUsedColor();
+    }
+    
+    private bool IsTrackingTextureEmpty()
+    {
+        RenderTexture.active = trackingRenderTexture;
+        Texture2D temp = new Texture2D(trackingRenderTexture.width, trackingRenderTexture.height, TextureFormat.RGB24, false);
+        temp.ReadPixels(new Rect(0, 0, trackingRenderTexture.width, trackingRenderTexture.height), 0, 0);
+        temp.Apply();
+        RenderTexture.active = null;
+        
+        Color[] pixels = temp.GetPixels();
+        int nonBlackPixels = 0;
+        float threshold = 0.1f; // when to consider a pixel non-black
+        
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            if (pixels[i].r > threshold || pixels[i].g > threshold || pixels[i].b > threshold)
+            {
+                nonBlackPixels++;
+            }
+        }
+        
+        DestroyImmediate(temp);
+        
+        float nonBlackPercentage = (float)nonBlackPixels / pixels.Length;
+        return nonBlackPercentage < 0.01f;
+    }
+    
+    private Color GetLeastUsedColor()
+    {
+        RenderTexture.active = trackingRenderTexture;
+        Texture2D temp = new Texture2D(trackingRenderTexture.width, trackingRenderTexture.height, TextureFormat.RGB24, false);
+        temp.ReadPixels(new Rect(0, 0, trackingRenderTexture.width, trackingRenderTexture.height), 0, 0);
+        temp.Apply();
+        RenderTexture.active = null;
+        
+        Color[] pixels = temp.GetPixels();
+        
+        // Count usage of each tracking color
+        int redCount = 0, greenCount = 0, blueCount = 0;
+        float colorThreshold = 0.5f;
+        
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            Color pixel = pixels[i];
+            
+            if (pixel.r > colorThreshold && pixel.r > pixel.g && pixel.r > pixel.b)
+            {
+                redCount++;
+            }
+            else if (pixel.g > colorThreshold && pixel.g > pixel.r && pixel.g > pixel.b)
+            {
+                greenCount++;
+            }
+            else if (pixel.b > colorThreshold && pixel.b > pixel.r && pixel.b > pixel.g)
+            {
+                blueCount++;
+            }
+        }
+        
+        DestroyImmediate(temp);
+        
+        // Return the least used color
+        if (redCount <= greenCount && redCount <= blueCount)
+        {
+            return redColor;
+        }
+        else if (greenCount <= blueCount)
+        {
+            return greenColor;
+        }
+        else
+        {
+            return blueColor;
+        }
+    }
+
+    private Color RandomColor()
+    {
+        // pick a random red, green, or blue color
+        switch (UnityEngine.Random.Range(0, 3))
+        {
+            case 0: return redColor;
+            case 1: return greenColor;
+            case 2: return blueColor;
+            default: return redColor; // fallback
         }
     }
     
