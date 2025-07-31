@@ -13,6 +13,7 @@ public class TakePhotos : MonoBehaviour
     [SerializeField] private Image photoDisplayArea; //this is the raw image the photo will be displayed on
     [SerializeField] private GameObject photoFrame; //this is a UI mask and image for the photo
     [SerializeField] private GameObject webCameraFeed; //this is the live feed
+    private WebCamTest webCamTest; // reference to access the webcam texture
 
 
     [Header("Flash Effect")]
@@ -75,6 +76,12 @@ public class TakePhotos : MonoBehaviour
 
     private void Start()
     {
+        // Get ref to webcam gameobject
+        if (webCameraFeed != null)
+        {
+            webCamTest = webCameraFeed.GetComponent<WebCamTest>();
+        }
+        
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
         
         if (enablePinballTracking)
@@ -199,10 +206,29 @@ public class TakePhotos : MonoBehaviour
         viewingPhoto = true;
         yield return new WaitForEndOfFrame();
 
-        Rect regionToRead = new Rect(0, 0, Screen.width, Screen.height);
-
-        screenCapture.ReadPixels(regionToRead, 0, 0, false);
-        screenCapture.Apply();
+        // Capture from webcam texture instead of screen
+        if (webCamTest != null && webCamTest.webCam != null && webCamTest.webCam.isPlaying)
+        {
+            // Create or recreate the screen capture texture with webcam dimensions
+            if (screenCapture != null)
+            {
+                DestroyImmediate(screenCapture);
+            }
+            screenCapture = new Texture2D(webCamTest.webCam.width, webCamTest.webCam.height, TextureFormat.RGB24, false);
+            
+            // Get pixels from webcam texture
+            Color32[] pixels = webCamTest.webCam.GetPixels32();
+            screenCapture.SetPixels32(pixels);
+            screenCapture.Apply();
+        }
+        else
+        {
+            Debug.LogWarning("WebCam not available, falling back to screen capture");
+            // Fallback to screen capture
+            Rect regionToRead = new Rect(0, 0, Screen.width, Screen.height);
+            screenCapture.ReadPixels(regionToRead, 0, 0, false);
+            screenCapture.Apply();
+        }
         
         // Send captured photo immediately via NDI
         if (ndiSenderPhoto != null)

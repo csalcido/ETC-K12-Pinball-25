@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class WebCamTest : MonoBehaviour
 {
     [SerializeField] private RawImage img = default;
-    WebCamTexture webCam;
+    public WebCamTexture webCam;
     
 
     private void Start()
