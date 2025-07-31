@@ -63,6 +63,8 @@ public class TakePhotos : MonoBehaviour
     private Color greenColor = new Color(0f, 1f, 0f, 1f);
     private Color blueColor = new Color(0f, 0f, 1f, 1f);
     
+    public Color nextPinballColor;
+    
     [Header("Countdown Display")]//text display for picture countdown
     [SerializeField] public int countdownTime;
     [SerializeField] public TextMeshProUGUI countdownDisplay;
@@ -489,11 +491,18 @@ public class TakePhotos : MonoBehaviour
     
     public Color GetPinballColor()
     {
+        Color result;
         if (trackingRenderTexture == null || IsTrackingTextureEmpty())
         {
-            return RandomColor();
+            result = RandomColor();
         }
-        return GetLeastUsedColor();
+        else
+        {
+            result = GetLeastUsedColor();
+        }
+        
+        nextPinballColor = result;
+        return result;
     }
     
     private bool IsTrackingTextureEmpty()
