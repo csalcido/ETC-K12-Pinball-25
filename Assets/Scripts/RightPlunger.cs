@@ -44,18 +44,18 @@ public class RightPlunger : MonoBehaviour
         distanceCM = distanceCM > 9f ? 4f : distanceCM;
         matIndex = ballSwitchRight.currentMaterialIndex;
 
-        if ((Input.GetKeyDown(plungerKey) && ballsInContact.Count > 0) || (distanceCM > maxDistance && ballsInContact.Count > 0))
+        if (((Input.GetKeyDown(plungerKey) || SerialManager.BallSent) && ballsInContact.Count > 0) || (distanceCM > maxDistance && ballsInContact.Count > 0))
         {
             isCharging = true;
         }
 
-        if ((Input.GetKey(plungerKey) && isCharging) || (distanceCM > maxDistance && isCharging))
+        if (((Input.GetKey(plungerKey) || SerialManager.BallSent) && isCharging) || (distanceCM > maxDistance && isCharging))
         {
             currentForce += chargeSpeed * Time.deltaTime;
             currentForce = Mathf.Clamp(currentForce, minForce, maxForce);
         }
 
-        if ((Input.GetKeyUp(plungerKey) && isCharging) || (distanceCM < minDistance && isCharging))
+        if (((Input.GetKeyUp(plungerKey) || SerialManager.BallSent) && isCharging) || (distanceCM < minDistance && isCharging))
         {
             isLaunching = true;
             startManager.RegisterStart();

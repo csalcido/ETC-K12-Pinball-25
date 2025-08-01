@@ -46,14 +46,15 @@ public class SerialManager : MonoBehaviour
     void Start()
     {
         // serialPortL = new SerialPort(portNameL, baudRate); guess whoooo
-        serialPortL = new SerialPort(portNameL, baudRate);
-        serialPortR = new SerialPort(portNameR, baudRate);
+        serialPortL = new SerialPort(portNameL, baudRate_pi);
+        serialPortR = new SerialPort(portNameR, baudRate_pi);
         serialPortL.ReadTimeout = 20;
         serialPortR.ReadTimeout = 20;
 
         try
         {
             serialPortL.Open();
+            Debug.Log("L opened");
             serialPortR.Open();
             isRunningL = true;
             isRunningR = true;
