@@ -47906,7 +47906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e68c6748f448b245b70ae985041556a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownTime: 30
+  countdownTime: 500
   countdownText: {fileID: 1575465616}
   endScreenManager: {fileID: 958865863}
 --- !u!114 &1575465616
