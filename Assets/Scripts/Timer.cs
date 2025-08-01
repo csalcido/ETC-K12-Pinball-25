@@ -4,9 +4,10 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    public float countdownTime = 300f;
+    public float countdownTime = 100f;
     public TextMeshProUGUI countdownText;
-    public GameObject resultPanel;
+    public GameObject endScreenManager;
+    
 
     private float timeRemaining;
     private bool timerIsRunning = false;
@@ -15,7 +16,7 @@ public class Timer : MonoBehaviour
     {
         timeRemaining = countdownTime;
         timerIsRunning = true;
-        resultPanel.SetActive(false);
+        endScreenManager.SetActive(false);
     }
 
     // Update is called once per frame
@@ -33,7 +34,7 @@ public class Timer : MonoBehaviour
                 timeRemaining = 0;
                 timerIsRunning = false;
                 Time.timeScale = 0f;
-                resultPanel.SetActive(true);
+                endScreenManager.SetActive(true);
             }
         }
     }

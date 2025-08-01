@@ -1,0 +1,44 @@
+#pragma kernel AnalyzePixels
+
+// Tracking texture
+Texture2D<float4> _TrackingTexture;
+
+// Output: [nonBlackPixels, redCount, greenCount, blueCount, totalPixels]
+RWStructuredBuffer<int> _Results;
+
+// Thresholds
+float _NonBlackThreshold;
+float _ColorThreshold;
+
+[numthreads(8,8,1)]
+void AnalyzePixels(uint3 id : SV_DispatchThreadID)
+{
+    uint width, height;
+    _TrackingTexture.GetDimensions(width, height);
+    
+    // Bounds check
+    if (id.x >= width || id.y >= height) 
+        return;
+    
+    float4 pixel = _TrackingTexture[id.xy];
+    
+    // Check if pixel is non-black
+    if (pixel.r > _NonBlackThreshold || pixel.g > _NonBlackThreshold || pixel.b > _NonBlackThreshold)
+    {
+        InterlockedAdd(_Results[0], 1); // nonBlackPixels
+    }
+    
+    // count tracked colors
+    if (pixel.r > _ColorThreshold && pixel.r > pixel.g && pixel.r > pixel.b)
+    {
+        InterlockedAdd(_Results[1], 1); // redCount
+    }
+    else if (pixel.g > _ColorThreshold && pixel.g > pixel.r && pixel.g > pixel.b)
+    {
+        InterlockedAdd(_Results[2], 1); // greenCount
+    }
+    else if (pixel.b > _ColorThreshold && pixel.b > pixel.r && pixel.b > pixel.g)
+    {
+        InterlockedAdd(_Results[3], 1); // blueCount
+    }
+}

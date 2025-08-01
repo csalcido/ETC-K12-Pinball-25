@@ -9,9 +9,21 @@ public class SerialManager : MonoBehaviour
 {
 
     public string portNameL = "COM3";
-    public string portNameR = "COM4";
+    public string portNameR = "COM3";
     public int baudRate = 9600;
 
+    //****************************************//
+    //hannah section
+    public static bool StartPressed = false;
+    public static bool StartReleased = false;
+    public static bool LeftFlipperPressed = false;
+    public static bool LeftFlipperReleased = false;
+    public static bool RightFlipperPressed = false;
+    public static bool RightFlipperReleased = false;
+    public static bool BallSent = false;
+    public int baudRate_pi = 115200;
+
+    //******************************************//
     private SerialPort serialPortL;
     private SerialPort serialPortR;
     private Thread readThreadL;
@@ -33,14 +45,16 @@ public class SerialManager : MonoBehaviour
 
     void Start()
     {
-        serialPortL = new SerialPort(portNameL, baudRate);
-        serialPortR = new SerialPort(portNameR, baudRate);
-        serialPortL.ReadTimeout = 100;
-        serialPortR.ReadTimeout = 100;
+        // serialPortL = new SerialPort(portNameL, baudRate); guess whoooo
+        serialPortL = new SerialPort(portNameL, baudRate_pi);
+        serialPortR = new SerialPort(portNameR, baudRate_pi);
+        serialPortL.ReadTimeout = 20;
+        serialPortR.ReadTimeout = 20;
 
         try
         {
             serialPortL.Open();
+            Debug.Log("L opened");
             serialPortR.Open();
             isRunningL = true;
             isRunningR = true;
@@ -65,6 +79,52 @@ public class SerialManager : MonoBehaviour
     {
         Debug.Log("Left distance: " + distanceCML + " cm");
         Debug.Log("Right distance: " + distanceCMR + " cm");
+
+        //added later by hannah for pi controller purposes
+
+        //*******************************************
+        string line = serialPortL.ReadLine().Trim();
+        Debug.Log("Recieved: " + line);
+        if (line == "start_pressed")
+        {
+            StartPressed = true;
+            Debug.Log("Button Press Detected!");
+            StartReleased = false;
+        }
+        else if (line == "start_released")
+        {
+            StartReleased = true;
+            StartPressed = false;
+        }
+        else if (line == "left_flipper_pressed")
+        {
+            LeftFlipperPressed = true;
+            LeftFlipperReleased = false;
+        }
+        else if (line == "left_flipper_released")
+        {
+            LeftFlipperReleased = true;
+            LeftFlipperPressed = false;
+        }
+        else if (line == "right_flipper_pressed")
+        {
+            RightFlipperPressed = true;
+            RightFlipperReleased = false;
+        }
+        else if (line == "right_flipper_released")
+        {
+            RightFlipperReleased = true;
+            RightFlipperPressed = false;
+        }
+        else if (line == "ball_sent")
+        {
+            BallSent = true;
+        }
+        else if (line == "ball_back")
+        {
+            BallSent = false;
+        }
+        //*******************************************
     }
 
     void OnDestroy()
