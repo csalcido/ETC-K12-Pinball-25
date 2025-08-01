@@ -684,7 +684,6 @@ public class TakePhotos : MonoBehaviour
 
     private Color RandomColor()
     {
-        // pick a random red, green, or blue color
         switch (UnityEngine.Random.Range(0, 3))
         {
             case 0: return redColor;
