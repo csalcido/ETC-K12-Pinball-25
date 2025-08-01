@@ -8,6 +8,7 @@ using TMPro;
 
 public class TakePhotos : MonoBehaviour
 {
+    #region Serialized Fields
 
     [Header("Photo Taker")]
     [SerializeField] private Image photoDisplayArea; //this is the raw image the photo will be displayed on
@@ -39,12 +40,23 @@ public class TakePhotos : MonoBehaviour
     [SerializeField] private bool enablePinballTracking = true;
     [SerializeField] private float trackingRadius = 10f; // radius around pinball to mark as visited (in pixels)
     [SerializeField] private Material trackingMaterial; // material with tracking fragment shader
+    [SerializeField] private ComputeShader trackingAnalysisShader; // compute shader for pixel analysis
 
     [Header("NDI")]
     [SerializeField] private NdiSender ndiSender; // NDI sender component for tracking data
     [SerializeField] private NdiSender ndiSenderPhoto; // NDI sender component for full color photo
     [SerializeField] private NdiReceiver ndiReceiver; // NDI receiver component
     [SerializeField] private bool showRawTrackingTexture = false; // show tracking texture instead of NDI input
+
+    [Header("Countdown Display")]//text display for picture countdown
+    [SerializeField] public int countdownTime;
+    [SerializeField] public TextMeshProUGUI countdownDisplay;
+    [SerializeField] public GameObject countdownDisplayBackground;
+    [SerializeField] public SoundController countdownSound;
+
+    #endregion
+
+    #region Private Variables
 
     private RenderTexture trackingRenderTexture; // texture with tracking data
     private RenderTexture tempRenderTexture; // temp texture for ping-pong rendering
@@ -66,13 +78,13 @@ public class TakePhotos : MonoBehaviour
     
     public Color nextPinballColor;
     
-    [Header("Countdown Display")]//text display for picture countdown
-    [SerializeField] public int countdownTime;
-    [SerializeField] public TextMeshProUGUI countdownDisplay;
-    [SerializeField] public GameObject countdownDisplayBackground;
-    [SerializeField] public SoundController countdownSound;
+    // Compute shader variables
+    private ComputeBuffer resultBuffer;
+    private int[] analysisResults = new int[5]; // [nonBlackPixels, redCount, greenCount, blueCount, totalPixels]
 
-    
+    #endregion
+
+    #region Unity Lifecycle
 
     private void Start()
     {
@@ -95,7 +107,81 @@ public class TakePhotos : MonoBehaviour
                 Debug.LogWarning("Pinball Tracker material not assigned");
             }
         }
+
+        // for tracking texture analysis
+        InitializeComputeShader();
     }
+
+    private void Update()
+    {
+        
+
+        if (enablePinballTracking && trackingMaterial != null && trackingRenderTexture != null)
+        {
+            UpdatePinballTracking();
+        }
+
+        // Debug controls
+        if (displayPlane != null && displayPlane.activeInHierarchy)
+        {
+            // Press T to toggle between photo and tracking mask
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                ToggleDisplayMode();
+            }
+        }
+
+        // Press R to toggle raw tracking texture display
+        // skip ndi receiving (debug)
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            showRawTrackingTexture = !showRawTrackingTexture;
+        }
+
+        // Press C to clear/reset tracking texture
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            ResetTrackingTexture();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // Clean up NDI sender
+        if (ndiSender != null)
+        {
+            ndiSender.sourceTexture = null;
+        }
+        
+        if (ndiSenderPhoto != null)
+        {
+            ndiSenderPhoto.sourceTexture = null;
+        }
+        
+        // Clean up GPU textures
+        if (trackingRenderTexture != null)
+        {
+            trackingRenderTexture.Release();
+            trackingRenderTexture = null;
+        }
+        
+        if (tempRenderTexture != null)
+        {
+            tempRenderTexture.Release();
+            tempRenderTexture = null;
+        }
+        
+        // Clean up compute buffer
+        if (resultBuffer != null)
+        {
+            resultBuffer.Release();
+            resultBuffer = null;
+        }
+    }
+
+    #endregion
+
+    #region Initialization Methods
     
     void InitializeGPUTracking()
     {
@@ -139,8 +225,20 @@ public class TakePhotos : MonoBehaviour
         {
             ndiSenderPhoto.captureMethod = CaptureMethod.Texture;
         }
-        
-        // NDI receiver is configured in its own component - no setup needed here
+    }
+    
+    void InitializeComputeShader()
+    {
+        if (trackingAnalysisShader != null)
+        {
+            // Create compute buffer for results
+            resultBuffer = new ComputeBuffer(5, sizeof(int));
+            Debug.Log("Compute shader initialized for pixel analysis");
+        }
+        else
+        {
+            Debug.LogWarning("Tracking analysis compute shader not assigned - falling back to CPU analysis");
+        }
     }
 
      public void ClickButton()
@@ -160,39 +258,10 @@ public class TakePhotos : MonoBehaviour
             }
     }
 
-    private void Update()
-    {
-        
+    #endregion
 
-        if (enablePinballTracking && trackingMaterial != null && trackingRenderTexture != null)
-        {
-            UpdatePinballTracking();
-        }
-
-        // Debug controls
-        if (displayPlane != null && displayPlane.activeInHierarchy)
-        {
-            // Press T to toggle between photo and tracking mask
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                ToggleDisplayMode();
-            }
-        }
-
-        // Press R to toggle raw tracking texture display
-        // skip ndi receiving (debug)
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            showRawTrackingTexture = !showRawTrackingTexture;
-        }
-
-        // Press C to clear/reset tracking texture
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            ResetTrackingTexture();
-        }
-    }
-
+    #region Photo Capture Methods
+    
     public void TakePhoto()
     {
         StartCoroutine(CapturePhoto());
@@ -308,6 +377,10 @@ public class TakePhotos : MonoBehaviour
         displayPlane.SetActive(true);
     }
 
+    #endregion
+
+    #region Pinball Tracking Methods
+
     void UpdatePinballTracking()
     {
         // Find all pinballs
@@ -410,6 +483,10 @@ public class TakePhotos : MonoBehaviour
         trackingMaterial.SetColor("_TrackingColor", colorToSet);
         Debug.Log($"Tracking color changed to: {colorName}");
     }
+
+    #endregion
+
+    #region Display and UI Methods
     
     Texture GetDisplayTexture()
     {
@@ -514,96 +591,95 @@ public class TakePhotos : MonoBehaviour
             DisplayPhotoOnPlane();
         }
     }
-    
+
+    #endregion
+
+    #region Tracking Texture Analysis
+
     public Color GetPinballColor()
     {
         Color result;
-        if (trackingRenderTexture == null || IsTrackingTextureEmpty())
+        if (trackingRenderTexture == null)
         {
             result = RandomColor();
         }
         else
         {
-            result = GetLeastUsedColor();
+            TrackingAnalysis analysis = AnalyzeTrackingTexture();
+            result = analysis.isEmpty ? RandomColor() : analysis.leastUsedColor;
         }
         
         nextPinballColor = result;
         return result;
     }
     
-    private bool IsTrackingTextureEmpty()
+    private struct TrackingAnalysis
     {
-        RenderTexture.active = trackingRenderTexture;
-        Texture2D temp = new Texture2D(trackingRenderTexture.width, trackingRenderTexture.height, TextureFormat.RGB24, false);
-        temp.ReadPixels(new Rect(0, 0, trackingRenderTexture.width, trackingRenderTexture.height), 0, 0);
-        temp.Apply();
-        RenderTexture.active = null;
-        
-        Color[] pixels = temp.GetPixels();
-        int nonBlackPixels = 0;
-        float threshold = 0.1f; // when to consider a pixel non-black
-        
-        for (int i = 0; i < pixels.Length; i++)
-        {
-            if (pixels[i].r > threshold || pixels[i].g > threshold || pixels[i].b > threshold)
-            {
-                nonBlackPixels++;
-            }
-        }
-        
-        DestroyImmediate(temp);
-        
-        float nonBlackPercentage = (float)nonBlackPixels / pixels.Length;
-        return nonBlackPercentage < 0.01f;
+        public bool isEmpty;
+        public Color leastUsedColor;
     }
     
-    private Color GetLeastUsedColor()
+    private TrackingAnalysis AnalyzeTrackingTexture()
     {
-        RenderTexture.active = trackingRenderTexture;
-        Texture2D temp = new Texture2D(trackingRenderTexture.width, trackingRenderTexture.height, TextureFormat.RGB24, false);
-        temp.ReadPixels(new Rect(0, 0, trackingRenderTexture.width, trackingRenderTexture.height), 0, 0);
-        temp.Apply();
-        RenderTexture.active = null;
-        
-        Color[] pixels = temp.GetPixels();
-        
-        // Count usage of each tracking color
-        int redCount = 0, greenCount = 0, blueCount = 0;
-        float colorThreshold = 0.5f;
-        
-        for (int i = 0; i < pixels.Length; i++)
+        if (trackingAnalysisShader == null || resultBuffer == null)
         {
-            Color pixel = pixels[i];
-            
-            if (pixel.r > colorThreshold && pixel.r > pixel.g && pixel.r > pixel.b)
-            {
-                redCount++;
-            }
-            else if (pixel.g > colorThreshold && pixel.g > pixel.r && pixel.g > pixel.b)
-            {
-                greenCount++;
-            }
-            else if (pixel.b > colorThreshold && pixel.b > pixel.r && pixel.b > pixel.g)
-            {
-                blueCount++;
-            }
+            Debug.LogError("Compute shader or result buffer not initialized for pixel analysis");
+            return new TrackingAnalysis { isEmpty = true, leastUsedColor = RandomColor() };
         }
         
-        DestroyImmediate(temp);
+        System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
+        // Clear results buffer
+        analysisResults = new int[5];
+        resultBuffer.SetData(analysisResults);
         
-        // Return the least used color
+        // Set compute shader parameters
+        int kernelHandle = trackingAnalysisShader.FindKernel("AnalyzePixels");
+        trackingAnalysisShader.SetTexture(kernelHandle, "_TrackingTexture", trackingRenderTexture);
+        trackingAnalysisShader.SetBuffer(kernelHandle, "_Results", resultBuffer);
+        trackingAnalysisShader.SetFloat("_NonBlackThreshold", 0.1f);
+        trackingAnalysisShader.SetFloat("_ColorThreshold", 0.5f);
+        
+        // Dispatch compute shader
+        int threadGroupsX = Mathf.CeilToInt(trackingRenderTexture.width / 8.0f);
+        int threadGroupsY = Mathf.CeilToInt(trackingRenderTexture.height / 8.0f);
+        trackingAnalysisShader.Dispatch(kernelHandle, threadGroupsX, threadGroupsY, 1);
+        
+        // Read results back
+        resultBuffer.GetData(analysisResults);
+        
+        // Calculate analysis results
+        int nonBlackPixels = analysisResults[0];
+        int redCount = analysisResults[1];
+        int greenCount = analysisResults[2];
+        int blueCount = analysisResults[3];
+        int totalPixels = trackingRenderTexture.width * trackingRenderTexture.height;
+        
+        float nonBlackPercentage = (float)nonBlackPixels / totalPixels;
+        bool isEmpty = nonBlackPercentage < 0.01f;
+        
+        Color leastUsedColor;
         if (redCount <= greenCount && redCount <= blueCount)
         {
-            return redColor;
+            leastUsedColor = redColor;
         }
         else if (greenCount <= blueCount)
         {
-            return greenColor;
+            leastUsedColor = greenColor;
         }
         else
         {
-            return blueColor;
+            leastUsedColor = blueColor;
         }
+        
+        stopwatch.Stop();
+        Debug.Log($"AnalyzeTrackingTexture (GPU) took: {stopwatch.Elapsed} (nonBlack: {nonBlackPixels}, red: {redCount}, green: {greenCount}, blue: {blueCount})");
+        
+        return new TrackingAnalysis 
+        { 
+            isEmpty = isEmpty, 
+            leastUsedColor = leastUsedColor 
+        };
     }
 
     private Color RandomColor()
@@ -617,31 +693,6 @@ public class TakePhotos : MonoBehaviour
             default: return redColor; // fallback
         }
     }
-    
-    private void OnDestroy()
-    {
-        // Clean up NDI sender
-        if (ndiSender != null)
-        {
-            ndiSender.sourceTexture = null;
-        }
-        
-        if (ndiSenderPhoto != null)
-        {
-            ndiSenderPhoto.sourceTexture = null;
-        }
-        
-        // Clean up GPU textures
-        if (trackingRenderTexture != null)
-        {
-            trackingRenderTexture.Release();
-            trackingRenderTexture = null;
-        }
-        
-        if (tempRenderTexture != null)
-        {
-            tempRenderTexture.Release();
-            tempRenderTexture = null;
-        }
-    }
+
+    #endregion
 }
