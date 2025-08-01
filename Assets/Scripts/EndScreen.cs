@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EndScreen : MonoBehaviour
@@ -7,18 +8,16 @@ public class EndScreen : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void OnEnable()
     {
-        //play end screen camera transition
-        mainCameraAnimator.SetBool("playEnddAnim", true); // MAKE ANIMATION FROM BOARD TO END
+        StartCoroutine(PlayEndAnimation());
+       
 
-        //particle confetti effect
+    }
+    IEnumerator PlayEndAnimation()
+    {
+        yield return null;
+        mainCameraAnimator.SetBool("playEndAnim", true); // MAKE ANIMATION FROM BOARD TO END
 
-        //ending sound, drum roll?
-
-
-        //photo pop in animation 
         
-        //delay, then ask to restart
-
     }
 
     // Update is called once per frame

@@ -706,7 +706,7 @@ MonoBehaviour:
   - {fileID: 211692731}
   plungerSound: {fileID: 144605271}
   ballSwitchRight: {fileID: 2278951}
-  startManager: {fileID: 694871611}
+  startManager: {fileID: 0}
 --- !u!54 &2278953
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1712,8 +1712,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f289a311401a1b9459a23a0a07ae8894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorText: {fileID: 33828986}
-  takePhotosScript: {fileID: 1483407584}
 --- !u!1 &34829640
 GameObject:
   m_ObjectHideFlags: 0
@@ -4626,8 +4624,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 39.18}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -530.8401, y: -34.90999}
-  m_SizeDelta: {x: 875.51, y: 1302.18}
+  m_AnchoredPosition: {x: -558.62, y: -34.90999}
+  m_SizeDelta: {x: 496.65, y: 1302.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &154574095
 Animator:
@@ -7277,8 +7275,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 39.18}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 32.293312, y: 542.0002}
-  m_SizeDelta: {x: 1200, y: 1200}
+  m_AnchoredPosition: {x: 32.293312, y: 579.45}
+  m_SizeDelta: {x: 1200, y: 608.42}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &253809707
 Animator:
@@ -12501,8 +12499,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1528ff55873204bab01df9ea592685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useRandomColor: 1
-  presetColorChoice: 0
 --- !u!65 &368898479
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14301,6 +14297,7 @@ MonoBehaviour:
   portNameL: COM4
   portNameR: COM3
   baudRate: 9600
+  baudRate_pi: 115200
   leftBall: {fileID: 1301729703}
   leftLaunch: {fileID: 1301729698}
   rightBall: {fileID: 2278951}
@@ -20610,7 +20607,6 @@ GameObject:
   - component: {fileID: 694871610}
   - component: {fileID: 694871613}
   - component: {fileID: 694871612}
-  - component: {fileID: 694871611}
   m_Layer: 5
   m_Name: StartPanel
   m_TagString: Untagged
@@ -20639,19 +20635,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &694871611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 694871609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49b801ba94f70654ab9fbb09dbc4267e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timer: {fileID: 0}
 --- !u!114 &694871612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24646,8 +24629,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 39.18}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.007487297, y: -592}
-  m_SizeDelta: {x: 1295, y: 1849.89}
+  m_AnchoredPosition: {x: -0.0000000023283, y: -643.31}
+  m_SizeDelta: {x: 1295, y: 1039.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &872805456
 Animator:
@@ -28174,6 +28157,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 988713811}
   m_CullTransparentMesh: 1
+--- !u!1 &989920487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 989920489}
+  - component: {fileID: 989920488}
+  m_Layer: 0
+  m_Name: Button Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &989920488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 989920487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67378692534fcc147aed70c1ed9a8ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serialManager: {fileID: 460106131}
+  tutorialButton: {fileID: 0}
+  startButton: {fileID: 0}
+  photoButton: {fileID: 1751044975}
+  restartButton: {fileID: 0}
+  currentState: 2
+--- !u!4 &989920489
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 989920487}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -18.948006, y: 1.8788183, z: 135.67854}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &990337150
 GameObject:
   m_ObjectHideFlags: 0
@@ -39806,7 +39839,7 @@ MonoBehaviour:
   - {fileID: 544164550}
   - {fileID: 916285034}
   ballSwitchLeft: {fileID: 1301729703}
-  startManager: {fileID: 694871611}
+  startManager: {fileID: 0}
 --- !u!65 &1301729699
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45469,15 +45502,16 @@ MonoBehaviour:
   enablePinballTracking: 1
   trackingRadius: 10
   trackingMaterial: {fileID: 2100000, guid: c3c8e9c1ebbe72344aada2d3b56d98c2, type: 2}
+  trackingAnalysisShader: {fileID: 0}
   ndiSender: {fileID: 1483407587}
   ndiSenderPhoto: {fileID: 1483407588}
   ndiReceiver: {fileID: 1483407586}
   showRawTrackingTexture: 0
-  nextPinballColor: {r: 0, g: 0, b: 0, a: 0}
   countdownTime: 3
   countdownDisplay: {fileID: 1491257520}
   countdownDisplayBackground: {fileID: 34829640}
   countdownSound: {fileID: 831782323}
+  nextPinballColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!4 &1483407585
 Transform:
   m_ObjectHideFlags: 0
@@ -45717,8 +45751,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 39.18}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 542.17993, y: -33.879898}
-  m_SizeDelta: {x: 801.57, y: 1228.41}
+  m_AnchoredPosition: {x: 568.86, y: -33.879898}
+  m_SizeDelta: {x: 437.8, y: 1228.41}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1486108865
 Animator:
@@ -47906,7 +47940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e68c6748f448b245b70ae985041556a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownTime: 500
+  countdownTime: 30
   countdownText: {fileID: 1575465616}
   endScreenManager: {fileID: 958865863}
 --- !u!114 &1575465616
@@ -62260,3 +62294,4 @@ SceneRoots:
   - {fileID: 102875312}
   - {fileID: 958865865}
   - {fileID: 368898482}
+  - {fileID: 989920489}
