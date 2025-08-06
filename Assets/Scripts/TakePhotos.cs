@@ -53,6 +53,9 @@ public class TakePhotos : MonoBehaviour
     [SerializeField] public TextMeshProUGUI countdownDisplay;
     [SerializeField] public GameObject countdownDisplayBackground;
     [SerializeField] public SoundController countdownSound;
+    
+    [Header("Auto Countdown")]
+    public bool shouldAutoStart = false; // Flag to control automatic countdown
 
     #endregion
 
@@ -85,6 +88,25 @@ public class TakePhotos : MonoBehaviour
     #endregion
 
     #region Unity Lifecycle
+
+    private void OnEnable()
+    {
+        // delay auto-start to ensure everything is initialized
+        StartCoroutine(CheckForAutoStart());
+    }
+    
+    IEnumerator CheckForAutoStart()
+    {
+        // Wait a frame to make sure everything is initialized
+        yield return new WaitForEndOfFrame();
+        
+        // Check flag
+        if (shouldAutoStart && !viewingPhoto && !countdownDisplayBackground.activeInHierarchy)
+        {
+            countdownDisplayBackground.SetActive(true);
+            StartCoroutine(CountdownToPhoto());
+        }
+    }
 
     private void Start()
     {
