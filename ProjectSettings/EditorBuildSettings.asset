@@ -6,16 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/AC Starting Screen.unity
+    path: Assets/Scenes/Additive Color/AC Starting Screen.unity
     guid: d6c0561856c902f4c91dcd3cc4b4a695
   - enabled: 0
-    path: Assets/Scenes/AC Test.unity
+    path: Assets/Scenes/Additive Color/AC Test.unity
     guid: 8dd17fa70b57a424fa79240c12b91789
   - enabled: 0
-    path: Assets/Scenes/Main.unity
+    path: Assets/Scenes/Old Project/Main.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/TouchDesigner Test.unity
+    path: Assets/Scenes/Additive Color/TouchDesigner Test.unity
     guid: 305ecef7206f49a42993e19c80138f99
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
