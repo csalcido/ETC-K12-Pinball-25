@@ -523,8 +523,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d837a2c3c614c7c8031e035ef6585f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffType: 0
+  buffType: 2
   buffDuration: 5
   buffValue: 1.5
-  disableAfterUse: 0
+  disableAfterUse: 1
   respawnTime: 10

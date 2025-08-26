@@ -706,7 +706,7 @@ MonoBehaviour:
   - {fileID: 211692731}
   plungerSound: {fileID: 144605271}
   ballSwitchRight: {fileID: 2278951}
-  startManager: {fileID: 0}
+  startManager: {fileID: 694871614}
 --- !u!54 &2278953
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2233,7 +2233,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1482610c36a1e8b40841902300c8c7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 10
 --- !u!64 &47566146
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -20974,6 +20973,7 @@ GameObject:
   - component: {fileID: 694871610}
   - component: {fileID: 694871613}
   - component: {fileID: 694871612}
+  - component: {fileID: 694871614}
   m_Layer: 5
   m_Name: StartPanel
   m_TagString: Untagged
@@ -21040,6 +21040,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 694871609}
   m_CullTransparentMesh: 1
+--- !u!114 &694871614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694871609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b801ba94f70654ab9fbb09dbc4267e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: {fileID: 0}
 --- !u!1001 &700263468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45915,7 +45928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a09ab5fc64402d49b12d170a7577986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ndiName: FAST (TouchDesigner)
+  _ndiName: ETC-PINBALL-01 (TouchDesigner)
   _targetTexture: {fileID: 0}
   _targetRenderer: {fileID: 0}
   _targetMaterialProperty: 
@@ -57066,7 +57079,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1482610c36a1e8b40841902300c8c7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 10
 --- !u!64 &1849228375
 MeshCollider:
   m_ObjectHideFlags: 0

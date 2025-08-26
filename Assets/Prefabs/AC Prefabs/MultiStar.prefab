@@ -158,7 +158,7 @@ MonoBehaviour:
   buffType: 1
   buffDuration: 5
   buffValue: 1.5
-  disableAfterUse: 0
+  disableAfterUse: 1
   respawnTime: 10
 --- !u!95 &6652553563601899920
 Animator:

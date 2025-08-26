@@ -41036,10 +41036,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a09ab5fc64402d49b12d170a7577986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ndiName: FAST (TouchDesigner)
+  _ndiName: ETC-PINBALL-01 (TouchDesigner)
   _targetTexture: {fileID: 0}
-  _targetRenderer: {fileID: 0}
-  _targetMaterialProperty: 
+  _targetRenderer: {fileID: 102875310}
+  _targetMaterialProperty: _MainTex
   _resources: {fileID: 11400000, guid: 69304b86950074db7ba8caba75214004, type: 2}
 --- !u!114 &1483407587
 MonoBehaviour:
