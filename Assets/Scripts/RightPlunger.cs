@@ -36,6 +36,7 @@ public class RightPlunger : MonoBehaviour
     private int matIndex = 0;
 
     public StartManager startManager;
+    public GameStateManager gameStateManager;
 
     void Update()
     {
@@ -44,24 +45,30 @@ public class RightPlunger : MonoBehaviour
         distanceCM = distanceCM > 9f ? 4f : distanceCM;
         matIndex = ballSwitchRight.currentMaterialIndex;
 
-        if (((Input.GetKeyDown(plungerKey) || SerialManager.BallSent) && ballsInContact.Count > 0) || (distanceCM > maxDistance && ballsInContact.Count > 0))
-        {
-            isCharging = true;
-        }
 
-        if (((Input.GetKey(plungerKey) || SerialManager.BallSent) && isCharging) || (distanceCM > maxDistance && isCharging))
+        //check gameState
+        if (gameStateManager.currentState == GameStateManager.ScreenState.GameBoard)
         {
-            currentForce += chargeSpeed * Time.deltaTime;
-            currentForce = Mathf.Clamp(currentForce, minForce, maxForce);
-        }
 
-        if (((Input.GetKeyUp(plungerKey) || SerialManager.BallSent) && isCharging) || (distanceCM < minDistance && isCharging))
-        {
-            isLaunching = true;
-            startManager.RegisterStart();
-            LaunchBalls();
-            isCharging = false;
-            currentForce = 0f;
+            if (((Input.GetKeyDown(plungerKey) || SerialManager.BallSent) && ballsInContact.Count > 0) || (distanceCM > maxDistance && ballsInContact.Count > 0))
+            {
+                isCharging = true;
+            }
+
+            if (((Input.GetKey(plungerKey) || SerialManager.BallSent) && isCharging) || (distanceCM > maxDistance && isCharging))
+            {
+                currentForce += chargeSpeed * Time.deltaTime;
+                currentForce = Mathf.Clamp(currentForce, minForce, maxForce);
+            }
+
+            if (((Input.GetKeyUp(plungerKey) || SerialManager.BallSent) && isCharging) || (distanceCM < minDistance && isCharging))
+            {
+                isLaunching = true;
+                startManager.RegisterStart();
+                LaunchBalls();
+                isCharging = false;
+                currentForce = 0f;
+            }
         }
     }
 

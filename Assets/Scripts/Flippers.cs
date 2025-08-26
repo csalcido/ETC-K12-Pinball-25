@@ -24,6 +24,7 @@ public class Flippers : MonoBehaviour
     private JointSpring upperRightSpring;
 
     private Xbox xboxControls;
+    public GameStateManager gameStateManager;
 
     void Start()
     {
@@ -44,68 +45,72 @@ public class Flippers : MonoBehaviour
         upperLeftSpring.spring = flipSpeed;
         upperRightSpring.spring = flipSpeed;
 
-        //play flippers sound
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || xboxControls.Player.LeftArrow.WasPressedThisFrame() || SerialManager.LeftFlipperPressed)
+        //check gameState
+        if (gameStateManager.currentState == GameStateManager.ScreenState.GameBoard)
         {
-            flipperUpSound.PlaySound();
-        }
+            //play flippers sound
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || xboxControls.Player.LeftArrow.WasPressedThisFrame() || SerialManager.LeftFlipperPressed)
+            {
+                flipperUpSound.PlaySound();
+            }
 
-        if (Input.GetKeyUp(KeyCode.LeftArrow) || xboxControls.Player.LeftArrow.WasReleasedThisFrame() || SerialManager.LeftFlipperReleased)
-        {
-            flipperDownSound.PlaySound();
-        }
+            if (Input.GetKeyUp(KeyCode.LeftArrow) || xboxControls.Player.LeftArrow.WasReleasedThisFrame() || SerialManager.LeftFlipperReleased)
+            {
+                flipperDownSound.PlaySound();
+            }
 
-        //control flippers
-        if (Input.GetKey(KeyCode.LeftArrow) || xboxControls.Player.LeftArrow.IsPressed() || SerialManager.LeftFlipperPressed)
-        {
-            Debug.Log("left arrow");
-            leftSpring.targetPosition = -targetAngle;
-            restart.RegisterLeftFlipper();
-        }
-        else
-        {
-            leftSpring.targetPosition = 0f;
-            restart.CancelLeftFlipper();
-        }
+            //control flippers
+            if (Input.GetKey(KeyCode.LeftArrow) || xboxControls.Player.LeftArrow.IsPressed() || SerialManager.LeftFlipperPressed)
+            {
+                Debug.Log("left arrow");
+                leftSpring.targetPosition = -targetAngle;
+                restart.RegisterLeftFlipper();
+            }
+            else
+            {
+                leftSpring.targetPosition = 0f;
+                restart.CancelLeftFlipper();
+            }
 
-        // play sound for right flippers
-        if (Input.GetKeyDown(KeyCode.RightArrow) || xboxControls.Player.RightArrow.WasPressedThisFrame() || SerialManager.RightFlipperPressed)
-        {
-            flipperUpSound.PlaySound();
-        }
-        if (Input.GetKeyUp(KeyCode.RightArrow) || xboxControls.Player.RightArrow.WasReleasedThisFrame() || SerialManager.RightFlipperReleased)
-        {
-            flipperDownSound.PlaySound();
-        }
+            // play sound for right flippers
+            if (Input.GetKeyDown(KeyCode.RightArrow) || xboxControls.Player.RightArrow.WasPressedThisFrame() || SerialManager.RightFlipperPressed)
+            {
+                flipperUpSound.PlaySound();
+            }
+            if (Input.GetKeyUp(KeyCode.RightArrow) || xboxControls.Player.RightArrow.WasReleasedThisFrame() || SerialManager.RightFlipperReleased)
+            {
+                flipperDownSound.PlaySound();
+            }
 
-        // control right flippers
-        if (Input.GetKey(KeyCode.RightArrow) || xboxControls.Player.RightArrow.IsPressed() || SerialManager.RightFlipperPressed)
-        {
-            rightSpring.targetPosition = targetAngle;
-            restart.RegisterRightFlipper();
-        }
-        else
-        {
-            rightSpring.targetPosition = 0f;
-            restart.CancelRightFlipper();
-        }
+            // control right flippers
+            if (Input.GetKey(KeyCode.RightArrow) || xboxControls.Player.RightArrow.IsPressed() || SerialManager.RightFlipperPressed)
+            {
+                rightSpring.targetPosition = targetAngle;
+                restart.RegisterRightFlipper();
+            }
+            else
+            {
+                rightSpring.targetPosition = 0f;
+                restart.CancelRightFlipper();
+            }
 
-        if (Input.GetKey(KeyCode.LeftArrow) || xboxControls.Player.LeftArrow.IsPressed() || SerialManager.LeftFlipperPressed)
-        {
-            upperLeftSpring.targetPosition = -targetAngle;
-        }
-        else
-        {
-            upperLeftSpring.targetPosition = 0f;
-        }
+            if (Input.GetKey(KeyCode.LeftArrow) || xboxControls.Player.LeftArrow.IsPressed() || SerialManager.LeftFlipperPressed)
+            {
+                upperLeftSpring.targetPosition = -targetAngle;
+            }
+            else
+            {
+                upperLeftSpring.targetPosition = 0f;
+            }
 
-        if (Input.GetKey(KeyCode.RightArrow) || xboxControls.Player.RightArrow.IsPressed() || SerialManager.RightFlipperPressed)
-        {
-            upperRightSpring.targetPosition = targetAngle;
-        }
-        else
-        {
-            upperRightSpring.targetPosition = 0f;
+            if (Input.GetKey(KeyCode.RightArrow) || xboxControls.Player.RightArrow.IsPressed() || SerialManager.RightFlipperPressed)
+            {
+                upperRightSpring.targetPosition = targetAngle;
+            }
+            else
+            {
+                upperRightSpring.targetPosition = 0f;
+            }
         }
 
         leftFlipper.spring = leftSpring;

@@ -707,6 +707,7 @@ MonoBehaviour:
   plungerSound: {fileID: 144605271}
   ballSwitchRight: {fileID: 2278951}
   startManager: {fileID: 694871614}
+  gameStateManager: {fileID: 989920490}
 --- !u!54 &2278953
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8784,6 +8785,7 @@ MonoBehaviour:
   flipperDownSound: {fileID: 856291695}
   targetAngle: 45
   flipSpeed: 20000
+  gameStateManager: {fileID: 989920490}
 --- !u!4 &274475362
 Transform:
   m_ObjectHideFlags: 0
