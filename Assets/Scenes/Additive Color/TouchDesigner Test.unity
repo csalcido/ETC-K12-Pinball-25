@@ -29702,12 +29702,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67378692534fcc147aed70c1ed9a8ead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serialManager: {fileID: 0}
-  takePhotos: {fileID: 0}
+  serialManager: {fileID: 460106131}
+  takePhotos: {fileID: 1483407584}
   tutorialButton: {fileID: 0}
   startButton: {fileID: 0}
   photoButton: {fileID: 1751044975}
-  restartButton: {fileID: 0}
+  restartButton: {fileID: 483508000}
   currentState: 0
   photoTaken: 0
   photoPrinted: 0
@@ -30695,13 +30695,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1015547983}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.60523665, y: -0.33196062, z: -0.1872865, w: 0.6988667}
+  m_LocalRotation: {x: 0.1765928, y: 0.6929087, z: -0.60844284, w: 0.3442237}
   m_LocalPosition: {x: -61.949997, y: 15.48, z: 11.1}
   m_LocalScale: {x: 2.7203627, y: 2.7203624, z: 2.7203624}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1462442678}
-  m_LocalEulerAnglesHint: {x: -76.002, y: -78.801, z: 35.379}
+  m_LocalEulerAnglesHint: {x: 74.745, y: 94.931, z: -41.446}
 --- !u!1 &1022081622
 GameObject:
   m_ObjectHideFlags: 0
