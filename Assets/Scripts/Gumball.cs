@@ -12,6 +12,7 @@ public class Gumball : MonoBehaviour
 
     public GameObject gumballDrop;
     public Animator gumballAnimator;
+    public GameStateManager gameStateManager;
 
     
 
@@ -25,11 +26,10 @@ public class Gumball : MonoBehaviour
     IEnumerator startGumballMachine()
     {
         yield return new WaitForSeconds(2f); //delay between camera transition and gumball generating
-
-
+        Debug.Log("Playing leverAnim on " + leverAnimator);
         //play lever animation
-        leverAnimator.SetBool("playAnim", true);
-        leverAnimator.Rebind();
+        leverAnimator.Play("leverAnim");
+       
 
         //play lever sound
         lever.GetComponent<AudioSource>().Play();
@@ -53,12 +53,13 @@ public class Gumball : MonoBehaviour
             obj.transform.localScale = Vector3.one;
             
             yield return new WaitForSeconds(2.5f);
-            Destroy(obj, 0.2f);
+            Destroy(obj, 0.1f);
             gumballAnimator.Rebind();
             
         }
 
         mainCameraAnimator.SetBool("playBoardAnim", true);
+        gameStateManager.currentState = GameStateManager.ScreenState.GameBoard;
 
         yield return null;
     }

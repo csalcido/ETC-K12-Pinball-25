@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonManager : MonoBehaviour
+public class GameStateManager : MonoBehaviour
 {
     public SerialManager serialManager;
     public Button tutorialButton;

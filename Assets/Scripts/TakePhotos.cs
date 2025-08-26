@@ -29,7 +29,10 @@ public class TakePhotos : MonoBehaviour
     [SerializeField] private Animator slidingAnimation;
     public Animator cameraAnimator;
 
+    [Header("Game States")]
+    public GameStateManager gameStateManager;
     public GameObject gumballManager; //this while be set to active and start the gumball sequence after the photo is taken
+    
     
 
     [Header("3D Plane Display")]
@@ -93,6 +96,9 @@ public class TakePhotos : MonoBehaviour
     {
         // delay auto-start to ensure everything is initialized
         StartCoroutine(CheckForAutoStart());
+
+        //change gamestate to photo zone
+        gameStateManager.currentState = GameStateManager.ScreenState.PhotoZone;
     }
     
     IEnumerator CheckForAutoStart()
@@ -275,6 +281,7 @@ public class TakePhotos : MonoBehaviour
             {
                 RemovePhoto();
                 cameraAnimator.SetBool("playGumballAnim", true);
+           
                 gumballManager.SetActive(true);
 
             }
@@ -306,7 +313,7 @@ public class TakePhotos : MonoBehaviour
                 DestroyImmediate(screenCapture);
             }
             screenCapture = new Texture2D(webCamTest.webCam.width, webCamTest.webCam.height, TextureFormat.RGB24, false);
-            
+
             // Get pixels from webcam texture
             Color32[] pixels = webCamTest.webCam.GetPixels32();
             screenCapture.SetPixels32(pixels);
@@ -320,28 +327,21 @@ public class TakePhotos : MonoBehaviour
             screenCapture.ReadPixels(regionToRead, 0, 0, false);
             screenCapture.Apply();
         }
-        
+
         // Send captured photo immediately via NDI
         if (ndiSenderPhoto != null)
         {
             ndiSenderPhoto.sourceTexture = screenCapture;
         }
-        
+
         ShowPhoto();
         webCameraFeed.SetActive(false);
 
+        //tell game that photo has been taken, so no others fire off
+        gameStateManager.currentState = GameStateManager.ScreenState.PhotoIsTaken;
 
-        //return image and store photo file in folder;
-        /*
-                byte[] bytes = screenCapture.EncodeToPNG();
-                string fileName = DateTime.Now.ToString("yyyymmdd_hhmmss") + ".png";
-                string filePath = Application.dataPath + "Materials/Photo/" + fileName;
-                UnityEngine.Windows.File.WriteAllBytes(filePath, bytes);
 
-                //Destroy(rt);
-                //Destroy(screenCapture);
-
-                */
+     
 
     }
 
@@ -357,7 +357,8 @@ public class TakePhotos : MonoBehaviour
         }
         StartCoroutine(CapturePhoto());
         countdownDisplayBackground.SetActive(false);
-        //countdownDisplay.text = "Snap!";
+        countdownDisplay.text = "";
+        
 
 
 

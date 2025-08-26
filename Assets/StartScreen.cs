@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class StartScreen : MonoBehaviour
 {
-    public ButtonManager buttonManager;
+    public GameStateManager gameStateManager;
     public SerialManager serialManager;
 
 

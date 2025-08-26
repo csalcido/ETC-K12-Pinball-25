@@ -5,6 +5,9 @@ public class EndScreen : MonoBehaviour
 {
 
     public Animator mainCameraAnimator;
+    public GameStateManager gameStateManager;
+    public SerialManager serialManager;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void OnEnable()
     {

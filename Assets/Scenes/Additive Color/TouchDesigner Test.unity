@@ -1574,7 +1574,7 @@ GameObject:
   - component: {fileID: 33828985}
   - component: {fileID: 33828987}
   - component: {fileID: 33828986}
-  - component: {fileID: 33828988}
+  - component: {fileID: 33828989}
   m_Layer: 5
   m_Name: Color mode
   m_TagString: Untagged
@@ -1700,7 +1700,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33828984}
   m_CullTransparentMesh: 1
---- !u!114 &33828988
+--- !u!114 &33828989
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1709,9 +1709,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 33828984}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f289a311401a1b9459a23a0a07ae8894, type: 3}
+  m_Script: {fileID: 11500000, guid: d10e0e8f5980375458afcaf47ec70922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorText: {fileID: 33828986}
+  takePhotosScript: {fileID: 1483407584}
 --- !u!1 &34829640
 GameObject:
   m_ObjectHideFlags: 0
@@ -3949,7 +3951,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 08180e357bcca40489fb426cc75dd966, type: 3}
   m_Resource: {fileID: 8300000, guid: 08180e357bcca40489fb426cc75dd966, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -24303,8 +24305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ded02ee3a0dc8544097bd2ee5416920a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minPitch: 0.9
-  maxPitch: 1.1
+  minPitch: 1
+  maxPitch: 1
 --- !u!82 &831782324
 AudioSource:
   m_ObjectHideFlags: 0
@@ -27970,6 +27972,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCameraAnimator: {fileID: 330585548}
+  gameStateManager: {fileID: 989920490}
+  serialManager: {fileID: 0}
 --- !u!4 &958865865
 Transform:
   m_ObjectHideFlags: 0
@@ -28554,32 +28558,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 989920489}
-  - component: {fileID: 989920488}
+  - component: {fileID: 989920490}
   m_Layer: 0
-  m_Name: Button Manager
+  m_Name: Game State Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &989920488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 989920487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67378692534fcc147aed70c1ed9a8ead, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serialManager: {fileID: 460106131}
-  tutorialButton: {fileID: 0}
-  startButton: {fileID: 0}
-  photoButton: {fileID: 1751044975}
-  restartButton: {fileID: 0}
-  currentState: 2
 --- !u!4 &989920489
 Transform:
   m_ObjectHideFlags: 0
@@ -28595,6 +28581,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 764988703}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &989920490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 989920487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67378692534fcc147aed70c1ed9a8ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serialManager: {fileID: 0}
+  tutorialButton: {fileID: 0}
+  startButton: {fileID: 0}
+  photoButton: {fileID: 1751044975}
+  restartButton: {fileID: 0}
+  currentState: 0
 --- !u!1 &990337150
 GameObject:
   m_ObjectHideFlags: 0
@@ -45644,6 +45648,7 @@ MonoBehaviour:
   - {fileID: 2086948044}
   gumballDrop: {fileID: 1642608508}
   gumballAnimator: {fileID: 1642608510}
+  gameStateManager: {fileID: 989920490}
 --- !u!4 &1475238415
 Transform:
   m_ObjectHideFlags: 0
@@ -45884,10 +45889,11 @@ MonoBehaviour:
   fadingAnimation: {fileID: 1393364125}
   slidingAnimation: {fileID: 32133865}
   cameraAnimator: {fileID: 330585548}
+  gameStateManager: {fileID: 989920490}
   gumballManager: {fileID: 1475238413}
   displayPlane: {fileID: 102875308}
   planeMaterial: {fileID: 0}
-  enablePinballTracking: 1
+  enablePinballTracking: 0
   trackingRadius: 10
   trackingMaterial: {fileID: 2100000, guid: c3c8e9c1ebbe72344aada2d3b56d98c2, type: 2}
   trackingAnalysisShader: {fileID: 0}
@@ -45930,8 +45936,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ndiName: ETC-PINBALL-01 (TouchDesigner)
   _targetTexture: {fileID: 0}
-  _targetRenderer: {fileID: 0}
-  _targetMaterialProperty: 
+  _targetRenderer: {fileID: 102875310}
+  _targetMaterialProperty: _MainTex
   _resources: {fileID: 11400000, guid: 69304b86950074db7ba8caba75214004, type: 2}
 --- !u!114 &1483407587
 MonoBehaviour:
@@ -48329,9 +48335,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e68c6748f448b245b70ae985041556a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownTime: 500
+  countdownTime: 30
+  flashSound: {fileID: 831782323}
   countdownText: {fileID: 1575465616}
   endScreenManager: {fileID: 958865863}
+  gameStateManager: {fileID: 989920490}
 --- !u!114 &1575465616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50327,7 +50335,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0.1843542, z: -0, w: 0.9828599}
   m_LocalPosition: {x: 31.02, y: 38.27, z: 2.95}
   m_LocalScale: {x: 2.2505817, y: 2.2505817, z: 2.2505817}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 936109366}
   m_LocalEulerAnglesHint: {x: 0, y: -21.247, z: 0}
