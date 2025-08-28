@@ -13,8 +13,10 @@ public class BuffTrigger : MonoBehaviour
     Animator buffAnimator;
     public bool disableAfterUse = false;
     public float respawnTime = 10f;
-    
+
     private bool isActive = true;
+
+    public GameStateManager gameStateManager;
 
     private void Start()
     {
@@ -25,31 +27,37 @@ public class BuffTrigger : MonoBehaviour
     {
         if (!isActive) return;
 
-        BuffEffect ballBuff = other.GetComponent<BuffEffect>();
-        if (ballBuff != null)
+        if (gameStateManager.currentState == GameStateManager.ScreenState.GameBoard) //only usable when game is happening
         {
-            ballBuff.ApplyBuff(buffType, buffValue, buffDuration);
-            buffAnimator.SetBool("IsTriggered", true);
-
-            Debug.Log("triggered!");
-
-            if (disableAfterUse)
+            BuffEffect ballBuff = other.GetComponent<BuffEffect>();
+            if (ballBuff != null)
             {
-                StartCoroutine(DisableTemporarily());
+                ballBuff.ApplyBuff(buffType, buffValue, buffDuration);
+                buffAnimator.SetBool("IsTriggered", true);
+
+                Debug.Log("triggered!");
+
+                if (disableAfterUse)
+                {
+                    StartCoroutine(DisableTemporarily());
+                }
             }
         }
     }
-    
+
     private IEnumerator DisableTemporarily()
     {
         isActive = false;
         GetComponent<Renderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
-        
+
         yield return new WaitForSeconds(respawnTime);
-        
+
         isActive = true;
         GetComponent<Renderer>().enabled = true;
         GetComponent<Collider>().enabled = true;
     }
+    
+
+    
 }

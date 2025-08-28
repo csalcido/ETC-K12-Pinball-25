@@ -337,8 +337,9 @@ public class TakePhotos : MonoBehaviour
         ShowPhoto();
         webCameraFeed.SetActive(false);
 
-        //tell game that photo has been taken, so no others fire off
-        gameStateManager.currentState = GameStateManager.ScreenState.PhotoIsTaken;
+          //tell gameStateManager that photo has been taken, so no others fire off
+        gameStateManager.photoTaken = true;
+
 
 
      

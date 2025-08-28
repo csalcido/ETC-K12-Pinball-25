@@ -2,8 +2,6 @@
 
 using UnityEngine;
 using System.Collections;
-//using OpenCvSharp;
- // using OpenCvSharp.Demo;
 using UnityEngine.UI;
 
 public class WebCamTest : MonoBehaviour
@@ -14,13 +12,18 @@ public class WebCamTest : MonoBehaviour
 
     private void Start()
     {
+       if (webCam == null)
         webCam = new WebCamTexture();
-        if (!webCam.isPlaying) webCam.Play();
+
+    if (!webCam.isPlaying)
+        webCam.Play();
+
+    if (img != null)
         img.texture = webCam;
     }
 
 
-    // Take a "screenshot" of a camera's Render Texture.
+    
 
 
 

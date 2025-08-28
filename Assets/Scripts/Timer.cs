@@ -8,7 +8,7 @@ public class Timer : MonoBehaviour
 
     public SoundController flashSound;
     public TextMeshProUGUI countdownText;
-    public GameObject endScreenManager;
+    public EndScreen endScreen;
     public GameStateManager gameStateManager;
 
     private float nextBeepTime = 0f;
@@ -21,7 +21,7 @@ public class Timer : MonoBehaviour
     {
         timeRemaining = countdownTime;
         timerIsRunning = false;
-        endScreenManager.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -43,34 +43,32 @@ public class Timer : MonoBehaviour
 
 
 
-                //flashSound.PlaySound();
-                
-          if (timeRemaining <= 5f)
-            {
-                float beepInterval = 1f; // default 1 second
-                if (timeRemaining <= 2f) // last 2 seconds
+                if (timeRemaining <= 5f)
                 {
-                    beepInterval = 0.5f; // faster beeps
+                    float beepInterval = 1f; // default 1 second
+                    if (timeRemaining <= 2f) // last 2 seconds
+                    {
+                        beepInterval = 0.5f; // faster beeps
+                    }
+
+                    if (Time.time >= nextBeepTime)
+                    {
+                        flashSound.PlaySound();
+                        nextBeepTime = Time.time + beepInterval;
+                    }
                 }
 
-                if (Time.time >= nextBeepTime)
-                {
-                    flashSound.PlaySound();
-                    nextBeepTime = Time.time + beepInterval;
-                }
-            }
-            
 
             }
             else
             {
                 timeRemaining = 0;
                 timerIsRunning = false;
-                Time.timeScale = 0f;
-                endScreenManager.SetActive(true);
+                
 
                 //change gamestate to end screen
                 gameStateManager.currentState = GameStateManager.ScreenState.EndScreen;
+                endScreen.EndTheGame();
             }
         }
     }
