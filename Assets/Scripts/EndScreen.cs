@@ -26,6 +26,10 @@ public class EndScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameStateManager.currentState == GameStateManager.ScreenState.PhotoIsPrinted)
+        {
+            //if the photo has been printed , then player can restart
+        }
         
     }
 }

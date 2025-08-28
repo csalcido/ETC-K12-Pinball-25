@@ -15,26 +15,46 @@ public class GameStateManager : MonoBehaviour
         StartMenu,
         Tutorial,
         PhotoZone,
-        PhotoIsTaken,
         GameBoard,
-        EndScreen
+        EndScreen,
     }
 
     public ScreenState currentState = ScreenState.StartMenu;
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    
+    //pflags for temporary states in the photo zone and end screen
+      private bool photoTaken = false;
+    private bool photoPrinted = false;
+    
+    public void GoToTutorial()
     {
+        startButton.onClick.Invoke();
+        currentState = ScreenState.Tutorial;
 
     }
 
-    // Update is called once per frame
-    public void clickButton()
+    public void GoToPhotoZone()
     {
-
-
+        tutorialButton.onClick.Invoke();
+        currentState = ScreenState.PhotoZone;
+        
     }
+
+    public void GoToGameBoard()
+    {
+        photoButton.onClick.Invoke();
+        currentState = ScreenState.GameBoard;
+        
+    }
+
+    public void RestartGame()
+    {
+        restartButton.onClick.Invoke();
+        currentState = ScreenState.StartMenu;
+        
+    }
+
+
+    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) ||  SerialManager.StartPressed)
@@ -42,32 +62,36 @@ public class GameStateManager : MonoBehaviour
             switch (currentState)
             {
                 case ScreenState.StartMenu:
-                    startButton.onClick.Invoke();
-                    //switch gamestate
-                    currentState = ScreenState.Tutorial;
-
+                    GoToTutorial();
                     break;
 
-                case ScreenState.Tutorial:
-                    //switch gamestate
-                    tutorialButton.onClick.Invoke();
-                    currentState = ScreenState.PhotoZone;
+               case ScreenState.PhotoZone:
+                    if (!photoTaken)
+                    {
+                        // First press to take photo
+                        photoButton.onClick.Invoke();
+                        photoTaken = true;
+                    }
+                    else
+                    {
+                        // Already taken, then move to GameBoard
+                        currentState = ScreenState.GameBoard;
+                        photoTaken = false; // reset for next run
+                    }
                     break;
 
-                case ScreenState.PhotoZone:
-                    //switch gamestate
-                    photoButton.onClick.Invoke();
-                    currentState = ScreenState.PhotoIsTaken;
-                    break;
 
-                case ScreenState.PhotoIsTaken:
-                    photoButton.onClick.Invoke();
-                    currentState = ScreenState.GameBoard;
-                    break;
-
-                case ScreenState.EndScreen:
-                    restartButton.onClick.Invoke();
-                    currentState = ScreenState.StartMenu;
+                 case ScreenState.EndScreen:
+                    if (!photoPrinted)
+                    {
+                        // Run print animation
+                        photoPrinted = true;
+                    }
+                    else
+                    {
+                        RestartGame();
+                        photoPrinted = false; // reset
+                    }
                     break;
             }
 
