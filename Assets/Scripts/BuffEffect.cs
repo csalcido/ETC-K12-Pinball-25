@@ -6,6 +6,8 @@ public class BuffEffect : MonoBehaviour
 {
     private Dictionary<BuffType, Coroutine> buffCoroutines = new Dictionary<BuffType, Coroutine>();
     private Dictionary<BuffType, BuffBase> activeBuffs = new Dictionary<BuffType, BuffBase>();
+
+    public SoundController buffSound;
     
     public void ApplyBuff(BuffType buffType, float buffValue, float duration)
     {
@@ -13,19 +15,22 @@ public class BuffEffect : MonoBehaviour
         {
             return; // buff already active
         }
-        
+
         BuffBase newBuff = CreateBuff(buffType, buffValue, duration);
         if (newBuff != null)
         {
             newBuff.Apply();
             activeBuffs[buffType] = newBuff;
 
+            //play buff sound
+            buffSound.PlaySound();
+
             // Show buff popup
             if (BuffPopupManager.instance != null)
             {
                 BuffPopupManager.instance.ShowBuffPopup(buffType);
             }
-            
+
             Coroutine buffCoroutine = StartCoroutine(BuffTimer(newBuff, buffType, duration));
             buffCoroutines[buffType] = buffCoroutine;
         }

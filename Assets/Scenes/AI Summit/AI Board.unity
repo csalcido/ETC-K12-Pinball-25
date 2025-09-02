@@ -29730,9 +29730,8 @@ MonoBehaviour:
   startButton: {fileID: 0}
   photoButton: {fileID: 1751044975}
   restartButton: {fileID: 483508000}
-  additiveColor: 1
-  aiFilter: 0
   currentState: 0
+  currentMode: 1
   photoTaken: 0
   photoPrinted: 0
 --- !u!1 &990337150

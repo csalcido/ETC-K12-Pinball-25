@@ -12,13 +12,15 @@ public class BackgroundScale : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (gameStateManager.currentState == GameStateManager.ScreenState.GameBoard)
         {
-        // Keep Y and Z the same, only change X
-        Vector3 newScale = transform.localScale;
-        newScale.x = 5.861918f;
-        transform.localScale = newScale;
+            // Keep Y and Z the same, only change X
+            Vector3 newScale = transform.localScale;
+            newScale.x = 5.86f;
+            transform.localScale = newScale;
         }
+        */
         
     }
 }

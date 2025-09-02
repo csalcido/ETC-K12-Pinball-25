@@ -27,7 +27,7 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         Debug.Log("Game State changed to: " + gameStateManager.currentState);
+        
         if (gameStateManager.currentState == GameStateManager.ScreenState.GameBoard)
         {
             if (!timerIsRunning)

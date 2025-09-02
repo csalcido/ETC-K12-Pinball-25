@@ -8,6 +8,8 @@ public class Gumball : MonoBehaviour
     public Animator mainCameraAnimator;//Main camera animator
     public Animator leverAnimator;
     public GameObject lever;
+
+    public SoundController buffBeep;
     public Transform[] spawnLocations;
 
     public GameObject gumballDrop;
@@ -43,9 +45,10 @@ public class Gumball : MonoBehaviour
             //spawn buff at random
             Instantiate(randomBuff, spawnLocations[i]);
 
-            //play animation of it coming out of gumball machine
-            gumballAnimator.Play("gumballDropAnim");
 
+            //play animation and sound of it coming out of gumball machine
+            gumballAnimator.Play("gumballDropAnim");
+            buffBeep.PlaySound();
 
             GameObject obj = Instantiate(randomBuff, gumballDrop.transform); //this is all to get rid of weird transforms once gumball is instantiated
             obj.transform.localPosition = Vector3.zero;

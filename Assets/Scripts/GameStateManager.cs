@@ -12,8 +12,7 @@ public class GameStateManager : MonoBehaviour
     public Button restartButton;
 
 
-    public bool additiveColor;
-    public bool aiFilter;
+    
 
     public enum ScreenState
     {
@@ -26,7 +25,14 @@ public class GameStateManager : MonoBehaviour
         EndScreen,
     }
 
+    public enum GameMode
+    {
+        AdditiveColor,
+        AiFilter
+    }
+
     public ScreenState currentState = ScreenState.StartMenu;
+    public GameMode currentMode = GameMode.AdditiveColor;
 
     //flags for temporary states in the photo zone and end screen
 
@@ -101,13 +107,13 @@ public class GameStateManager : MonoBehaviour
                     {
                         TakePhoto();
                     } 
-                    if (photoTaken && additiveColor) //check which game it is
+                    if (photoTaken && currentMode == GameMode.AdditiveColor) //check which game it is
                     {
                         GoToPowerUpStation();
                         photoTaken = false; // reset for next run
         
                     }
-                    if (photoTaken && aiFilter) //check which game it is
+                    if (photoTaken && currentMode == GameMode.AiFilter) //check which game it is
                     {
                         GoToTextPrompt();
                         photoTaken = false;
