@@ -3175,6 +3175,7 @@ GameObject:
   - component: {fileID: 102875311}
   - component: {fileID: 102875310}
   - component: {fileID: 102875309}
+  - component: {fileID: 102875313}
   m_Layer: 0
   m_Name: Background Image
   m_TagString: Untagged
@@ -3272,6 +3273,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 928500354}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &102875313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102875308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 601ef1ce40d2ea04d9ff09c8700de59c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameStateManager: {fileID: 989920490}
 --- !u!1 &109031055
 GameObject:
   m_ObjectHideFlags: 0
@@ -29708,6 +29722,8 @@ MonoBehaviour:
   startButton: {fileID: 0}
   photoButton: {fileID: 1751044975}
   restartButton: {fileID: 483508000}
+  additiveColor: 1
+  aiFilter: 0
   currentState: 0
   photoTaken: 0
   photoPrinted: 0
@@ -47932,6 +47948,7 @@ MonoBehaviour:
   cameraFlash: {fileID: 1208426546}
   flashTime: 0.2
   flashSound: {fileID: 172214542}
+  buttonText: {fileID: 1483423680}
   screenCapture: {fileID: 2800000, guid: f79b222e1e049034eae8c3d8fce68e3f, type: 3}
   fadingAnimation: {fileID: 1393364125}
   slidingAnimation: {fileID: 32133865}

@@ -11,14 +11,18 @@ public class GameStateManager : MonoBehaviour
     public Button photoButton;
     public Button restartButton;
 
+
+    public bool additiveColor;
+    public bool aiFilter;
+
     public enum ScreenState
     {
         StartMenu,
         Tutorial,
         PhotoZone,
         GameBoard,
-
         PowerUpStation,
+        TextPrompt,
         EndScreen,
     }
 
@@ -57,6 +61,11 @@ public class GameStateManager : MonoBehaviour
         currentState = ScreenState.PowerUpStation;
     }
 
+    public void GoToTextPrompt()
+    {
+
+    }
+
     public void RestartGame()
     {
         restartButton.onClick.Invoke();
@@ -92,15 +101,23 @@ public class GameStateManager : MonoBehaviour
                     {
                         TakePhoto();
                     } 
-                    if (photoTaken)
+                    if (photoTaken && additiveColor) //check which game it is
                     {
                         GoToPowerUpStation();
                         photoTaken = false; // reset for next run
         
                     }
+                    if (photoTaken && aiFilter) //check which game it is
+                    {
+                        GoToTextPrompt();
+                        photoTaken = false;
+                    }
                     break;
 
                 case ScreenState.PowerUpStation:
+                    break;
+                
+                case ScreenState.TextPrompt:
                     break;
                 
                 case ScreenState.GameBoard:

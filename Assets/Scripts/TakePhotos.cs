@@ -21,6 +21,8 @@ public class TakePhotos : MonoBehaviour
     [SerializeField] private GameObject cameraFlash; // point light for the flash
     [SerializeField] private float flashTime;
     [SerializeField] public SoundController flashSound;
+
+    [SerializeField] public TextMeshProUGUI buttonText;
     public Texture2D screenCapture;
     private bool viewingPhoto; //this sets the photo to active 
 
@@ -281,7 +283,7 @@ public class TakePhotos : MonoBehaviour
         {
             RemovePhoto();
             cameraAnimator.SetBool("playGumballAnim", true);
-
+            
             gumballManager.SetActive(true);
             
 
@@ -360,6 +362,7 @@ public class TakePhotos : MonoBehaviour
         StartCoroutine(CapturePhoto());
         countdownDisplayBackground.SetActive(false);
         countdownDisplay.text = "";
+        buttonText.text = "Continue?";
         gameStateManager.photoTaken = true;
         
 
