@@ -47940,7 +47940,7 @@ MonoBehaviour:
   gumballManager: {fileID: 1475238413}
   displayPlane: {fileID: 102875308}
   planeMaterial: {fileID: 0}
-  enablePinballTracking: 0
+  enablePinballTracking: 1
   trackingRadius: 10
   trackingMaterial: {fileID: 2100000, guid: c3c8e9c1ebbe72344aada2d3b56d98c2, type: 2}
   trackingAnalysisShader: {fileID: 0}
@@ -47981,7 +47981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a09ab5fc64402d49b12d170a7577986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ndiName: ETC-PINBALL-01 (TouchDesigner)
+  _ndiName: ETC-PINBALL-05 (TouchDesigner)
   _targetTexture: {fileID: 0}
   _targetRenderer: {fileID: 102875310}
   _targetMaterialProperty: _MainTex
@@ -48002,7 +48002,7 @@ MonoBehaviour:
   _keepAlpha: 0
   _captureMethod: 2
   _sourceCamera: {fileID: 0}
-  _sourceTexture: {fileID: 0}
+  _sourceTexture: {fileID: 8400000, guid: 3b459fea6213f0441a3eff3f7ff47a7e, type: 2}
   _resources: {fileID: 11400000, guid: 69304b86950074db7ba8caba75214004, type: 2}
 --- !u!114 &1483407588
 MonoBehaviour:
