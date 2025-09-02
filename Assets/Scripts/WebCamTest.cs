@@ -12,14 +12,27 @@ public class WebCamTest : MonoBehaviour
 
     private void Start()
     {
-       if (webCam == null)
-        webCam = new WebCamTexture();
+        string nvidiaCam = "Camera (NVIDIA Broadcast)";
+        WebCamDevice[] devices = WebCamTexture.devices;
 
-    if (!webCam.isPlaying)
-        webCam.Play();
+        // Try to find the NVIDIA Broadcast camera
+        foreach (var device in devices)
+        {
+            if (device.name == nvidiaCam)
+            {
+                webCam = new WebCamTexture(device.name);
+                break;
+            }
+        }
+        
+        if (webCam == null)
+            webCam = new WebCamTexture();
 
-    if (img != null)
-        img.texture = webCam;
+        if (!webCam.isPlaying)
+            webCam.Play();
+
+        if (img != null)
+            img.texture = webCam;
     }
 
 
