@@ -17,6 +17,8 @@ public class GameStateManager : MonoBehaviour
         Tutorial,
         PhotoZone,
         GameBoard,
+
+        PowerUpStation,
         EndScreen,
     }
 
@@ -49,17 +51,23 @@ public class GameStateManager : MonoBehaviour
       
     }
 
+    public void GoToPowerUpStation()
+    {
+        photoButton.onClick.Invoke();
+        currentState = ScreenState.PowerUpStation;
+    }
+
     public void RestartGame()
     {
         restartButton.onClick.Invoke();
         currentState = ScreenState.StartMenu;
-        
+
     }
 
     public void TakePhoto()
     {
-
-        photoButton.onClick.Invoke(); 
+        photoButton.onClick.Invoke();
+        
 
     }
 
@@ -75,19 +83,29 @@ public class GameStateManager : MonoBehaviour
                     GoToTutorial();
                     break;
 
+                case ScreenState.Tutorial:
+                    GoToPhotoZone();
+                    break;
+
                case ScreenState.PhotoZone:
                     if (!photoTaken)
                     {
                         TakePhoto();
-                    }
+                    } 
                     if (photoTaken)
                     {
-                        GoToGameBoard();
+                        GoToPowerUpStation();
                         photoTaken = false; // reset for next run
         
                     }
                     break;
 
+                case ScreenState.PowerUpStation:
+                    break;
+                
+                case ScreenState.GameBoard:
+                    GoToGameBoard();
+                    break;
 
                  case ScreenState.EndScreen:
                     if (photoPrinted) //only allow button clicks after photo is done

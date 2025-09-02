@@ -272,17 +272,18 @@ public class TakePhotos : MonoBehaviour
      public void ClickButton()
     {
         if (!viewingPhoto)
-            {
-                countdownDisplayBackground.SetActive(true);
-                StartCoroutine(CountdownToPhoto());
+        {
+            countdownDisplayBackground.SetActive(true);
+            StartCoroutine(CountdownToPhoto());
 
-            }
-            else
-            {
-                RemovePhoto();
-                cameraAnimator.SetBool("playGumballAnim", true);
-           
-                gumballManager.SetActive(true);
+        }
+        else
+        {
+            RemovePhoto();
+            cameraAnimator.SetBool("playGumballAnim", true);
+
+            gumballManager.SetActive(true);
+            
 
             }
     }
@@ -359,6 +360,7 @@ public class TakePhotos : MonoBehaviour
         StartCoroutine(CapturePhoto());
         countdownDisplayBackground.SetActive(false);
         countdownDisplay.text = "";
+        gameStateManager.photoTaken = true;
         
 
 

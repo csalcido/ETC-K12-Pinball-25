@@ -851,6 +851,78 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 3.75}
   m_SizeDelta: {x: 608, y: 811}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &245739555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 245739557}
+  - component: {fileID: 245739556}
+  m_Layer: 0
+  m_Name: Photo Camera Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &245739556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245739555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15c9effe5bf1a7a4ea6f122a67496b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  photoDisplayArea: {fileID: 0}
+  photoFrame: {fileID: 0}
+  webCameraFeed: {fileID: 0}
+  cameraFlash: {fileID: 0}
+  flashTime: 0
+  flashSound: {fileID: 0}
+  screenCapture: {fileID: 0}
+  fadingAnimation: {fileID: 0}
+  slidingAnimation: {fileID: 0}
+  cameraAnimator: {fileID: 0}
+  gameStateManager: {fileID: 0}
+  gumballManager: {fileID: 0}
+  displayPlane: {fileID: 0}
+  planeMaterial: {fileID: 0}
+  enablePinballTracking: 1
+  trackingRadius: 10
+  trackingMaterial: {fileID: 0}
+  trackingAnalysisShader: {fileID: 0}
+  ndiSender: {fileID: 0}
+  ndiSenderPhoto: {fileID: 0}
+  ndiReceiver: {fileID: 0}
+  showRawTrackingTexture: 0
+  countdownTime: 0
+  countdownDisplay: {fileID: 0}
+  countdownDisplayBackground: {fileID: 0}
+  countdownSound: {fileID: 0}
+  shouldAutoStart: 0
+  nextPinballColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!4 &245739557
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245739555}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -18.860672, y: -129.29091, z: 141.17192}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -8251,7 +8323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a849a8dcb5e6c2649a8afcca91dc041d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonManager: {fileID: 1080593121}
+  gameStateManager: {fileID: 0}
   serialManager: {fileID: 1450887252}
 --- !u!1 &960209700
 GameObject:
@@ -9730,11 +9802,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serialManager: {fileID: 1450887252}
+  takePhotos: {fileID: 245739556}
   tutorialButton: {fileID: 1968023935}
   startButton: {fileID: 2002920779}
   photoButton: {fileID: 0}
   restartButton: {fileID: 0}
   currentState: 0
+  photoTaken: 0
+  photoPrinted: 0
 --- !u!4 &1080593122
 Transform:
   m_ObjectHideFlags: 0
@@ -16951,3 +17026,4 @@ SceneRoots:
   - {fileID: 1080593122}
   - {fileID: 877604721}
   - {fileID: 1450887251}
+  - {fileID: 245739557}
