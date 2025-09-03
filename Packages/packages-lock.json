@@ -94,6 +94,15 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.media.osc": {
+      "version": "https://github.com/Unity-Technologies/UnityOSCProtocolSupport.git?path=/com.unity.media.osc",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.modules.uielements": "1.0.0"
+      },
+      "hash": "9de27c9f8764aa4e978844b6af4389a2cf9bc27d"
+    },
     "com.unity.multiplayer.center": {
       "version": "1.0.0",
       "depth": 0,
