@@ -8,7 +8,7 @@ public class WebCamTest : MonoBehaviour
 {
     [SerializeField] private RawImage img = default;
     public WebCamTexture webCam;
-    
+
 
     private void Start()
     {
@@ -26,13 +26,19 @@ public class WebCamTest : MonoBehaviour
         }
         
         if (webCam == null)
-            webCam = new WebCamTexture();
+        webCam = new WebCamTexture();
 
         if (!webCam.isPlaying)
             webCam.Play();
 
         if (img != null)
-            img.texture = webCam;
+        img.texture = webCam;
+    }
+    
+       public void StopCamera()
+    {
+        if (webCam != null && webCam.isPlaying)
+            webCam.Stop();
     }
 
 

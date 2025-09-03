@@ -29726,13 +29726,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serialManager: {fileID: 460106131}
   takePhotos: {fileID: 1483407584}
+  webCamTest: {fileID: 1698725874}
   tutorialButton: {fileID: 0}
   startButton: {fileID: 0}
   photoButton: {fileID: 1751044975}
   restartButton: {fileID: 483508000}
-  additiveColor: 1
-  aiFilter: 0
   currentState: 0
+  currentMode: 0
   photoTaken: 0
   photoPrinted: 0
 --- !u!1 &990337150

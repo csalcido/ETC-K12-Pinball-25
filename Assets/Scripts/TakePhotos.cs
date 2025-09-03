@@ -406,6 +406,8 @@ public class TakePhotos : MonoBehaviour
         displayPlane.SetActive(true);
     }
 
+    
+
     #endregion
 
     #region Pinball Tracking Methods

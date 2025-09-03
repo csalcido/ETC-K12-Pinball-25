@@ -6,6 +6,7 @@ public class GameStateManager : MonoBehaviour
 {
     public SerialManager serialManager;
     public TakePhotos takePhotos;
+    public WebCamTest webCamTest;
     public Button tutorialButton;
     public Button startButton;
     public Button photoButton;
@@ -63,7 +64,7 @@ public class GameStateManager : MonoBehaviour
 
     public void GoToPowerUpStation()
     {
-        photoButton.onClick.Invoke();
+        
         currentState = ScreenState.PowerUpStation;
     }
 
@@ -76,6 +77,7 @@ public class GameStateManager : MonoBehaviour
     {
         restartButton.onClick.Invoke();
         currentState = ScreenState.StartMenu;
+        webCamTest.StopCamera();
 
     }
 
@@ -109,12 +111,14 @@ public class GameStateManager : MonoBehaviour
                     } 
                     if (photoTaken && currentMode == GameMode.AdditiveColor) //check which game it is
                     {
+                        photoButton.onClick.Invoke();
                         GoToPowerUpStation();
                         photoTaken = false; // reset for next run
         
                     }
                     if (photoTaken && currentMode == GameMode.AiFilter) //check which game it is
                     {
+                        photoButton.onClick.Invoke();
                         GoToTextPrompt();
                         photoTaken = false;
                     }
