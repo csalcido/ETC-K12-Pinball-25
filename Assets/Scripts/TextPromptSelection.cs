@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +18,11 @@ public class TextPromptSelection : MonoBehaviour
 
     private int currentPromptIndex = 0; //index of current prompt
     public TextMeshProUGUI selectedPromptText;
+
+    [Header("Animated Components")]
     public Animator textAnimator;
+    public Animator curtainAnimator;
+    public Animator filteredImageAnimator;
 
     // List of available prompt options
     private string[] promptOptions = { "Cartoony", "Magical", "Spooky", "Retro", "Sci-Fi" };
@@ -52,17 +57,32 @@ public class TextPromptSelection : MonoBehaviour
 
     private void ConfirmSelection()
     {
+        //play animation coroutine
+        StartCoroutine(ImageTransformation());
+
+
+        
+        ShowFilteredImage();
+        
         //update Game State
         gameStateManager.currentState = GameStateManager.ScreenState.GameBoard;
-
-        //show image and play sounds
-        selectionSound.PlaySound();
-        ShowFilteredImage();
         
         //transition to gameboard
 
 
 
+    }
+
+    IEnumerator ImageTransformation()
+    {
+        //first have text animation 
+        textAnimator.Play("textTransform", -1, 0f);
+        selectionSound.PlaySound();
+        
+      
+        //have text and image go behind curtain and do sparkle thing
+
+        yield return new WaitForSeconds(2f);
     }
 
     private void ShowFilteredImage()
