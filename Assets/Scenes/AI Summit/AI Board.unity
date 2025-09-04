@@ -27594,6 +27594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serialManager: {fileID: 460106131}
   takePhotos: {fileID: 1483407584}
+  webCamTest: {fileID: 0}
   tutorialButton: {fileID: 0}
   startButton: {fileID: 0}
   photoButton: {fileID: 1751044975}
@@ -39561,9 +39562,10 @@ GameObject:
   - component: {fileID: 1349891753}
   - component: {fileID: 1349891756}
   - component: {fileID: 1349891755}
-  - component: {fileID: 1349891754}
+  - component: {fileID: 1349891758}
+  - component: {fileID: 1349891757}
   m_Layer: 0
-  m_Name: Prompt Manager
+  m_Name: OSC Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39584,19 +39586,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 764988703}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1349891754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1349891752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16034f0c25f433a4fb944ea5b32eb0a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  promptText: this is a test
 --- !u!114 &1349891755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39610,20 +39599,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Sender: {fileID: 1349891756}
-  m_Address: /prompt/text
+  m_Address: /pinball/gameState
   m_Arguments:
   - m_Object: {fileID: 1349891752}
-    m_Component: {fileID: 1349891754}
+    m_Component: {fileID: 1349891757}
     m_MemberType: 1
-    m_MemberValueType: String
-    m_MemberName: promptText
+    m_MemberValueType: Int32
+    m_MemberName: gameState
     m_Output:
-      rid: 6504586631589396480
+      rid: 6504586650727219269
   references:
     version: 2
     RefIds:
-    - rid: 6504586631589396480
-      type: {class: ArgumentOutputString, ns: Unity.Media.Osc.Arguments, asm: Unity.Media.Osc.Components}
+    - rid: 6504586650727219269
+      type: {class: ArgumentOutputInt32, ns: Unity.Media.Osc.Arguments, asm: Unity.Media.Osc.Components}
       data: 
 --- !u!114 &1349891756
 MonoBehaviour:
@@ -39642,6 +39631,48 @@ MonoBehaviour:
   m_Port: 8000
   m_StreamType: 1
   m_AutoBundleMessages: 0
+--- !u!114 &1349891757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349891752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e152f046b5846845ba989ffe876ef5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameState: 0
+  promptText: Flame On
+--- !u!114 &1349891758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349891752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f3d5eb5de1c0194da44658e69474766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Sender: {fileID: 1349891756}
+  m_Address: /pinball/promptText
+  m_Arguments:
+  - m_Object: {fileID: 1349891752}
+    m_Component: {fileID: 1349891757}
+    m_MemberType: 1
+    m_MemberValueType: String
+    m_MemberName: promptText
+    m_Output:
+      rid: 6504586650727219268
+  references:
+    version: 2
+    RefIds:
+    - rid: 6504586650727219268
+      type: {class: ArgumentOutputString, ns: Unity.Media.Osc.Arguments, asm: Unity.Media.Osc.Components}
+      data: 
 --- !u!4 &1350344470 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5916488674898631843, guid: f8c21f5e7be2e604881dd289bae91bc2, type: 3}
