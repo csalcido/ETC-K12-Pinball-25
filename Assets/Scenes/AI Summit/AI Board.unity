@@ -14618,7 +14618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a097ac1c1eef68f4c8c0bf6d251cb541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portNameL: COM4
+  portNameL: COM3
   portNameR: COM3
   baudRate: 9600
   baudRate_pi: 115200
@@ -27593,6 +27593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serialManager: {fileID: 460106131}
   takePhotos: {fileID: 1483407584}
+  webCamTest: {fileID: 0}
   tutorialButton: {fileID: 0}
   startButton: {fileID: 0}
   photoButton: {fileID: 1751044975}
@@ -43102,7 +43103,7 @@ MonoBehaviour:
   displayPlane: {fileID: 102875308}
   planeMaterial: {fileID: 0}
   enablePinballTracking: 1
-  trackingRadius: 10
+  trackingRadius: 50
   trackingMaterial: {fileID: 2100000, guid: c3c8e9c1ebbe72344aada2d3b56d98c2, type: 2}
   trackingAnalysisShader: {fileID: 0}
   ndiSender: {fileID: 1483407587}
@@ -45349,7 +45350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e68c6748f448b245b70ae985041556a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownTime: 25
+  countdownTime: 60
   flashSound: {fileID: 831782323}
   countdownText: {fileID: 1575465616}
   endScreen: {fileID: 958865864}

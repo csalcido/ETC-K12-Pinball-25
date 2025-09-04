@@ -59,7 +59,6 @@ public class GameStateManager : MonoBehaviour
     public void GoToGameBoard()
     {
         currentState = ScreenState.GameBoard;
-      
     }
 
     public void GoToPowerUpStation()
@@ -83,9 +82,7 @@ public class GameStateManager : MonoBehaviour
 
     public void TakePhoto()
     {
-        photoButton.onClick.Invoke();
-        
-
+            photoButton.onClick.Invoke();
     }
 
 
@@ -108,19 +105,18 @@ public class GameStateManager : MonoBehaviour
                     if (!photoTaken)
                     {
                         TakePhoto();
+                        photoTaken = true;
                     } 
                     if (photoTaken && currentMode == GameMode.AdditiveColor) //check which game it is
                     {
                         photoButton.onClick.Invoke();
                         GoToPowerUpStation();
-                        photoTaken = false; // reset for next run
         
                     }
                     if (photoTaken && currentMode == GameMode.AiFilter) //check which game it is
                     {
                         photoButton.onClick.Invoke();
                         GoToTextPrompt();
-                        photoTaken = false;
                     }
                     break;
 
