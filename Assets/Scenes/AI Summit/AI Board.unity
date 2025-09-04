@@ -23087,6 +23087,7 @@ Transform:
   - {fileID: 1483407585}
   - {fileID: 989920489}
   - {fileID: 958865865}
+  - {fileID: 1349891753}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &767815888
@@ -39550,6 +39551,98 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -479904827947004575, guid: f97b40361c90491429ee55e9c306c579, type: 3}
+--- !u!1 &1349891752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1349891753}
+  - component: {fileID: 1349891756}
+  - component: {fileID: 1349891755}
+  - component: {fileID: 1349891754}
+  m_Layer: 0
+  m_Name: Prompt Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1349891753
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349891752}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 764988703}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1349891754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349891752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16034f0c25f433a4fb944ea5b32eb0a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  promptText: this is a test
+--- !u!114 &1349891755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349891752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f3d5eb5de1c0194da44658e69474766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Sender: {fileID: 1349891756}
+  m_Address: /prompt/text
+  m_Arguments:
+  - m_Object: {fileID: 1349891752}
+    m_Component: {fileID: 1349891754}
+    m_MemberType: 1
+    m_MemberValueType: String
+    m_MemberName: promptText
+    m_Output:
+      rid: 6504586631589396480
+  references:
+    version: 2
+    RefIds:
+    - rid: 6504586631589396480
+      type: {class: ArgumentOutputString, ns: Unity.Media.Osc.Arguments, asm: Unity.Media.Osc.Components}
+      data: 
+--- !u!114 &1349891756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349891752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6e129f8c98ad6247b7bbd76a97ce3c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Protocol: 0
+  m_IpAddress: 127.0.0.1
+  m_Port: 8000
+  m_StreamType: 1
+  m_AutoBundleMessages: 0
 --- !u!4 &1350344470 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5916488674898631843, guid: f8c21f5e7be2e604881dd289bae91bc2, type: 3}
