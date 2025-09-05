@@ -8,11 +8,9 @@ using UnityEngine;
 /// </summary>
 public class OscMessage : MonoBehaviour
 {
-    [SerializeField]
-    [Tooltip("The current game state, 0 = Game Over, 1 = Playing")]
-    public int gameState = 0;
+    [Tooltip("0 = Game In Progress, 1 = Game Over")]
+    public int gameOver = 0;
 
-    [SerializeField]
     [Tooltip("The AI prompt to be sent to to Touch Designer")]
     public string promptText;
 }

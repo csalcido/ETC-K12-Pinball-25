@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO.Ports;
 using System.Threading;
 using System.Drawing.Text;
+using System;
 
 public class SerialManager : MonoBehaviour
 {
@@ -83,47 +84,54 @@ public class SerialManager : MonoBehaviour
         //added later by hannah for pi controller purposes
 
         //*******************************************
-        string line = serialPortL.ReadLine().Trim();
-        Debug.Log("Recieved: " + line);
-        if (line == "start_pressed")
+        try
         {
-            StartPressed = true;
-            Debug.Log("Button Press Detected!");
-            StartReleased = false;
+            if (isRunningL && serialPortL.BytesToRead > 0)
+            {
+                string line = serialPortL.ReadLine().Trim();
+                Debug.Log("Recieved: " + line);
+                if (line == "start_pressed")
+                {
+                    StartPressed = true;
+                    Debug.Log("Button Press Detected!");
+                    StartReleased = false;
+                }
+                else if (line == "start_released")
+                {
+                    StartReleased = true;
+                    StartPressed = false;
+                }
+                else if (line == "left_flipper_pressed")
+                {
+                    LeftFlipperPressed = true;
+                    LeftFlipperReleased = false;
+                }
+                else if (line == "left_flipper_released")
+                {
+                    LeftFlipperReleased = true;
+                    LeftFlipperPressed = false;
+                }
+                else if (line == "right_flipper_pressed")
+                {
+                    RightFlipperPressed = true;
+                    RightFlipperReleased = false;
+                }
+                else if (line == "right_flipper_released")
+                {
+                    RightFlipperReleased = true;
+                    RightFlipperPressed = false;
+                }
+                else if (line == "ball_sent")
+                {
+                    BallSent = true;
+                }
+                else if (line == "ball_back")
+                {
+                    BallSent = false;
+                }
+            }
         }
-        else if (line == "start_released")
-        {
-            StartReleased = true;
-            StartPressed = false;
-        }
-        else if (line == "left_flipper_pressed")
-        {
-            LeftFlipperPressed = true;
-            LeftFlipperReleased = false;
-        }
-        else if (line == "left_flipper_released")
-        {
-            LeftFlipperReleased = true;
-            LeftFlipperPressed = false;
-        }
-        else if (line == "right_flipper_pressed")
-        {
-            RightFlipperPressed = true;
-            RightFlipperReleased = false;
-        }
-        else if (line == "right_flipper_released")
-        {
-            RightFlipperReleased = true;
-            RightFlipperPressed = false;
-        }
-        else if (line == "ball_sent")
-        {
-            BallSent = true;
-        }
-        else if (line == "ball_back")
-        {
-            BallSent = false;
-        }
+        catch (TimeoutException) { /* EAT IT */ }
         //*******************************************
     }
 

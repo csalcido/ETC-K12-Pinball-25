@@ -64,11 +64,11 @@ public class Timer : MonoBehaviour
             {
                 timeRemaining = 0;
                 timerIsRunning = false;
-                
+
 
                 //change gamestate to end screen
-                gameStateManager.currentState = GameStateManager.ScreenState.EndScreen;
-                endScreen.EndTheGame();
+                gameStateManager.TransitionToEndScreen();
+                endScreen.EndTheGame();     // TODO: Move this to GameStateManager
             }
         }
     }
