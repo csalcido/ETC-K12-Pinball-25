@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,14 +11,23 @@ public class TextPromptSelection : MonoBehaviour
     public SerialManager serialManager; //manages controls
     public GameStateManager gameStateManager;
 
+    [Header ("Buttons")]
+
     public Button leftButton;
     public Button RightButton;
     public Button SelectButton;
     public SoundController buttonSound;
     public SoundController selectionSound;
 
+    [Header("Info for Touchdesigner")]
+    public string TdPrompt = "full prompt here";
+
 
     private int currentPromptIndex = 0; //index of current prompt
+
+    [Header ("Text Objects")]
+    public TextMeshProUGUI randomPromptOneText;
+    public TextMeshProUGUI randomPromptTwoText;
     public TextMeshProUGUI selectedPromptText;
 
     [Header("Animated Components")]
@@ -25,21 +36,39 @@ public class TextPromptSelection : MonoBehaviour
     public Animator filteredImageAnimator;
 
     // List of available prompt options
-    private string[] promptOptions = { "Cartoony", "Magical", "Spooky", "Retro", "Sci-Fi" };
+
+    private string[] randomPromptOne = {"medieval","magical","futuristic" };
+    private string[] randomPromptTwo = {"cowboy", "wizard", "mermaid", "pirate"};
+    private string[] promptOptions = { "Comic Book", "Watercolor", "Vintage", "Hyperrealistic", "Lego", "Cartoon", "16-Bit" };
 
 
     
     void Start()
     {
+        //randomize the first two prompts
+        StartCoroutine(randomizePrompt(randomPromptOne, randomPromptOneText));
+        StartCoroutine(randomizePrompt(randomPromptTwo, randomPromptTwoText));
+        gameStateManager.randomSelectionFinished = true;
         // Set initial prompt text
         UpdatePromptText();
+    }
+
+
+    IEnumerator randomizePrompt(string[] promptList, TextMeshProUGUI textObject)
+    {
+        //selects random prompt from list
+        int listLength = promptList.Count();
+        int index = Random.Range(0, listLength);
+
+        //update text object
+        textObject.text = promptList[index];
+
+        yield return new WaitForSeconds(2f);
     }
 
     private void UpdatePromptText()
     {
         selectedPromptText.text = promptOptions[currentPromptIndex]; //update text object
-
-        
     }
 
     public void ChangePrompt(int change)
@@ -54,22 +83,95 @@ public class TextPromptSelection : MonoBehaviour
         textAnimator.Play("textBounce", -1, 0f);
         UpdatePromptText();
     }
-
-    private void ConfirmSelection()
+    public string TdPromptTranslate(string partOne, string partTwo, string partThree)
     {
+        
+
+        //first part
+        switch (partOne)
+    {
+        case "medieval":
+            partOne = "a fantasy medieval kingdom with castles and knights";
+            break;
+        case "magical":
+            partOne = "a magical fairy forest glowing with enchantment";
+            break;
+        case "futuristic":
+            partOne = "a neon cyberpunk futuristic city full of robots";
+            break;
+    }
+
+        //second part 
+    switch (partTwo)
+    {
+        case "cowboy":
+            partTwo = "inhabited by cowboys in a dusty desert western setting";
+            break;
+        case "wizard":
+            partTwo = "with a wise wizard casting powerful spells";
+            break;
+        case "mermaid":
+            partTwo = "featuring mystical mermaids swimming in crystal waters";
+            break;
+        case "pirate":
+            partTwo = "sailing with pirates on stormy seas";
+            break;
+    }
+
+        //third part
+    switch (partThree)
+    {
+        case "Comic Book":
+            partThree = "illustrated in bold comic book style";
+            break;
+        case "Watercolor":
+            partThree = "painted in dreamy watercolor textures";
+            break;
+        case "Vintage":
+            partThree = "styled as a vintage faded photograph";
+            break;
+        case "Hyperrealistic":
+            partThree = "rendered in hyperrealistic detail";
+            break;
+        case "Lego":
+            partThree = "constructed entirely from colorful Lego bricks";
+            break;
+        case "Cartoon":
+            partThree = "drawn as a playful Saturday morning cartoon";
+            break;
+        case "16-Bit":
+            partThree = "depicted in retro 16-bit pixel art";
+            break;
+    }
+        string fullPrompt = $"{partOne}, {partTwo}, {partThree}."; //turn into interpolated string
+
+        return fullPrompt;
+        
+        
+      
+
+
+    }
+
+
+    public void ConfirmSelection()
+    {
+        //translate prompts to TD prompts
+        TdPrompt = TdPromptTranslate(randomPromptOneText.text, randomPromptTwoText.text, selectedPromptText.text);
+        //apply it to the oscmessage object
+        gameStateManager.oscMessage.promptText = TdPrompt;
+
         //play animation coroutine
         StartCoroutine(ImageTransformation());
 
 
-        
         ShowFilteredImage();
-        
+
         //update Game State
         gameStateManager.currentState = GameStateManager.ScreenState.GameBoard;
-        
+        gameStateManager.randomSelectionFinished = false; //reset flag
+
         //transition to gameboard
-
-
 
     }
 
@@ -94,8 +196,8 @@ public class TextPromptSelection : MonoBehaviour
     void Update()
     {
 
-        //check gameState, use flipper controls to select prompt
-        if (gameStateManager.currentState == GameStateManager.ScreenState.TextPrompt)
+        //check gameState, use flipper controls to select last prompt
+        if (gameStateManager.currentState == GameStateManager.ScreenState.TextPrompt && gameStateManager.randomSelectionFinished)
         {
             //play left flipper
             if (Input.GetKeyDown(KeyCode.LeftArrow) || SerialManager.LeftFlipperPressed)
@@ -108,11 +210,7 @@ public class TextPromptSelection : MonoBehaviour
             {
                 OnRightButton();
             }
-            //select prompt
-            if (Input.GetKeyDown(KeyCode.Space) || SerialManager.StartPressed)
-            {
-                ConfirmSelection();
-            }
+        
         }
 
     }

@@ -7,9 +7,12 @@ public class GameStateManager : MonoBehaviour
     public SerialManager serialManager;
     public TakePhotos takePhotos;
     public WebCamTest webCamTest;
+    public TextPromptSelection textPromptSelection;
+
     public Button tutorialButton;
     public Button startButton;
     public Button photoButton;
+    public Button promptSelectButton;
     public Button restartButton;
 
     [Tooltip("Reference to the OSC Message script to send data to TouchDesigner")]
@@ -40,6 +43,11 @@ public class GameStateManager : MonoBehaviour
 
     [HideInInspector]
     public bool photoTaken = false;
+
+
+    [HideInInspector]
+    public bool randomSelectionFinished = false;
+
     [HideInInspector]
     public bool photoPrinted = false;
 
@@ -47,14 +55,12 @@ public class GameStateManager : MonoBehaviour
     {
         startButton.onClick.Invoke();
         currentState = ScreenState.Tutorial;
-
     }
 
     public void GoToPhotoZone()
     {
         tutorialButton.onClick.Invoke();
         currentState = ScreenState.PhotoZone;
-        
     }
 
     public void GoToGameBoard()
@@ -64,13 +70,12 @@ public class GameStateManager : MonoBehaviour
 
     public void GoToPowerUpStation()
     {
-        
         currentState = ScreenState.PowerUpStation;
     }
 
     public void GoToTextPrompt()
     {
-
+        currentState = ScreenState.TextPrompt;
     }
 
     public void RestartGame()
@@ -84,7 +89,12 @@ public class GameStateManager : MonoBehaviour
 
     public void TakePhoto()
     {
-            photoButton.onClick.Invoke();
+        photoButton.onClick.Invoke();
+    }
+
+    public void SelectPrompt()
+    {
+        promptSelectButton.onClick.Invoke();
     }
 
 
@@ -136,6 +146,11 @@ public class GameStateManager : MonoBehaviour
                     break;
                 
                 case ScreenState.TextPrompt:
+
+                    if (randomSelectionFinished)
+                    {
+                        SelectPrompt();
+                    }
                     break;
                 
                 case ScreenState.GameBoard:
