@@ -22,6 +22,8 @@ public class SerialManager : MonoBehaviour
     public static bool RightFlipperPressed = false;
     public static bool RightFlipperReleased = false;
     public static bool BallSent = false;
+    public static float BallSpeed = 0;
+    public static float prevBallSpeed = 0;
     public int baudRate_pi = 115200;
 
     //******************************************//
@@ -129,7 +131,20 @@ public class SerialManager : MonoBehaviour
                 }
                 else
                 {
-                    //put logic here for plunger data
+                    float speed;
+                    if (float.TryParse(line, out speed))
+                    {
+                        if (speed != prevBallSpeed)
+                        {
+                            BallSpeed = speed;
+                            prevBallSpeed = speed;
+                        }
+                        else
+                        {
+                            BallSpeed = 0;
+                            prevBallSpeed = 0;
+                        }
+                    }
                 }
             }
         }

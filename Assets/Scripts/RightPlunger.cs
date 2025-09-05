@@ -16,7 +16,7 @@ public class RightPlunger : MonoBehaviour
     private bool isWaitingForReturn = false;
 
     private float currentForce = 0f;
-    private bool isCharging = false;
+    //private bool isCharging = false;
     private List<Rigidbody> ballsInContact = new List<Rigidbody>();
 
     public float minDistance = 4f;
@@ -50,23 +50,13 @@ public class RightPlunger : MonoBehaviour
         if (gameStateManager.currentState == GameStateManager.ScreenState.GameBoard)
         {
 
-            if (((Input.GetKeyDown(plungerKey) || SerialManager.BallSent) && ballsInContact.Count > 0) || (distanceCM > maxDistance && ballsInContact.Count > 0))
+            if (((Input.GetKeyDown(plungerKey) || SerialManager.BallSent) && ballsInContact.Count > 0))
             {
-                isCharging = true;
-            }
-
-            if (((Input.GetKey(plungerKey) || SerialManager.BallSent) && isCharging) || (distanceCM > maxDistance && isCharging))
-            {
-                currentForce += chargeSpeed * Time.deltaTime;
-                currentForce = Mathf.Clamp(currentForce, minForce, maxForce);
-            }
-
-            if (((Input.GetKeyUp(plungerKey) || SerialManager.BallSent) && isCharging) || (distanceCM < minDistance && isCharging))
-            {
+                currentForce = ((100 - SerialManager.BallSpeed) / 10);
+                print(currentForce);
                 isLaunching = true;
                 startManager.RegisterStart();
                 LaunchBalls();
-                isCharging = false;
                 currentForce = 0f;
             }
         }
