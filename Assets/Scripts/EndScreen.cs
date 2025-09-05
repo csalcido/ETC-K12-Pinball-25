@@ -28,7 +28,7 @@ public class EndScreen : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         //change printed flag in gameStateManager
-        gameStateManager.photoPrinted = true;
+        gameStateManager.photoPrinted = true;   // TODO: Move this OscMessage / GameStateManger
 
     }
 

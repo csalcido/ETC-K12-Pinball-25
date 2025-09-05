@@ -27599,6 +27599,7 @@ MonoBehaviour:
   startButton: {fileID: 0}
   photoButton: {fileID: 1751044975}
   restartButton: {fileID: 483508000}
+  oscMessage: {fileID: 1349891757}
   currentState: 0
   currentMode: 1
   photoTaken: 0
@@ -39605,13 +39606,13 @@ MonoBehaviour:
     m_Component: {fileID: 1349891757}
     m_MemberType: 1
     m_MemberValueType: Int32
-    m_MemberName: gameState
+    m_MemberName: gameOver
     m_Output:
-      rid: 6504586650727219269
+      rid: 6504586652955705344
   references:
     version: 2
     RefIds:
-    - rid: 6504586650727219269
+    - rid: 6504586652955705344
       type: {class: ArgumentOutputInt32, ns: Unity.Media.Osc.Arguments, asm: Unity.Media.Osc.Components}
       data: 
 --- !u!114 &1349891756
@@ -39643,8 +39644,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e152f046b5846845ba989ffe876ef5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: 0
-  promptText: Flame On
+  gameOver: 0
+  promptText: this is a test
 --- !u!114 &1349891758
 MonoBehaviour:
   m_ObjectHideFlags: 0

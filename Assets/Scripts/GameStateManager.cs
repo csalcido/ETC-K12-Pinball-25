@@ -12,8 +12,9 @@ public class GameStateManager : MonoBehaviour
     public Button photoButton;
     public Button restartButton;
 
+    [Tooltip("Reference to the OSC Message script to send data to TouchDesigner")]
+    public OscMessage oscMessage;
 
-    
 
     public enum ScreenState
     {
@@ -77,7 +78,8 @@ public class GameStateManager : MonoBehaviour
         restartButton.onClick.Invoke();
         currentState = ScreenState.StartMenu;
         webCamTest.StopCamera();
-
+        oscMessage.gameOver = 0;
+        photoPrinted = false;       // TODO: Does value need to come from Touch Designer
     }
 
     public void TakePhoto()
@@ -86,7 +88,17 @@ public class GameStateManager : MonoBehaviour
     }
 
 
-    
+    public void TransitionToEndScreen()
+    {
+        if (oscMessage.gameOver == 0)
+        {
+            oscMessage.gameOver = 1; //send game over signal to TouchDesigner
+        }
+
+        this.currentState = ScreenState.EndScreen;
+    }
+
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) ||  SerialManager.StartPressed)
@@ -134,7 +146,6 @@ public class GameStateManager : MonoBehaviour
                     if (photoPrinted) //only allow button clicks after photo is done
                     {
                         RestartGame();
-                        photoPrinted = false; // reset
                     }
                     break;
             }
