@@ -10,7 +10,7 @@ public class SerialManager : MonoBehaviour
 {
 
     public string portNameL = "COM3";
-    public string portNameR = "COM3";
+   // public string portNameR = "COM3";
     public int baudRate = 9600;
 
     //****************************************//
@@ -48,26 +48,26 @@ public class SerialManager : MonoBehaviour
     {
         // serialPortL = new SerialPort(portNameL, baudRate); guess whoooo
         serialPortL = new SerialPort(portNameL, baudRate_pi);
-        serialPortR = new SerialPort(portNameR, baudRate_pi);
+       // serialPortR = new SerialPort(portNameR, baudRate_pi);
         serialPortL.ReadTimeout = 20;
-        serialPortR.ReadTimeout = 20;
+      //  serialPortR.ReadTimeout = 20;
 
         try
         {
             serialPortL.Open();
             Debug.Log("L opened");
-            serialPortR.Open();
+          //  serialPortR.Open();
             isRunningL = true;
-            isRunningR = true;
+          //  isRunningR = true;
 
-            readThreadL = new Thread(ReadSerialDataL);
-            readThreadL.Start();
+           // readThreadL = new Thread(ReadSerialDataL);
+           // readThreadL.Start();
             writeThreadL = new Thread(WriteSerialDataL);
             writeThreadL.Start();
-            readThreadR = new Thread(ReadSerialDataR);
-            readThreadR.Start();
-            writeThreadR = new Thread(WriteSerialDataR);
-            writeThreadR.Start();
+          //  readThreadR = new Thread(ReadSerialDataR);
+           // readThreadR.Start();
+           // writeThreadR = new Thread(WriteSerialDataR);
+           // writeThreadR.Start();
             Debug.Log("Both serial port opened successfully.");
         }
         catch (System.Exception e)
@@ -78,8 +78,8 @@ public class SerialManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Left distance: " + distanceCML + " cm");
-        Debug.Log("Right distance: " + distanceCMR + " cm");
+        //Debug.Log("Left distance: " + distanceCML + " cm");
+        //Debug.Log("Right distance: " + distanceCMR + " cm");
 
         //added later by hannah for pi controller purposes
 
@@ -94,11 +94,9 @@ public class SerialManager : MonoBehaviour
                 {
                     StartPressed = true;
                     Debug.Log("Button Press Detected!");
-                    StartReleased = false;
                 }
                 else if (line == "start_released")
                 {
-                    StartReleased = true;
                     StartPressed = false;
                 }
                 else if (line == "left_flipper_pressed")
@@ -128,6 +126,10 @@ public class SerialManager : MonoBehaviour
                 else if (line == "ball_back")
                 {
                     BallSent = false;
+                }
+                else
+                {
+                    //put logic here for plunger data
                 }
             }
         }
@@ -162,7 +164,7 @@ public class SerialManager : MonoBehaviour
             Debug.Log("Serial port closed.");
         }
     }
-
+    /*
     private void ReadSerialDataL()
     {
         while (isRunningL)
@@ -209,7 +211,7 @@ public class SerialManager : MonoBehaviour
             }
         }
     }
-
+    */
     private void WriteSerialDataL()
     {
         int colorCache = -1;

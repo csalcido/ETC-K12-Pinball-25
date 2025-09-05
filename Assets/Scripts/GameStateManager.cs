@@ -90,6 +90,7 @@ public class GameStateManager : MonoBehaviour
     public void TakePhoto()
     {
         photoButton.onClick.Invoke();
+        photoTaken = true;
     }
 
     public void SelectPrompt()
@@ -111,7 +112,7 @@ public class GameStateManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) ||  SerialManager.StartPressed)
+        if (Input.GetKeyDown(KeyCode.Space) || SerialManager.StartPressed)
         {
             switch (currentState)
             {
@@ -123,23 +124,23 @@ public class GameStateManager : MonoBehaviour
                     GoToPhotoZone();
                     break;
 
-               case ScreenState.PhotoZone:
+                case ScreenState.PhotoZone:
                     if (!photoTaken)
                     {
                         TakePhoto();
-                        photoTaken = true;
-                    } 
-                    if (photoTaken && currentMode == GameMode.AdditiveColor) //check which game it is
-                    {
-                        TakePhoto();
-                        GoToPowerUpStation();
-        
                     }
-                    if (photoTaken && currentMode == GameMode.AiFilter) //check which game it is
-                    {
-                        TakePhoto();
-                        GoToTextPrompt();
+                    else {
+                        if (currentMode == GameMode.AdditiveColor) //check which game it is
+                        {
+                            GoToPowerUpStation();
+
+                        }
+                        else if (currentMode == GameMode.AiFilter) //check which game it is
+                        {
+                            GoToTextPrompt();
+                        }
                     }
+                    
                     break;
 
                 case ScreenState.PowerUpStation:
@@ -157,27 +158,15 @@ public class GameStateManager : MonoBehaviour
                     GoToGameBoard();
                     break;
 
-                 case ScreenState.EndScreen:
+                case ScreenState.EndScreen:
                     if (photoPrinted) //only allow button clicks after photo is done
                     {
                         RestartGame();
                     }
                     break;
             }
-
-                
-
-                    
-                    
-
-
-
             
         }
     }
-    
-
-        
-        
     
 }
