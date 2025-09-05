@@ -42,7 +42,7 @@ public class TextPromptSelection : MonoBehaviour
 
     private string[] randomPromptOne = {"medieval","magical","futuristic" };
     private string[] randomPromptTwo = {"cowboy", "wizard", "mermaid", "pirate"};
-    private string[] promptOptions = { "Comic Book", "Watercolor", "Vintage", "Hyperrealistic", "Lego", "Cartoon", "16-Bit" };
+    private string[] promptOptions = { "Comic Book", "Watercolor", "Vintage", "Hyperrealism", "Lego", "Cartoon", "16-Bit" };
 
 
     
@@ -137,17 +137,17 @@ public class TextPromptSelection : MonoBehaviour
             case "Vintage":
                 partThree = "styled as a vintage faded photograph";
                 break;
-            case "Hyperrealistic":
+            case "Hyperrealism":
                 partThree = "rendered in hyperrealistic detail";
                 break;
             case "Lego":
-                partThree = "constructed entirely from colorful Lego bricks";
+                partThree = "colorful Lego bricks";
                 break;
             case "Cartoon":
                 partThree = "drawn as a playful Saturday morning cartoon";
                 break;
             case "16-Bit":
-                partThree = "depicted in retro 16-bit pixel art";
+                partThree = "retro 16-bit pixel art";
                 break;
         }
         string fullPrompt = $"{partOne}, {partTwo}, {partThree}."; //turn into interpolated string

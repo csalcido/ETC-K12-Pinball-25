@@ -131,13 +131,13 @@ public class GameStateManager : MonoBehaviour
                     } 
                     if (photoTaken && currentMode == GameMode.AdditiveColor) //check which game it is
                     {
-                        photoButton.onClick.Invoke();
+                        TakePhoto();
                         GoToPowerUpStation();
         
                     }
                     if (photoTaken && currentMode == GameMode.AiFilter) //check which game it is
                     {
-                        photoButton.onClick.Invoke();
+                        TakePhoto();
                         GoToTextPrompt();
                     }
                     break;
