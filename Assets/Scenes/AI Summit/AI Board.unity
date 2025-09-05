@@ -5532,8 +5532,8 @@ Transform:
   m_GameObject: {fileID: 209159602}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -197.42297, y: 65.216995, z: -250.09886}
-  m_LocalScale: {x: 0.6164, y: 1, z: 1.6692407}
+  m_LocalPosition: {x: -197.396, y: 65.216995, z: -250.0962}
+  m_LocalScale: {x: 0.51413924, y: 1, z: 1.6694076}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1132160411}
@@ -17596,7 +17596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &663776455
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24437,7 +24437,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.0054186103, y: 0.7032035, z: -0.71096134, w: 0.003092915}
   m_LocalPosition: {x: 0.39562547, y: 1.8130145, z: -34.303593}
-  m_LocalScale: {x: 131.18826, y: 134.20631, z: 134.2063}
+  m_LocalScale: {x: 112.06101, y: 134.20631, z: 134.2063}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1738675777}
@@ -27317,8 +27317,8 @@ Transform:
   m_GameObject: {fileID: 1129488053}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -209.58186, y: 64.995895, z: -234.80615}
-  m_LocalScale: {x: 3.5242789, y: 3.3429797, z: 1.7208762}
+  m_LocalPosition: {x: -209.5414, y: 64.995895, z: -234.80615}
+  m_LocalScale: {x: 3.535909, y: 3.3429797, z: 1.7208762}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1132160411}
@@ -37686,7 +37686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a09ab5fc64402d49b12d170a7577986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ndiName: ETC-PINBALL-05 (TouchDesigner)
+  _ndiName: ETC-PINBALL-02 (TouchDesigner)
   _targetTexture: {fileID: 0}
   _targetRenderer: {fileID: 102875310}
   _targetMaterialProperty: _MainTex
