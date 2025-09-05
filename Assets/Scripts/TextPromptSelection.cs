@@ -40,7 +40,7 @@ public class TextPromptSelection : MonoBehaviour
 
     // List of available prompt options
 
-    private string[] randomPromptOne = {"medieval","magical","futuristic" };
+    private string[] randomPromptOne = {"medieval","magical","futuristic", "retro" };
     private string[] randomPromptTwo = {"cowboy", "wizard", "mermaid", "pirate"};
     private string[] promptOptions = { "Comic Book", "Watercolor", "Vintage", "Hyperrealism", "Lego", "Cartoon", "16-Bit" };
 
@@ -105,6 +105,9 @@ public class TextPromptSelection : MonoBehaviour
                 break;
             case "futuristic":
                 partOne = "a neon cyberpunk futuristic city full of robots";
+                break;
+            case "retro":
+                partOne = "60s hippie flower vivid colors vibe";
                 break;
         }
 
