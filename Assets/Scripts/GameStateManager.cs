@@ -130,6 +130,7 @@ public class GameStateManager : MonoBehaviour
                         TakePhoto();
                     }
                     else {
+                        Debug.Log("Current Mode: " + currentMode);
                         if (currentMode == GameMode.AdditiveColor) //check which game it is
                         {
                             GoToPowerUpStation();
@@ -165,7 +166,7 @@ public class GameStateManager : MonoBehaviour
                     }
                     break;
             }
-            
+         SerialManager.StartPressed = false;
         }
     }
     
