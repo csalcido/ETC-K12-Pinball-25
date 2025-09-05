@@ -33,6 +33,7 @@ public class TakePhotos : MonoBehaviour
 
     [Header("Game States")]
     public GameStateManager gameStateManager;
+    
     public GameObject gumballManager; //this while be set to active and start the gumball sequence after the photo is taken
     
     
@@ -123,11 +124,11 @@ public class TakePhotos : MonoBehaviour
         {
             webCamTest = webCameraFeed.GetComponent<WebCamTest>();
         }
-        
+
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
-        
+
         if (enablePinballTracking)
-        {   
+        {
             if (trackingMaterial != null)
             {
                 InitializeGPUTracking();
@@ -140,6 +141,9 @@ public class TakePhotos : MonoBehaviour
 
         // for tracking texture analysis
         InitializeComputeShader();
+
+       
+        
     }
 
     private void Update()
@@ -282,9 +286,19 @@ public class TakePhotos : MonoBehaviour
         else
         {
             RemovePhoto();
-            cameraAnimator.SetBool("playGumballAnim", true);
-            
-            gumballManager.SetActive(true);
+
+            if (gameStateManager.currentMode == GameStateManager.GameMode.AdditiveColor)
+            {
+                cameraAnimator.SetBool("playGumballAnim", true);
+                gumballManager.SetActive(true);
+            }
+
+            if (gameStateManager.currentMode== GameStateManager.GameMode.AiFilter)
+            {
+                cameraAnimator.SetBool("playPromptAnim", true);
+
+            }
+           
             
 
             }

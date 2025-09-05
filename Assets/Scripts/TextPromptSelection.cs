@@ -10,8 +10,9 @@ public class TextPromptSelection : MonoBehaviour
 
     public SerialManager serialManager; //manages controls
     public GameStateManager gameStateManager;
+    public GameObject gumballManager;
 
-    [Header ("Buttons")]
+    [Header("Buttons")]
 
     public Button leftButton;
     public Button RightButton;
@@ -31,6 +32,8 @@ public class TextPromptSelection : MonoBehaviour
     public TextMeshProUGUI selectedPromptText;
 
     [Header("Animated Components")]
+
+    public Animator cameraAnimator;
     public Animator textAnimator;
     public Animator curtainAnimator;
     public Animator filteredImageAnimator;
@@ -83,75 +86,76 @@ public class TextPromptSelection : MonoBehaviour
         textAnimator.Play("textBounce", -1, 0f);
         UpdatePromptText();
     }
+    
+    
+    
+
+    #region TouchDesigner Prompts
+    
     public string TdPromptTranslate(string partOne, string partTwo, string partThree)
     {
-        
-
         //first part
         switch (partOne)
-    {
-        case "medieval":
-            partOne = "a fantasy medieval kingdom with castles and knights";
-            break;
-        case "magical":
-            partOne = "a magical fairy forest glowing with enchantment";
-            break;
-        case "futuristic":
-            partOne = "a neon cyberpunk futuristic city full of robots";
-            break;
-    }
+        {
+            case "medieval":
+                partOne = "a fantasy medieval kingdom with castles and knights";
+                break;
+            case "magical":
+                partOne = "a magical fairy forest glowing with enchantment";
+                break;
+            case "futuristic":
+                partOne = "a neon cyberpunk futuristic city full of robots";
+                break;
+        }
 
         //second part 
-    switch (partTwo)
-    {
-        case "cowboy":
-            partTwo = "inhabited by cowboys in a dusty desert western setting";
-            break;
-        case "wizard":
-            partTwo = "with a wise wizard casting powerful spells";
-            break;
-        case "mermaid":
-            partTwo = "featuring mystical mermaids swimming in crystal waters";
-            break;
-        case "pirate":
-            partTwo = "sailing with pirates on stormy seas";
-            break;
-    }
+        switch (partTwo)
+        {
+            case "cowboy":
+                partTwo = "inhabited by cowboys in a dusty desert western setting";
+                break;
+            case "wizard":
+                partTwo = "with a wise wizard casting powerful spells";
+                break;
+            case "mermaid":
+                partTwo = "featuring mystical mermaids swimming in crystal waters";
+                break;
+            case "pirate":
+                partTwo = "sailing with pirates on stormy seas";
+                break;
+        }
 
         //third part
-    switch (partThree)
-    {
-        case "Comic Book":
-            partThree = "illustrated in bold comic book style";
-            break;
-        case "Watercolor":
-            partThree = "painted in dreamy watercolor textures";
-            break;
-        case "Vintage":
-            partThree = "styled as a vintage faded photograph";
-            break;
-        case "Hyperrealistic":
-            partThree = "rendered in hyperrealistic detail";
-            break;
-        case "Lego":
-            partThree = "constructed entirely from colorful Lego bricks";
-            break;
-        case "Cartoon":
-            partThree = "drawn as a playful Saturday morning cartoon";
-            break;
-        case "16-Bit":
-            partThree = "depicted in retro 16-bit pixel art";
-            break;
-    }
+        switch (partThree)
+        {
+            case "Comic Book":
+                partThree = "illustrated in bold comic book style";
+                break;
+            case "Watercolor":
+                partThree = "painted in dreamy watercolor textures";
+                break;
+            case "Vintage":
+                partThree = "styled as a vintage faded photograph";
+                break;
+            case "Hyperrealistic":
+                partThree = "rendered in hyperrealistic detail";
+                break;
+            case "Lego":
+                partThree = "constructed entirely from colorful Lego bricks";
+                break;
+            case "Cartoon":
+                partThree = "drawn as a playful Saturday morning cartoon";
+                break;
+            case "16-Bit":
+                partThree = "depicted in retro 16-bit pixel art";
+                break;
+        }
         string fullPrompt = $"{partOne}, {partTwo}, {partThree}."; //turn into interpolated string
 
         return fullPrompt;
-        
-        
-      
-
-
     }
+
+    #endregion
 
 
     public void ConfirmSelection()
@@ -172,6 +176,10 @@ public class TextPromptSelection : MonoBehaviour
         gameStateManager.randomSelectionFinished = false; //reset flag
 
         //transition to gameboard
+        cameraAnimator.SetBool("playGumballAnim", true);
+        gumballManager.SetActive(true);
+
+
 
     }
 
@@ -214,7 +222,6 @@ public class TextPromptSelection : MonoBehaviour
         }
 
     }
-
 
     // Called by Left Button
     public void OnLeftButton()
