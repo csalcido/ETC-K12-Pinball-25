@@ -41,9 +41,8 @@ public class GameStateManager : MonoBehaviour
 
     //flags for temporary states in the photo zone and end screen
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool photoTaken = false;
-
 
     [HideInInspector]
     public bool randomSelectionFinished = false;
@@ -90,7 +89,7 @@ public class GameStateManager : MonoBehaviour
     public void TakePhoto()
     {
         photoButton.onClick.Invoke();
-        photoTaken = true;
+        
     }
 
     public void SelectPrompt()
@@ -129,12 +128,10 @@ public class GameStateManager : MonoBehaviour
                     {
                         TakePhoto();
                     }
-                    else {
-                        Debug.Log("Current Mode: " + currentMode);
+                    if (photoTaken) {
                         if (currentMode == GameMode.AdditiveColor) //check which game it is
                         {
                             GoToPowerUpStation();
-
                         }
                         else if (currentMode == GameMode.AiFilter) //check which game it is
                         {

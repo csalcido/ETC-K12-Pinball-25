@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Gumball : MonoBehaviour
@@ -8,6 +9,8 @@ public class Gumball : MonoBehaviour
     public Animator mainCameraAnimator;//Main camera animator
     public Animator leverAnimator;
     public GameObject lever;
+    public TextMeshProUGUI buffText;
+    public Animator textAnimator;
 
     public SoundController buffBeep;
     public Transform[] spawnLocations;
@@ -28,19 +31,20 @@ public class Gumball : MonoBehaviour
     IEnumerator startGumballMachine()
     {
         yield return new WaitForSeconds(2f); //delay between camera transition and gumball generating
-        Debug.Log("Playing leverAnim on " + leverAnimator);
         //play lever animation
         leverAnimator.Play("leverAnim");
        
-
         //play lever sound
         lever.GetComponent<AudioSource>().Play();
-
 
         for (int i = 0; i < spawnLocations.Length; i++)
         {
             //randomize buff
             var randomBuff = spawnBuffs[Random.Range(0, spawnBuffs.Length)];
+           
+            buffText.text = randomBuff.name; //update text popup
+            
+            
 
             //spawn buff at random
             Instantiate(randomBuff, spawnLocations[i]);
@@ -50,12 +54,20 @@ public class Gumball : MonoBehaviour
             gumballAnimator.Play("gumballDropAnim");
             buffBeep.PlaySound();
 
+           
+
             GameObject obj = Instantiate(randomBuff, gumballDrop.transform); //this is all to get rid of weird transforms once gumball is instantiated
             obj.transform.localPosition = Vector3.zero;
             obj.transform.localRotation = Quaternion.identity;
             obj.transform.localScale = Vector3.one;
+
+             buffText.gameObject.SetActive(true);
+            textAnimator.Play("textInflate", -1, 0f); // play bounce animation
+
+            yield return new WaitForSeconds(1f);
+            buffText.gameObject.SetActive(false);
             
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(1.5f);
             Destroy(obj, 0.1f);
             gumballAnimator.Rebind();
             

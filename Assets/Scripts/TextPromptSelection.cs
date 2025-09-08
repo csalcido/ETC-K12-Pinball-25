@@ -42,31 +42,50 @@ public class TextPromptSelection : MonoBehaviour
 
     private string[] randomPromptOne = {"medieval","magical","futuristic", "retro" };
     private string[] randomPromptTwo = {"cowboy", "wizard", "mermaid", "pirate"};
-    private string[] promptOptions = { "Comic Book", "Watercolor", "Vintage", "Hyperrealism", "Lego", "Cartoon", "16-Bit" };
+    private string[] promptOptions = { "Comic Book", "Watercolor", "Vintage", "Hyperrealism", "LEGO", "Cartoon", "16-Bit" };
 
 
     
     void Start()
     {
-        //randomize the first two prompts
-        StartCoroutine(randomizePrompt(randomPromptOne, randomPromptOneText));
-        StartCoroutine(randomizePrompt(randomPromptTwo, randomPromptTwoText));
-        gameStateManager.randomSelectionFinished = true;
+        gameStateManager.randomSelectionFinished = false;
+        StartCoroutine(randomPromptSequence()); //randomize the first two prompts   
         // Set initial prompt text
         UpdatePromptText();
+    }
+
+    IEnumerator randomPromptSequence()
+    {
+        yield return new WaitForSeconds(2f);
+        yield return StartCoroutine(randomizePrompt(randomPromptOne, randomPromptOneText));
+        yield return StartCoroutine(randomizePrompt(randomPromptTwo, randomPromptTwoText)); 
+        gameStateManager.randomSelectionFinished = true;
+
     }
 
 
     IEnumerator randomizePrompt(string[] promptList, TextMeshProUGUI textObject)
     {
+
         //selects random prompt from list
         int listLength = promptList.Count();
         int index = Random.Range(0, listLength);
 
+
+        for (int i = 0; i < ((listLength * 2) + index); i++)
+        {
+            int wrappedIndex = i % listLength;
+            textObject.text = promptList[wrappedIndex];
+            yield return new WaitForSeconds(0.1f);
+
+        }
+
         //update text object
         textObject.text = promptList[index];
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
+        
+        
     }
 
     private void UpdatePromptText()
@@ -143,7 +162,7 @@ public class TextPromptSelection : MonoBehaviour
             case "Hyperrealism":
                 partThree = "rendered in hyperrealistic detail";
                 break;
-            case "Lego":
+            case "LEGO":
                 partThree = "colorful Lego bricks";
                 break;
             case "Cartoon":
@@ -166,13 +185,7 @@ public class TextPromptSelection : MonoBehaviour
         //translate prompts to TD prompts
         TdPrompt = TdPromptTranslate(randomPromptOneText.text, randomPromptTwoText.text, selectedPromptText.text);
         //apply it to the oscmessage object
-        gameStateManager.oscMessage.promptText = TdPrompt;
-
-        //play animation coroutine
-        StartCoroutine(ImageTransformation());
-
-
-        ShowFilteredImage();
+        gameStateManager.oscMessage.promptText = TdPrompt;        
 
         //update Game State
         gameStateManager.currentState = GameStateManager.ScreenState.GameBoard;
@@ -182,26 +195,9 @@ public class TextPromptSelection : MonoBehaviour
         cameraAnimator.SetBool("playGumballAnim", true);
         gumballManager.SetActive(true);
 
-
-
     }
 
-    IEnumerator ImageTransformation()
-    {
-        //first have text animation 
-        textAnimator.Play("textTransform", -1, 0f);
-        selectionSound.PlaySound();
-        
-      
-        //have text and image go behind curtain and do sparkle thing
-
-        yield return new WaitForSeconds(2f);
-    }
-
-    private void ShowFilteredImage()
-    {
-
-    }
+    
 
     // Update is called once per frame
     void Update()

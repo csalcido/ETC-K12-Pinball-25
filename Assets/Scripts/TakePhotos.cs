@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using Klak.Ndi;
 using TMPro;
+using UnityEditor.Recorder.Input;
 
 
 public class TakePhotos : MonoBehaviour
@@ -34,7 +35,8 @@ public class TakePhotos : MonoBehaviour
     [Header("Game States")]
     public GameStateManager gameStateManager;
     
-    public GameObject gumballManager; //this while be set to active and start the gumball sequence after the photo is taken
+    public GameObject gumballManager; //will be set to active and start the gumball sequence after the photo is taken
+    public GameObject textSelectionManager; //will be set to active after photo is taken in AI game
     
     
 
@@ -293,9 +295,10 @@ public class TakePhotos : MonoBehaviour
                 gumballManager.SetActive(true);
             }
 
-            if (gameStateManager.currentMode== GameStateManager.GameMode.AiFilter)
+            if (gameStateManager.currentMode == GameStateManager.GameMode.AiFilter)
             {
                 cameraAnimator.SetBool("playPromptAnim", true);
+                textSelectionManager.SetActive(true);
 
             }
            

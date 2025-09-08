@@ -756,6 +756,7 @@ MonoBehaviour:
   cameraAnimator: {fileID: 0}
   gameStateManager: {fileID: 0}
   gumballManager: {fileID: 0}
+  textSelectionManager: {fileID: 0}
   displayPlane: {fileID: 0}
   planeMaterial: {fileID: 0}
   enablePinballTracking: 1
@@ -6856,7 +6857,7 @@ GameObject:
   - component: {fileID: 1080593122}
   - component: {fileID: 1080593121}
   m_Layer: 0
-  m_Name: Button Manager
+  m_Name: Game State Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6885,7 +6886,7 @@ MonoBehaviour:
   restartButton: {fileID: 0}
   oscMessage: {fileID: 0}
   currentState: 0
-  currentMode: 0
+  currentMode: 1
   photoTaken: 0
   randomSelectionFinished: 0
   photoPrinted: 0
@@ -7482,7 +7483,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portNameL: COM3
-  portNameR: COM3
   baudRate: 9600
   baudRate_pi: 115200
   leftBall: {fileID: 0}
