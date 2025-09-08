@@ -44,7 +44,7 @@ public class GameStateManager : MonoBehaviour
     //[HideInInspector]
     public bool photoTaken = false;
 
-    [HideInInspector]
+    
     public bool randomSelectionFinished = false;
 
     [HideInInspector]
@@ -75,6 +75,7 @@ public class GameStateManager : MonoBehaviour
     public void GoToTextPrompt()
     {
         currentState = ScreenState.TextPrompt;
+        photoButton.onClick.Invoke(); //second click turns on text Selection manager and transitions Camera
     }
 
     public void RestartGame()

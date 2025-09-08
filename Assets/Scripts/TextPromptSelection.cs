@@ -12,6 +12,7 @@ public class TextPromptSelection : MonoBehaviour
     public GameStateManager gameStateManager;
     public GameObject gumballManager;
 
+
     [Header("Buttons")]
 
     public Button leftButton;
@@ -31,6 +32,8 @@ public class TextPromptSelection : MonoBehaviour
     public TextMeshProUGUI randomPromptTwoText;
     public TextMeshProUGUI selectedPromptText;
 
+    public GameObject thirdPromptUI;
+
     [Header("Animated Components")]
 
     public Animator cameraAnimator;
@@ -48,7 +51,7 @@ public class TextPromptSelection : MonoBehaviour
     
     void Start()
     {
-        gameStateManager.randomSelectionFinished = false;
+        
         StartCoroutine(randomPromptSequence()); //randomize the first two prompts   
         // Set initial prompt text
         UpdatePromptText();
@@ -60,6 +63,7 @@ public class TextPromptSelection : MonoBehaviour
         yield return StartCoroutine(randomizePrompt(randomPromptOne, randomPromptOneText));
         yield return StartCoroutine(randomizePrompt(randomPromptTwo, randomPromptTwoText)); 
         gameStateManager.randomSelectionFinished = true;
+        thirdPromptUI.SetActive(true);
 
     }
 
@@ -194,6 +198,8 @@ public class TextPromptSelection : MonoBehaviour
         //transition to gameboard
         cameraAnimator.SetBool("playGumballAnim", true);
         gumballManager.SetActive(true);
+
+        thirdPromptUI.SetActive(false); //reset
 
     }
 

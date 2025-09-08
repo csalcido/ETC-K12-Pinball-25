@@ -295,10 +295,12 @@ public class TakePhotos : MonoBehaviour
                 gumballManager.SetActive(true);
             }
 
+            
             if (gameStateManager.currentMode == GameStateManager.GameMode.AiFilter)
             {
                 cameraAnimator.SetBool("playPromptAnim", true);
                 textSelectionManager.SetActive(true);
+
 
             }
            
