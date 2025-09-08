@@ -24,25 +24,23 @@ public class WebCamTest : MonoBehaviour
                 break;
             }
         }
-        
+
         if (webCam == null)
-        webCam = new WebCamTexture();
+            webCam = new WebCamTexture();
 
         if (!webCam.isPlaying)
             webCam.Play();
 
         if (img != null)
-        img.texture = webCam;
+            img.texture = webCam;
     }
-    
-       public void StopCamera()
+
+    public void StopCamera()
     {
         if (webCam != null && webCam.isPlaying)
             webCam.Stop();
     }
 
-
-    
 
 
 
@@ -74,7 +72,6 @@ public class WebCamTest : MonoBehaviour
        
     } */
 
-
-
-
 }
+
+

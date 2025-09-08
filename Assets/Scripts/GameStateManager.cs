@@ -157,9 +157,10 @@ public class GameStateManager : MonoBehaviour
                     break;
 
                 case ScreenState.EndScreen:
-                    if (photoPrinted) //only allow button clicks after photo is done
+                    RestartGame();
+                    if (photoPrinted) //TO DO: only allow button clicks after photo is done
                     {
-                        RestartGame();
+
                     }
                     break;
             }
