@@ -13,8 +13,15 @@ public class BuffEffect : MonoBehaviour
     {
         if (buffCoroutines.ContainsKey(buffType))
         {
-            return; // buff already active
+
+            // restart buff duration
+    StopCoroutine(buffCoroutines[buffType]);
+    buffCoroutines[buffType] = StartCoroutine(BuffTimer(activeBuffs[buffType], buffType, duration));
+    Debug.Log($"Refreshed {buffType} buff duration.");
+    return;
+            // return; // buff already active
         }
+    
 
         BuffBase newBuff = CreateBuff(buffType, buffValue, duration);
         if (newBuff != null)
