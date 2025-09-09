@@ -52,7 +52,7 @@ public class RightPlunger : MonoBehaviour
 
             if (((Input.GetKeyDown(plungerKey) || SerialManager.BallSent) && ballsInContact.Count > 0))
             {
-                currentForce = ((100 - SerialManager.BallSpeed) / 10);
+                currentForce = ((100 - SerialManager.BallSpeed) /5); //testing values, add /10?
                 print(currentForce);
                 isLaunching = true;
                 startManager.RegisterStart();

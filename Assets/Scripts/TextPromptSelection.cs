@@ -19,7 +19,7 @@ public class TextPromptSelection : MonoBehaviour
     public Button RightButton;
     public Button SelectButton;
     public SoundController buttonSound;
-    public SoundController selectionSound;
+    //public SoundController selectionSound;
 
     [Header("Info for Touchdesigner")]
     public string TdPrompt = "full prompt here";
@@ -51,7 +51,7 @@ public class TextPromptSelection : MonoBehaviour
     
     void Start()
     {
-        
+        thirdPromptUI.SetActive(false); 
         StartCoroutine(randomPromptSequence()); //randomize the first two prompts   
         // Set initial prompt text
         UpdatePromptText();
@@ -199,7 +199,7 @@ public class TextPromptSelection : MonoBehaviour
         cameraAnimator.SetBool("playGumballAnim", true);
         gumballManager.SetActive(true);
 
-        thirdPromptUI.SetActive(false); //reset
+        
 
     }
 

@@ -77,6 +77,6 @@ public class Timer : MonoBehaviour
         timeToDisplay = Mathf.Max(timeToDisplay, 0f);
         int minutes = Mathf.FloorToInt(timeToDisplay / 60);
         int seconds = Mathf.FloorToInt(timeToDisplay % 60);
-        countdownText.text = "time left: " + string.Format("{0:00}:{1:00}", minutes, seconds);
+        countdownText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }

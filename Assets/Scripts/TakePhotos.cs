@@ -381,7 +381,7 @@ public class TakePhotos : MonoBehaviour
         StartCoroutine(CapturePhoto());
         countdownDisplayBackground.SetActive(false);
         countdownDisplay.text = "";
-        buttonText.text = "Continue?";
+        buttonText.text = "Continue";
         gameStateManager.photoTaken = true;
         
 
