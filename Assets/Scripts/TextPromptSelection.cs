@@ -19,7 +19,7 @@ public class TextPromptSelection : MonoBehaviour
     public Button RightButton;
     public Button SelectButton;
     public SoundController buttonSound;
-    //public SoundController selectionSound;
+    public SoundController selectionSound;
 
     [Header("Info for Touchdesigner")]
     public string TdPrompt = "full prompt here";
@@ -31,6 +31,7 @@ public class TextPromptSelection : MonoBehaviour
     public TextMeshProUGUI randomPromptOneText;
     public TextMeshProUGUI randomPromptTwoText;
     public TextMeshProUGUI selectedPromptText;
+    public TextMeshProUGUI gameOverlayText;
 
     public GameObject thirdPromptUI;
 
@@ -44,8 +45,8 @@ public class TextPromptSelection : MonoBehaviour
     // List of available prompt options
 
     private string[] randomPromptOne = {"medieval","magical","futuristic", "retro" };
-    private string[] randomPromptTwo = {"cowboy", "wizard", "mermaid", "pirate"};
-    private string[] promptOptions = { "Comic Book", "Watercolor", "Vintage", "Hyperrealism", "LEGO", "Cartoon", "16-Bit" };
+    private string[] randomPromptTwo = {"cowboy", "wizard", "mermaid", "pirate", "vampire", "robot"};
+    private string[] promptOptions = { "Comic Book", "Watercolor", "Vintage", "Pop Art", "Anime", "Cartoon", "16-Bit" };
 
 
     
@@ -149,34 +150,41 @@ public class TextPromptSelection : MonoBehaviour
             case "pirate":
                 partTwo = "sailing with pirates on stormy seas";
                 break;
+            case "vampire":
+                partTwo = "victorian era vampire in spooky mansion";
+                break;
+            case "robot":
+                partTwo = "mechanical robot with gears and steam";
+                break;
+
         }
 
         //third part
         switch (partThree)
         {
             case "Comic Book":
-                partThree = "illustrated in bold comic book style";
+                partThree = "illustrated in bold comic book marvel style";
                 break;
             case "Watercolor":
                 partThree = "painted in dreamy watercolor textures";
                 break;
             case "Vintage":
-                partThree = "styled as a vintage faded photograph";
+                partThree = "styled as a vintage faded photograph in black and white";
                 break;
-            case "Hyperrealism":
-                partThree = "rendered in hyperrealistic detail";
+            case "Pop Art":
+                partThree = "rendered in pop art Andy Warhol style";
                 break;
-            case "LEGO":
-                partThree = "colorful Lego bricks";
+            case "Anime":
+                partThree = "drawn in ghibli anime style";
                 break;
             case "Cartoon":
-                partThree = "drawn as a playful Saturday morning cartoon";
+                partThree = "drawn in a disney cartoon style";
                 break;
             case "16-Bit":
                 partThree = "retro 16-bit pixel art";
                 break;
         }
-        string fullPrompt = $"{partOne}, {partTwo}, {partThree}."; //turn into interpolated string
+        string fullPrompt = $"{partThree}, {partTwo}, {partOne}."; //turn into interpolated string
 
         return fullPrompt;
     }
@@ -189,7 +197,7 @@ public class TextPromptSelection : MonoBehaviour
         //translate prompts to TD prompts
         TdPrompt = TdPromptTranslate(randomPromptOneText.text, randomPromptTwoText.text, selectedPromptText.text);
         //apply it to the oscmessage object
-        gameStateManager.oscMessage.promptText = TdPrompt;        
+        gameStateManager.oscMessage.promptText = TdPrompt;
 
         //update Game State
         gameStateManager.currentState = GameStateManager.ScreenState.GameBoard;
@@ -198,6 +206,11 @@ public class TextPromptSelection : MonoBehaviour
         //transition to gameboard
         cameraAnimator.SetBool("playGumballAnim", true);
         gumballManager.SetActive(true);
+        //update text overlay on gameboard
+        string onScreenPrompt = $"{randomPromptOneText.text } {randomPromptTwoText.text} in {selectedPromptText.text} style";
+        onScreenPrompt = onScreenPrompt.ToUpper(); //capitalizing all letters
+        gameOverlayText.text = onScreenPrompt;
+
 
         
 
