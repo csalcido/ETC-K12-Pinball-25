@@ -52079,6 +52079,7 @@ MonoBehaviour:
   flashTime: 0.2
   flashSound: {fileID: 172214542}
   buttonText: {fileID: 1483423680}
+  buttonImage: {fileID: 1751044976}
   screenCapture: {fileID: 2800000, guid: f79b222e1e049034eae8c3d8fce68e3f, type: 3}
   fadingAnimation: {fileID: 1393364125}
   slidingAnimation: {fileID: 32133865}
@@ -62974,7 +62975,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1751044973}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
