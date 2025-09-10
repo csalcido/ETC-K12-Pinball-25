@@ -45,8 +45,8 @@ public class TextPromptSelection : MonoBehaviour
 
     // List of available prompt options
 
-    private string[] randomPromptOne = {"medieval","magical","futuristic", "retro", "silly" };
-    private string[] randomPromptTwo = {"cowboy", "wizard", "mermaid", "pirate", "vampire", "robot"};
+    private string[] randomPromptOne = {"medieval","magical","futuristic", "retro", "disco" };
+    private string[] randomPromptTwo = {"cowboy", "wizard", "mermaid", "pirate", "vampire", "robot", "alien"};
     private string[] promptOptions = { "Comic Book", "Watercolor", "Vintage", "Pop Art", "Anime", "Cartoon", "16-Bit" };
 
 
@@ -125,8 +125,8 @@ public class TextPromptSelection : MonoBehaviour
         //first part
         switch (partOne)
         {
-            case "medieval":
-                partOne = "a fantasy medieval kingdom with castles and knights";
+            case "disco":
+                partOne = "disco diva in neon lights and glitter";
                 break;
             case "magical":
                 partOne = "a magical fairy forest glowing with enchantment";
@@ -159,6 +159,9 @@ public class TextPromptSelection : MonoBehaviour
                 break;
             case "robot":
                 partTwo = "mechanical robot with gears and steam";
+                break;
+            case "alien":
+                partTwo = "aliens in outer space";
                 break;
 
         }

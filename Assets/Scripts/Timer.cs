@@ -10,8 +10,12 @@ public class Timer : MonoBehaviour
     public TextMeshProUGUI countdownText;
     public EndScreen endScreen;
     public GameStateManager gameStateManager;
+    public RightPlunger rightPlunger; //start timer when first ball is launched
 
     private float nextBeepTime = 0f;
+    private bool viewingOverlay;
+    public GameObject overlayBackground;
+    public TextMeshProUGUI overlayText;
     
 
     private float timeRemaining;
@@ -21,17 +25,24 @@ public class Timer : MonoBehaviour
     {
         timeRemaining = countdownTime;
         timerIsRunning = false;
+
+        viewingOverlay = true;
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        if (gameStateManager.currentState == GameStateManager.ScreenState.GameBoard)
+
+        if (gameStateManager.currentState == GameStateManager.ScreenState.GameBoard && rightPlunger.firstLaunch)
         {
-            if (!timerIsRunning)
+            if (!timerIsRunning && viewingOverlay)
                 timerIsRunning = true;
+                 overlayBackground.SetActive(false);
+                overlayText.text = "";
+                viewingOverlay = false;
+
+            
         }
 
         if (timerIsRunning)

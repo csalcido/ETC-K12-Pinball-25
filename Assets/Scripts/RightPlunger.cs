@@ -38,6 +38,8 @@ public class RightPlunger : MonoBehaviour
     public StartManager startManager;
     public GameStateManager gameStateManager;
 
+    public bool firstLaunch;
+
     void Update()
     {
         isLaunching = false;
@@ -52,12 +54,16 @@ public class RightPlunger : MonoBehaviour
 
             if (((Input.GetKeyDown(plungerKey) || SerialManager.BallSent) && ballsInContact.Count > 0))
             {
-                currentForce = ((100 - SerialManager.BallSpeed) /5); //testing values, add /10?
+                currentForce = ((100 - SerialManager.BallSpeed) / 5); //testing values, add /10?
                 print(currentForce);
                 isLaunching = true;
                 startManager.RegisterStart();
                 LaunchBalls();
                 currentForce = 0f;
+                if (!firstLaunch)
+                {
+                    firstLaunch = true;
+                }
             }
         }
     }

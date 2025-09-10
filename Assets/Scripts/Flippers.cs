@@ -10,6 +10,11 @@ public class Flippers : MonoBehaviour
     public HingeJoint upperLeftFlipper;
     public HingeJoint upperRightFlipper;
 
+    public HingeJoint upperRightFlipperTwo;
+    public HingeJoint upperLeftFlipperTwo;
+
+    
+
     public Restart restart;
 
     public SoundController flipperUpSound;
@@ -22,6 +27,10 @@ public class Flippers : MonoBehaviour
     private JointSpring rightSpring;
     private JointSpring upperLeftSpring;
     private JointSpring upperRightSpring;
+
+    private JointSpring upperLeftSpringTwo;
+    private JointSpring upperRightSpringTwo;
+
 
     private Xbox xboxControls;
     public GameStateManager gameStateManager;
@@ -36,6 +45,9 @@ public class Flippers : MonoBehaviour
         upperLeftSpring = upperLeftFlipper.spring;
         upperRightSpring = upperRightFlipper.spring;
 
+        upperRightSpringTwo = upperRightFlipperTwo.spring;
+        upperLeftSpringTwo = upperLeftFlipperTwo.spring;
+
         xboxControls = new Xbox();
         xboxControls.Enable();
     }
@@ -47,6 +59,9 @@ public class Flippers : MonoBehaviour
         rightSpring.spring = flipSpeed;
         upperLeftSpring.spring = flipSpeed;
         upperRightSpring.spring = flipSpeed;
+
+        upperLeftSpringTwo.spring = flipSpeed;
+        upperRightSpringTwo.spring = flipSpeed;
 
         //check gameState
         if (gameStateManager.currentState == GameStateManager.ScreenState.GameBoard)
@@ -86,7 +101,7 @@ public class Flippers : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.RightArrow) || xboxControls.Player.RightArrow.WasReleasedThisFrame() || SerialManager.RightFlipperReleased && rightHeld)
             {
                 rightHeld = false;
-               // flipperDownSound.PlaySound();
+                // flipperDownSound.PlaySound();
             }
 
             // control right flippers
@@ -104,19 +119,23 @@ public class Flippers : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftArrow) || xboxControls.Player.LeftArrow.IsPressed() || SerialManager.LeftFlipperPressed)
             {
                 upperLeftSpring.targetPosition = -targetAngle;
+                upperLeftSpringTwo.targetPosition = -targetAngle;
             }
             else
             {
                 upperLeftSpring.targetPosition = 0f;
+                upperLeftSpringTwo.targetPosition = 0f;
             }
 
             if (Input.GetKey(KeyCode.RightArrow) || xboxControls.Player.RightArrow.IsPressed() || SerialManager.RightFlipperPressed)
             {
                 upperRightSpring.targetPosition = targetAngle;
+                upperRightSpringTwo.targetPosition = targetAngle;
             }
             else
             {
                 upperRightSpring.targetPosition = 0f;
+                upperRightSpringTwo.targetPosition = 0f;
             }
         }
 
@@ -124,5 +143,9 @@ public class Flippers : MonoBehaviour
         rightFlipper.spring = rightSpring;
         upperLeftFlipper.spring = upperLeftSpring;
         upperRightFlipper.spring = upperRightSpring;
+
+        upperLeftFlipperTwo.spring = upperLeftSpringTwo;
+        upperRightFlipperTwo.spring = upperRightSpringTwo;
+
     }
 }
