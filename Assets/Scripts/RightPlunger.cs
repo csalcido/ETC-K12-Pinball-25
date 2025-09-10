@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
@@ -37,6 +37,8 @@ public class RightPlunger : MonoBehaviour
 
     public StartManager startManager;
     public GameStateManager gameStateManager;
+
+    public Respawn respawn;
 
     public bool firstLaunch;
 
@@ -82,6 +84,8 @@ public class RightPlunger : MonoBehaviour
 
         ballsInContact.Clear();
         plungerSound.PlaySound();
+
+        respawn.SpawnBall();
 
         StartCoroutine(DisableForSeconds(plungerClose, closeTime));
         StartCoroutine(EffectsTrigger(plungerVFX[matIndex], 1f));
@@ -148,6 +152,6 @@ public class RightPlunger : MonoBehaviour
         }
 
         isWaitingForReturn = false;
-        respawnScript.SpawnBall(false);
+        //respawnScript.SpawnBall(false);
     }
 }

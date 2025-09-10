@@ -4,6 +4,7 @@ using System.Collections;
 
 public class LeftPlunger : MonoBehaviour
 {
+    
     public Respawn respawnScript;
 
     public Rigidbody ball;
@@ -36,7 +37,7 @@ public class LeftPlunger : MonoBehaviour
     private bool ballHasLeftPlunger = true;
 
     public StartManager startManager;
-
+/*
     void Update()
     {
         isLaunching = false;
@@ -145,5 +146,5 @@ public class LeftPlunger : MonoBehaviour
 
         isWaitingForReturn = false;
         respawnScript.SpawnBall(true);
-    }
+    } */
 }

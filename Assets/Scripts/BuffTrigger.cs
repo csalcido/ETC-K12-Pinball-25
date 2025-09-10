@@ -53,9 +53,12 @@ public class BuffTrigger : MonoBehaviour
 
         yield return new WaitForSeconds(respawnTime);
 
+        /*
+
         isActive = true;
         GetComponent<Renderer>().enabled = true;
         GetComponent<Collider>().enabled = true;
+        */ 
     }
     
 

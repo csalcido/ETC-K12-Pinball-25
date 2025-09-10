@@ -8,17 +8,22 @@ public class BuffEffect : MonoBehaviour
     private Dictionary<BuffType, BuffBase> activeBuffs = new Dictionary<BuffType, BuffBase>();
 
     public SoundController buffSound;
-    
+    public bool isBuffActive = false;
     public void ApplyBuff(BuffType buffType, float buffValue, float duration)
     {
+        if (isBuffActive)
+        {
+             Debug.Log("A buff is already active, ignoring new buff.");
+            return;
+        }
         if (buffCoroutines.ContainsKey(buffType))
         {
 
             // restart buff duration
-    StopCoroutine(buffCoroutines[buffType]);
-    buffCoroutines[buffType] = StartCoroutine(BuffTimer(activeBuffs[buffType], buffType, duration));
-    Debug.Log($"Refreshed {buffType} buff duration.");
-    return;
+            StopCoroutine(buffCoroutines[buffType]);
+            buffCoroutines[buffType] = StartCoroutine(BuffTimer(activeBuffs[buffType], buffType, duration));
+            Debug.Log($"Refreshed {buffType} buff duration.");
+            return;
             // return; // buff already active
         }
     
@@ -28,6 +33,7 @@ public class BuffEffect : MonoBehaviour
         {
             newBuff.Apply();
             activeBuffs[buffType] = newBuff;
+            isBuffActive = true;
 
             //play buff sound
             buffSound.PlaySound();
@@ -58,27 +64,32 @@ public class BuffEffect : MonoBehaviour
                 return null;
         }
     }
-    
+
     private IEnumerator BuffTimer(BuffBase buff, BuffType buffType, float duration)
     {
         yield return new WaitForSeconds(duration);
         RemoveBuff(buffType);
+        isBuffActive = false;
     }
-    
+
     private void RemoveBuff(BuffType buffType)
-    {        
+    {
         if (buffCoroutines.ContainsKey(buffType))
         {
             StopCoroutine(buffCoroutines[buffType]);
             buffCoroutines.Remove(buffType);
         }
-        
+
+
+
         // Remove the buff from the active buffs
         if (activeBuffs.ContainsKey(buffType))
         {
             activeBuffs[buffType].Remove();
             activeBuffs.Remove(buffType);
         }
+        
+        
     }
     
     private void OnDestroy()

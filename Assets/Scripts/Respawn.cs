@@ -23,12 +23,23 @@ public class Respawn : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
-
-    public void SpawnBall(bool isLeftRespawnPoint)
+    
+    public void SpawnBall()
     {
-        Vector3 respawnPosition = isLeftRespawnPoint ? leftInitialPosition : rightInitialPosition;
-        StartCoroutine(SpawnBallAfterDelay(respawnPosition, 0.5f));
-    }
+        Vector3 rightRespawnPosition = rightRespawnPoint.position;
+        Vector3 leftRespawnPosition = leftRespawnPoint.position;
+        
+        
+         StartCoroutine(SpawnBallAfterDelay(rightRespawnPosition, 0.5f));
+        StartCoroutine(SpawnBallAfterDelay(leftRespawnPosition, 0.5f));
+    } 
+
+/*
+            public void SpawnBall(bool isLeftRespawnPoint)
+            {
+                Vector3 respawnPosition = isLeftRespawnPoint ? leftInitialPosition : rightInitialPosition;
+                StartCoroutine(SpawnBallAfterDelay(respawnPosition, 0.5f));
+            } */
 
     private IEnumerator SpawnBallAfterDelay(Vector3 position, float delay)
     {
