@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
+using System.Collections.Concurrent;
 using System.IO.Ports;
 using System.Threading;
-using System.Drawing.Text;
-using System;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class SerialManager : MonoBehaviour
 {
@@ -34,7 +33,7 @@ public class SerialManager : MonoBehaviour
     private Thread readThreadR;
     private Thread writeThreadR;
     private bool isRunningL = false;
-    private bool isRunningR = false;
+    /* private bool isRunningR = false; */
     private float distanceCML = 0f;
     private float distanceCMR = 0f;
 
@@ -46,30 +45,36 @@ public class SerialManager : MonoBehaviour
     public float DistanceCML => distanceCML;
     public float DistanceCMR => distanceCMR;
 
+    /// <summary>
+    /// Thread-safe queue for incoming serial data.
+    /// </summary>
+    private readonly ConcurrentQueue<string> incoming = new();
+
     void Start()
     {
-        // serialPortL = new SerialPort(portNameL, baudRate); guess whoooo
         serialPortL = new SerialPort(portNameL, baudRate_pi);
-       // serialPortR = new SerialPort(portNameR, baudRate_pi);
         serialPortL.ReadTimeout = 20;
-      //  serialPortR.ReadTimeout = 20;
+        // serialPortR = new SerialPort(portNameR, baudRate_pi);
+        // serialPortR.ReadTimeout = 20;
 
         try
         {
             serialPortL.Open();
-            Debug.Log("L opened");
-          //  serialPortR.Open();
             isRunningL = true;
-          //  isRunningR = true;
+            Debug.Log($"{portNameL} opened");
 
-           // readThreadL = new Thread(ReadSerialDataL);
-           // readThreadL.Start();
+            readThreadL = new Thread(ReadSerialDataL);
+            readThreadL.Start();
+
             writeThreadL = new Thread(WriteSerialDataL);
             writeThreadL.Start();
-          //  readThreadR = new Thread(ReadSerialDataR);
-           // readThreadR.Start();
-           // writeThreadR = new Thread(WriteSerialDataR);
-           // writeThreadR.Start();
+
+            // serialPortR.Open();
+            // isRunningR = true;
+            // readThreadR = new Thread(ReadSerialDataR);
+            // readThreadR.Start();
+            // writeThreadR = new Thread(WriteSerialDataR);
+            // writeThreadR.Start();
             Debug.Log("Both serial port opened successfully.");
         }
         catch (System.Exception e)
@@ -78,61 +83,70 @@ public class SerialManager : MonoBehaviour
         }
     }
 
-    void Update()
+    private void LateUpdate()
     {
-        //Debug.Log("Left distance: " + distanceCML + " cm");
-        //Debug.Log("Right distance: " + distanceCMR + " cm");
+        /* Parse incoming data from the queue
+         * 
+         * Since you don't know the order in which scripts will run Update,
+         * there is a chance that one script will check a button state BEFORE
+         * this script has updated it leading to missed button presses.
+         * 
+         * LateUpdate runs AFTER all other Update() calls, so any change to
+         * button states will be queued up and processed by other scripts
+         * during their next Update() cycle and we know that the state will be
+         * conssistet for all scripts because we won't change the state until
+         * AFTER all Update() calls have been made.
+         * 
+         * Additionally, the thread reading the input data is running asynchronously
+         * from the main Unity thread, so we need to place data into a thread-safe
+         * queue to be processed here in LateUpdate.
+         * 
+         * We process just 1 line of input per LateUpdate() cycle, otherwise we
+         * might both press and unpress a button in the same frame and the button
+         * press would be missed by all the other scripts.
+         * 
+         * bm3n 
+         */
 
-        //added later by hannah for pi controller purposes
-
-        //*******************************************
-        try
+        if (incoming.TryDequeue(out string line))
         {
-            if (isRunningL && serialPortL.BytesToRead > 0)
+            Debug.Log("Received: " + line);
+
+            switch (line)
             {
-                string line = serialPortL.ReadLine().Trim();
-                Debug.Log("Recieved: " + line);
-                if (line == "start_pressed")
-                {
+                case "start_pressed":
                     StartPressed = true;
-                    Debug.Log("Button Press Detected!");
-                }
-                else if (line == "start_released")
-                {
+                    StartReleased = false;
+                    break;
+                case "start_released":
+                    StartReleased = true;
                     StartPressed = false;
-                }
-                else if (line == "left_flipper_pressed")
-                {
+                    break;
+                case "left_flipper_pressed":
                     LeftFlipperPressed = true;
                     LeftFlipperReleased = false;
-                }
-                else if (line == "left_flipper_released")
-                {
+                    break;
+                case "left_flipper_released":
                     LeftFlipperReleased = true;
                     LeftFlipperPressed = false;
-                }
-                else if (line == "right_flipper_pressed")
-                {
+                    break;
+                case "right_flipper_pressed":
                     RightFlipperPressed = true;
                     RightFlipperReleased = false;
-                }
-                else if (line == "right_flipper_released")
-                {
+                    break;
+                case "right_flipper_released":
                     RightFlipperReleased = true;
                     RightFlipperPressed = false;
-                }
-                else if (line == "ball_sent")
-                {
+                    break;
+                case "ball_sent":
                     BallSent = true;
-                }
-                else if (line == "ball_back")
-                {
+                    break;
+                case "ball_back":
                     BallSent = false;
-                }
-                else
-                {
-                    float speed;
-                    if (float.TryParse(line, out speed))
+                    break;
+                default:
+                    // If it isn't one of the known commands, try parsing as a float
+                    if (float.TryParse(line, out float speed))
                     {
                         if (speed != prevBallSpeed)
                         {
@@ -145,17 +159,19 @@ public class SerialManager : MonoBehaviour
                             prevBallSpeed = 0;
                         }
                     }
-                }
+                    else
+                    {
+                        Debug.LogWarning($"Failed to parse data: {line}");
+                    }
+                    break;
             }
         }
-        catch (TimeoutException) { /* EAT IT */ }
-        //*******************************************
+
     }
 
     void OnDestroy()
     {
         isRunningL = false;
-        isRunningR = false;
 
         if (readThreadL != null && readThreadL.IsAlive)
         {
@@ -165,8 +181,11 @@ public class SerialManager : MonoBehaviour
         if (serialPortL != null && serialPortL.IsOpen)
         {
             serialPortL.Close();
-            Debug.Log("Serial port closed.");
+            Debug.Log($"{portNameL} closed.");
         }
+
+        /*
+        isRunningR = false;
 
         if (readThreadR != null && readThreadR.IsAlive)
         {
@@ -176,57 +195,31 @@ public class SerialManager : MonoBehaviour
         if (serialPortR != null && serialPortR.IsOpen)
         {
             serialPortR.Close();
-            Debug.Log("Serial port closed.");
+            Debug.Log($"{portNameR}  closed.");
         }
+        */
     }
-    /*
+
     private void ReadSerialDataL()
     {
         while (isRunningL)
         {
             try
             {
-                string data = serialPortL.ReadLine();
-
-                if (float.TryParse(data, out float parsedDistance))
-                {
-                    distanceCML = parsedDistance;
-                }
-                else
-                {
-                    Debug.LogWarning("Failed to parse data: " + data);
-                }
+                string data = serialPortL.ReadLine().Trim();
+                incoming.Enqueue(data);
+            }
+            catch (TimeoutException) 
+            { 
+                /* ignore timeouts */ 
             }
             catch (System.Exception e)
             {
-                Debug.LogWarning("Error reading serial data: " + e.Message);
+                Debug.LogWarning($"Error reading data from {portNameL}: " + e.Message);
             }
         }
     }
-    private void ReadSerialDataR()
-    {
-        while (isRunningR)
-        {
-            try
-            {
-                string data = serialPortR.ReadLine();
 
-                if (float.TryParse(data, out float parsedDistance))
-                {
-                    distanceCMR = parsedDistance;
-                }
-                else
-                {
-                    Debug.LogWarning("Failed to parse data: " + data);
-                }
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogWarning("Error reading serial data: " + e.Message);
-            }
-        }
-    }
-    */
     private void WriteSerialDataL()
     {
         int colorCache = -1;
@@ -252,7 +245,7 @@ public class SerialManager : MonoBehaviour
                     }
                     catch (System.Exception e)
                     {
-                        Debug.LogWarning("Error writing serial data: " + e.Message);
+                        Debug.LogWarning($"Error writing to {portNameL}: " + e.Message);
                     }
                 }
             }
@@ -265,16 +258,42 @@ public class SerialManager : MonoBehaviour
                     string data = (colorCache.ToString() + "\n");
                     serialPortL.Write(data);
                     launchSent++;
-                    Debug.Log("Launch data sent: " + data + "*" + launchSent);
+                    Debug.Log($"Launch data sent: {data}*{launchSent}");
                 }
-                catch (System.Exception e)
+                catch (Exception e)
                 {
-                    Debug.LogWarning("Error writing serial data: " + e.Message);
+                    Debug.LogWarning($"Error writing serial data: {e.Message}");
                 }
-                
+
             }
         }
     }
+
+    /*
+    private void ReadSerialDataR()
+    {
+        while (isRunningR)
+        {
+            try
+            {
+                string data = serialPortR.ReadLine();
+
+                if (float.TryParse(data, out float parsedDistance))
+                {
+                    distanceCMR = parsedDistance;
+                }
+                else
+                {
+                    Debug.LogWarning("Failed to parse data: " + data);
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning("Error reading serial data: " + e.Message);
+            }
+        }
+    }
+
     private void WriteSerialDataR()
     {
         int colorCache = -1;
@@ -322,6 +341,8 @@ public class SerialManager : MonoBehaviour
 
             }
         }
-    }
+    }     
+    */
+
 }
 
