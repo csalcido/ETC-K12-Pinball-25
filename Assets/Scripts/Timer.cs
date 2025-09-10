@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class Timer : MonoBehaviour
 {
@@ -34,13 +35,12 @@ public class Timer : MonoBehaviour
     void Update()
     {
 
-        if (gameStateManager.currentState == GameStateManager.ScreenState.GameBoard && rightPlunger.firstLaunch)
+        if (gameStateManager.currentState == GameStateManager.ScreenState.GameBoard )
         {
-            if (!timerIsRunning && viewingOverlay)
+            if (!timerIsRunning )
                 timerIsRunning = true;
-                 overlayBackground.SetActive(false);
-                overlayText.text = "";
-                viewingOverlay = false;
+            StartCoroutine(TurnOffDisplay());
+               
 
             
         }
@@ -82,6 +82,13 @@ public class Timer : MonoBehaviour
                 endScreen.EndTheGame();     // TODO: Move this to GameStateManager
             }
         }
+    }
+    private IEnumerator TurnOffDisplay()
+    {
+        yield return new WaitForSeconds(15.0f);
+         overlayBackground.SetActive(false);
+                overlayText.text = "";
+                viewingOverlay = false;
     }
     void UpdateTimerUI(float timeToDisplay)
     {

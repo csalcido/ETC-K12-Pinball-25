@@ -708,6 +708,7 @@ MonoBehaviour:
   ballSwitchRight: {fileID: 2278951}
   startManager: {fileID: 694871614}
   gameStateManager: {fileID: 989920490}
+  respawn: {fileID: 1845134473}
   firstLaunch: 0
 --- !u!54 &2278953
 Rigidbody:
@@ -21932,6 +21933,7 @@ MonoBehaviour:
   ballSwitchRight: {fileID: 774547395}
   startManager: {fileID: 694871614}
   gameStateManager: {fileID: 989920490}
+  respawn: {fileID: 0}
   firstLaunch: 0
 --- !u!23 &774547397
 MeshRenderer:
