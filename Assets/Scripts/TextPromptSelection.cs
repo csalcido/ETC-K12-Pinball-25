@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
@@ -44,7 +45,7 @@ public class TextPromptSelection : MonoBehaviour
 
     // List of available prompt options
 
-    private string[] randomPromptOne = {"medieval","magical","futuristic", "retro" };
+    private string[] randomPromptOne = {"medieval","magical","futuristic", "retro", "silly" };
     private string[] randomPromptTwo = {"cowboy", "wizard", "mermaid", "pirate", "vampire", "robot"};
     private string[] promptOptions = { "Comic Book", "Watercolor", "Vintage", "Pop Art", "Anime", "Cartoon", "16-Bit" };
 
@@ -80,13 +81,16 @@ public class TextPromptSelection : MonoBehaviour
         for (int i = 0; i < ((listLength * 2) + index); i++)
         {
             int wrappedIndex = i % listLength;
-            textObject.text = promptList[wrappedIndex];
+            textObject.text = (promptList[wrappedIndex]).ToUpper();
             yield return new WaitForSeconds(0.1f);
 
         }
 
         //update text object
-        textObject.text = promptList[index];
+        string displayText = (promptList[index]).ToUpper();
+       
+        textObject.text = displayText;
+        
 
         yield return new WaitForSeconds(1f);
         
@@ -216,7 +220,8 @@ public class TextPromptSelection : MonoBehaviour
 
     }
 
-    
+
+    private bool isScrolling = false;
 
     // Update is called once per frame
     void Update()
@@ -225,19 +230,30 @@ public class TextPromptSelection : MonoBehaviour
         //check gameState, use flipper controls to select last prompt
         if (gameStateManager.currentState == GameStateManager.ScreenState.TextPrompt && gameStateManager.randomSelectionFinished)
         {
-            //play left flipper
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || SerialManager.LeftFlipperPressed)
+            //play left flipper once
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || SerialManager.LeftFlipperPressed && !isScrolling)
             {
+                StartCoroutine(MenuScrollDelay());
                 OnLeftButton();
             }
 
-            // play right flippers
-            if (Input.GetKeyDown(KeyCode.RightArrow) || SerialManager.RightFlipperPressed)
+            // play right flipper once
+            if (Input.GetKeyDown(KeyCode.RightArrow) || SerialManager.RightFlipperPressed && !isScrolling)
             {
+                StartCoroutine(MenuScrollDelay());
                 OnRightButton();
             }
         
         }
+
+    }
+    IEnumerator MenuScrollDelay()
+    {
+        isScrolling = true;
+        yield return new WaitForSeconds(0.5f);
+        isScrolling = false;
+
+        
 
     }
 

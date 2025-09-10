@@ -26,6 +26,9 @@ public class Flippers : MonoBehaviour
     private Xbox xboxControls;
     public GameStateManager gameStateManager;
 
+    private bool leftHeld = false;
+    private bool rightHeld = false;
+
     void Start()
     {
         leftSpring = leftFlipper.spring;
@@ -49,14 +52,16 @@ public class Flippers : MonoBehaviour
         if (gameStateManager.currentState == GameStateManager.ScreenState.GameBoard)
         {
             //play flippers sound
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || xboxControls.Player.LeftArrow.WasPressedThisFrame() || SerialManager.LeftFlipperPressed)
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || xboxControls.Player.LeftArrow.WasPressedThisFrame() || SerialManager.LeftFlipperPressed && !leftHeld)
             {
+                leftHeld = true;
                 flipperUpSound.PlaySound();
             }
 
-            if (Input.GetKeyUp(KeyCode.LeftArrow) || xboxControls.Player.LeftArrow.WasReleasedThisFrame() || SerialManager.LeftFlipperReleased)
+            if (Input.GetKeyUp(KeyCode.LeftArrow) || xboxControls.Player.LeftArrow.WasReleasedThisFrame() || SerialManager.LeftFlipperReleased && leftHeld)
             {
-                flipperDownSound.PlaySound();
+                //flipperDownSound.PlaySound();
+                leftHeld = false;
             }
 
             //control flippers
@@ -73,13 +78,15 @@ public class Flippers : MonoBehaviour
             }
 
             // play sound for right flippers
-            if (Input.GetKeyDown(KeyCode.RightArrow) || xboxControls.Player.RightArrow.WasPressedThisFrame() || SerialManager.RightFlipperPressed)
+            if (Input.GetKeyDown(KeyCode.RightArrow) || xboxControls.Player.RightArrow.WasPressedThisFrame() || SerialManager.RightFlipperPressed && !rightHeld)
             {
+                rightHeld = true;
                 flipperUpSound.PlaySound();
             }
-            if (Input.GetKeyUp(KeyCode.RightArrow) || xboxControls.Player.RightArrow.WasReleasedThisFrame() || SerialManager.RightFlipperReleased)
+            if (Input.GetKeyUp(KeyCode.RightArrow) || xboxControls.Player.RightArrow.WasReleasedThisFrame() || SerialManager.RightFlipperReleased && rightHeld)
             {
-                flipperDownSound.PlaySound();
+                rightHeld = false;
+               // flipperDownSound.PlaySound();
             }
 
             // control right flippers

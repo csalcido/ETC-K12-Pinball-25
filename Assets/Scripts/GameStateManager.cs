@@ -127,7 +127,8 @@ public class GameStateManager : MonoBehaviour
                 case ScreenState.PhotoZone:
                     if (!photoTaken)
                     {
-                        TakePhoto();
+                        //TakePhoto();
+                        break; //photo is now taken automatically
                     }
                     if (photoTaken) {
                         if (currentMode == GameMode.AdditiveColor) //check which game it is

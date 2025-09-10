@@ -24,6 +24,7 @@ public class TakePhotos : MonoBehaviour
     [SerializeField] public SoundController flashSound;
 
     [SerializeField] public TextMeshProUGUI buttonText;
+    public Image buttonImage;
     public Texture2D screenCapture;
     private bool viewingPhoto; //this sets the photo to active 
 
@@ -99,6 +100,7 @@ public class TakePhotos : MonoBehaviour
 
     private void OnEnable()
     {
+        buttonImage.enabled = false;
         // delay auto-start to ensure everything is initialized
         StartCoroutine(CheckForAutoStart());
 
@@ -381,7 +383,8 @@ public class TakePhotos : MonoBehaviour
         StartCoroutine(CapturePhoto());
         countdownDisplayBackground.SetActive(false);
         countdownDisplay.text = "";
-        buttonText.text = "Continue";
+        buttonImage.enabled = true;
+        buttonText.text = "Press the blue button to continue";
         gameStateManager.photoTaken = true;
         
 

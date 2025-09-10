@@ -6647,7 +6647,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Click the center button to start
+  m_text: Press the blue button to start
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 80dada8e5cc7a374a8dd51a40ff82767, type: 2}
   m_sharedMaterial: {fileID: 6523062433826730668, guid: 80dada8e5cc7a374a8dd51a40ff82767, type: 2}
@@ -6783,7 +6783,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Let's go!
+  m_text: Press the blue button to continue
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 80dada8e5cc7a374a8dd51a40ff82767, type: 2}
   m_sharedMaterial: {fileID: 6523062433826730668, guid: 80dada8e5cc7a374a8dd51a40ff82767, type: 2}
@@ -8116,7 +8116,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0, g: 0, b: 0, a: 1}
+    m_NormalColor: {r: 1, g: 0.654902, b: 0.27058825, a: 1}
     m_HighlightedColor: {r: 0.015913023, g: 0, b: 0.5188679, a: 1}
     m_PressedColor: {r: 0.50980395, g: 0.41568628, b: 1, a: 1}
     m_SelectedColor: {r: 0.50980395, g: 0.41727704, b: 1, a: 1}
