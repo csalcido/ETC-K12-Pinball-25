@@ -33,6 +33,7 @@ public class TextPromptSelection : MonoBehaviour
     public TextMeshProUGUI randomPromptTwoText;
     public TextMeshProUGUI selectedPromptText;
     public TextMeshProUGUI gameOverlayText;
+    public TextMeshProUGUI endScreenOverlayText;
 
     public GameObject thirdPromptUI;
 
@@ -40,12 +41,11 @@ public class TextPromptSelection : MonoBehaviour
 
     public Animator cameraAnimator;
     public Animator textAnimator;
-    public Animator curtainAnimator;
-    public Animator filteredImageAnimator;
+    
 
     // List of available prompt options
 
-    private string[] randomPromptOne = {"medieval","magical","futuristic", "retro", "disco" };
+    private string[] randomPromptOne = {"galactic","magical","futuristic", "retro", "disco", "urban" };
     private string[] randomPromptTwo = {"cowboy", "wizard", "mermaid", "pirate", "vampire", "robot", "alien"};
     private string[] promptOptions = { "Comic Book", "Watercolor", "Vintage", "Pop Art", "Anime", "Cartoon", "16-Bit" };
 
@@ -214,9 +214,10 @@ public class TextPromptSelection : MonoBehaviour
         cameraAnimator.SetBool("playGumballAnim", true);
         gumballManager.SetActive(true);
         //update text overlay on gameboard
-        string onScreenPrompt = $"{randomPromptOneText.text } {randomPromptTwoText.text} in {selectedPromptText.text} style";
+        string onScreenPrompt = $"{randomPromptOneText.text} {randomPromptTwoText.text} in {selectedPromptText.text} style";
         onScreenPrompt = onScreenPrompt.ToUpper(); //capitalizing all letters
         gameOverlayText.text = onScreenPrompt;
+        endScreenOverlayText.text = onScreenPrompt;
 
 
         

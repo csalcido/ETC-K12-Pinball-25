@@ -17,6 +17,7 @@ public class BallEffect : MonoBehaviour
     public GameObject[] trails;
 
     private Achievement achievementManager;
+    public GameStateManager gameStateManager;
 
     private Material mat;
 
@@ -26,12 +27,22 @@ public class BallEffect : MonoBehaviour
         Transform impact = transform.Find("Ball_Impact");
         impactEffect = impact.gameObject;
         achievementManager = FindObjectOfType<Achievement>();
+
+        // Start the self-destruct timer
+        StartCoroutine(SelfDestructAfterDelay(15f));
     }
+    private IEnumerator SelfDestructAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(gameObject);
+    }
+
 
     // Update is called once per frame
     void Update()
     {
 
+        
     }
 
     private void OnCollisionEnter(Collision collision)

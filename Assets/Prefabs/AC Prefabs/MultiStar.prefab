@@ -157,9 +157,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buffType: 1
   buffDuration: 5
-  buffValue: 1.5
+  buffValue: 1
   disableAfterUse: 1
   respawnTime: 10
+  gameStateManager: {fileID: 0}
 --- !u!95 &6652553563601899920
 Animator:
   serializedVersion: 7

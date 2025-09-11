@@ -19,6 +19,9 @@ public class Gumball : MonoBehaviour
     public Animator gumballAnimator;
     public GameStateManager gameStateManager;
 
+    public GameObject pinballOne;
+    public GameObject pinballTwo;
+
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -75,6 +78,9 @@ public class Gumball : MonoBehaviour
 
         mainCameraAnimator.SetBool("playBoardAnim", true);
         gameStateManager.currentState = GameStateManager.ScreenState.GameBoard;
+
+        pinballOne.SetActive(true);
+        pinballTwo.SetActive(true);
 
         yield return null;
     }
