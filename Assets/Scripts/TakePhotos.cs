@@ -17,6 +17,14 @@ public class TakePhotos : MonoBehaviour
     [SerializeField] private GameObject webCameraFeed; //this is the live feed
     private WebCamTest webCamTest; // reference to access the webcam texture
 
+    //PAT START
+
+    [Header("Silhouette Tracking")]
+[SerializeField] private Material silhouetteMaterial; // shader/material for silhouette rendering
+[SerializeField] private NdiSender ndiSenderSilhouette; // new NDI sender for silhouette
+private RenderTexture silhouetteRenderTexture; // stores just the ball silhouette
+    //PAT END
+
 
     [Header("Flash Effect")]
     [SerializeField] private GameObject cameraFlash; // point light for the flash
@@ -123,6 +131,10 @@ public class TakePhotos : MonoBehaviour
 
     private void Start()
     {
+
+        //PAT START
+        InitializeSilhouetteTexture();
+        //PAT END
         // Get ref to webcam gameobject
         if (webCameraFeed != null)
         {
@@ -150,9 +162,36 @@ public class TakePhotos : MonoBehaviour
         
     }
 
+    //PAT START
+
+    void UpdateSilhouette()
+    {
+        if (silhouetteRenderTexture == null || pinballs == null) return;
+
+        // Render only the current ball(s) into the silhouette texture
+        RenderTexture.active = silhouetteRenderTexture;
+        GL.Clear(true, true, Color.black); // reset to black each frame
+        RenderTexture.active = null;
+
+        // Send pinball positions/colors into the silhouette shader
+        silhouetteMaterial.SetVectorArray("_PinballPositions", pinballPositions);
+        silhouetteMaterial.SetInt("_PinballCount", pinballs.Length);
+
+        // Blit into silhouette texture
+        Graphics.Blit(null, silhouetteRenderTexture, silhouetteMaterial);
+    }
+
+//PAT END
+
     private void Update()
     {
-        
+
+        //PAT START
+
+        UpdateSilhouette();
+
+        //PAT END
+
 
         if (enablePinballTracking && trackingMaterial != null && trackingRenderTexture != null)
         {
@@ -220,7 +259,28 @@ public class TakePhotos : MonoBehaviour
     #endregion
 
     #region Initialization Methods
-    
+
+
+    //PAT START
+    void InitializeSilhouetteTexture()
+    {
+        silhouetteRenderTexture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
+        silhouetteRenderTexture.Create();
+
+        // Clear once
+        RenderTexture.active = silhouetteRenderTexture;
+        GL.Clear(true, true, Color.black);
+        RenderTexture.active = null;
+
+        if (ndiSenderSilhouette != null)
+        {
+            ndiSenderSilhouette.captureMethod = CaptureMethod.Texture;
+            ndiSenderSilhouette.sourceTexture = silhouetteRenderTexture;
+        }
+    }
+
+//PAT END
+
     void InitializeGPUTracking()
     {
         // Create render textures
