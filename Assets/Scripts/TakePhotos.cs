@@ -292,7 +292,7 @@ private RenderTexture silhouetteRenderTexture; // stores just the ball silhouett
         
         // Clear both textures
         RenderTexture.active = trackingRenderTexture;
-        GL.Clear(true, true, Color.black);
+      
         RenderTexture.active = tempRenderTexture;
         GL.Clear(true, true, Color.black);
         RenderTexture.active = null;
@@ -625,6 +625,10 @@ private RenderTexture silhouetteRenderTexture; // stores just the ball silhouett
         {
             // Clear the tracking texture to black
             RenderTexture.active = trackingRenderTexture;
+
+            
+            
+
             GL.Clear(true, true, Color.black);
             RenderTexture.active = null;
             
