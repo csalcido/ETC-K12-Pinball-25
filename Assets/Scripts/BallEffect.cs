@@ -19,11 +19,28 @@ public class BallEffect : MonoBehaviour
     private Achievement achievementManager;
     public GameStateManager gameStateManager;
 
+    //PAT EDIT: changing color of ball based on current color
+    public TakePhotos takePhotosScript;
+    public Material redMaterial;
+    public Material greenMaterial;
+    public Material blueMaterial;
+
+    private Renderer ballRenderer;
+    
+    //PAT end
     private Material mat;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //PAT EDIT
+        ballRenderer = GetComponent<Renderer>();
+        
+        if (takePhotosScript == null)
+        {
+            takePhotosScript = FindAnyObjectByType<TakePhotos>();
+        }
+        //PAT END
         Transform impact = transform.Find("Ball_Impact");
         impactEffect = impact.gameObject;
         achievementManager = FindObjectOfType<Achievement>();
@@ -41,8 +58,20 @@ public class BallEffect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //PAT EDIT
+        if (takePhotosScript != null && ballRenderer != null)
+        {
+            Color nextColor = takePhotosScript.nextPinballColor;
 
-        
+            if (nextColor.r > 0.8f && nextColor.g < 0.2f && nextColor.b < 0.2f)
+                ballRenderer.material = redMaterial;
+            else if (nextColor.g > 0.8f && nextColor.r < 0.2f && nextColor.b < 0.2f)
+                ballRenderer.material = greenMaterial;
+            else if (nextColor.b > 0.8f && nextColor.r < 0.2f && nextColor.g < 0.2f)
+                ballRenderer.material = blueMaterial;
+        }
+
+        //PAT END
     }
 
     private void OnCollisionEnter(Collision collision)

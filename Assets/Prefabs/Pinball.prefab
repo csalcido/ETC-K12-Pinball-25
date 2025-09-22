@@ -1965,6 +1965,11 @@ MonoBehaviour:
   - {fileID: 5915145026121527012}
   - {fileID: 1276430154103669806}
   - {fileID: 2662656195991147597}
+  gameStateManager: {fileID: 0}
+  takePhotosScript: {fileID: 0}
+  redMaterial: {fileID: 2100000, guid: 041d3baf2ca9a484cb51704ac0364080, type: 2}
+  greenMaterial: {fileID: 2100000, guid: 71cfd4df49636414a9115bbdb24e948f, type: 2}
+  blueMaterial: {fileID: 2100000, guid: d28188e20b351aa4b8fb589b919613fd, type: 2}
 --- !u!114 &6166125471545761593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2004,6 +2009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buffSound: {fileID: 0}
+  isBuffActive: 0
 --- !u!1 &5699395716529925531
 GameObject:
   m_ObjectHideFlags: 0
