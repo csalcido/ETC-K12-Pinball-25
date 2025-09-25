@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AI Summit/AI Board.unity
     guid: 340d4ef2d2e2ed948b21f48428c1ad73
+  - enabled: 1
+    path: Assets/Scenes/Additive Color/AC Board v3.unity
+    guid: 1cca0bc7b4d3aac4e87df594c822c7ee
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

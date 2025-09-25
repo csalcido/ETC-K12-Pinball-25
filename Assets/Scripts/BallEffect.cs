@@ -64,11 +64,21 @@ public class BallEffect : MonoBehaviour
             Color nextColor = takePhotosScript.nextPinballColor;
 
             if (nextColor.r > 0.8f && nextColor.g < 0.2f && nextColor.b < 0.2f)
+            {
                 ballRenderer.material = redMaterial;
+                ActivateTrail(3);
+            }
             else if (nextColor.g > 0.8f && nextColor.r < 0.2f && nextColor.b < 0.2f)
+            {
+
                 ballRenderer.material = greenMaterial;
+                ActivateTrail(4);
+            }
             else if (nextColor.b > 0.8f && nextColor.r < 0.2f && nextColor.g < 0.2f)
+            {
                 ballRenderer.material = blueMaterial;
+                ActivateTrail(5);
+            }
         }
 
         //PAT END
@@ -135,13 +145,27 @@ public class BallEffect : MonoBehaviour
 
         obj.SetActive(false);
     }
+
+    // PAT EDIT: changing trail color based on color mode
+
+    // Helper method to change the color of all trails
+   void ActivateTrail(int index)
+{
+    for (int i = 0; i < trails.Length; i++)
+    {
+        trails[i].SetActive(i == index);
+    }
+}
+
+//PAT END
     public void SwitchTrail(Material material)
     {
         char firstChar = material.name[0];
         if (char.IsDigit(firstChar))
         {
             int materialIndex = int.Parse(firstChar.ToString());
-            foreach (var trail in trails) {
+            foreach (var trail in trails)
+            {
                 trail.gameObject.SetActive(false);
             }
             trails[materialIndex].gameObject.SetActive(true);
