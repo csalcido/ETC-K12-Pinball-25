@@ -436,6 +436,11 @@ private RenderTexture silhouetteRenderTexture; // stores just the ball silhouett
         {
             countdownSound.PlaySound();
             countdownDisplay.text = countdownTime.ToString();
+
+            // Run pop animation while waiting
+        yield return StartCoroutine(PopText(countdownDisplay.transform, 1.2f, 0.3f));
+
+
             yield return new WaitForSeconds(1f);
             countdownTime--;
 
@@ -451,6 +456,38 @@ private RenderTexture silhouetteRenderTexture; // stores just the ball silhouett
 
 
     }
+
+    //PAT EDIT
+
+    private IEnumerator PopText(Transform textTransform, float popScale, float duration)
+    {
+        Vector3 originalScale = textTransform.localScale;
+        Vector3 targetScale = originalScale * popScale;
+
+        float time = 0f;
+
+        // Scale up
+        while (time < duration / 2f)
+        {
+            float t = time / (duration / 2f);
+            textTransform.localScale = Vector3.Lerp(originalScale, targetScale, t);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // Scale back down
+        time = 0f;
+        while (time < duration / 2f)
+        {
+            float t = time / (duration / 2f);
+            textTransform.localScale = Vector3.Lerp(targetScale, originalScale, t);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        textTransform.localScale = originalScale; // reset at the end
+    }
+//PAT END
 
     void ShowPhoto()
     {

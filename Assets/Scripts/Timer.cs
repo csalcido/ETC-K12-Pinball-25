@@ -37,11 +37,13 @@ public class Timer : MonoBehaviour
 
         if (gameStateManager.currentState == GameStateManager.ScreenState.GameBoard )
         {
-            if (!timerIsRunning )
-                timerIsRunning = true;
-            StartCoroutine(TurnOffDisplay());
-               
+            if (!timerIsRunning)
+        timerIsRunning = true;
 
+    if (viewingOverlay)   // only run once
+    {
+        StartCoroutine(TurnOffDisplay());
+    }
             
         }
 
@@ -87,7 +89,7 @@ public class Timer : MonoBehaviour
     {
         yield return new WaitForSeconds(4.0f);
          overlayBackground.SetActive(false);
-                overlayText.text = "";
+        overlayText.gameObject.SetActive(false);
                 viewingOverlay = false;
     }
     void UpdateTimerUI(float timeToDisplay)
