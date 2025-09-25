@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buffType: 1
   buffDuration: 5
-  buffValue: 1
+  buffValue: 2
   disableAfterUse: 1
   respawnTime: 10
   gameStateManager: {fileID: 0}
