@@ -26,6 +26,7 @@ public class BallEffect : MonoBehaviour
     public Material blueMaterial;
 
     private Renderer ballRenderer;
+    private Animator animator;
     
     //PAT end
     private Material mat;
@@ -35,6 +36,8 @@ public class BallEffect : MonoBehaviour
     {
         //PAT EDIT
         ballRenderer = GetComponent<Renderer>();
+          // Grab the Animator component attached to this ball
+        animator = GetComponent<Animator>();
         
         if (takePhotosScript == null)
         {
@@ -51,6 +54,13 @@ public class BallEffect : MonoBehaviour
     private IEnumerator SelfDestructAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
+
+        // Play the pop animation
+        if (animator != null)
+        {
+            animator.Play("pinballPopAnim"); // must match the state name in Animator
+            yield return new WaitForSeconds(.5f);
+    }
         Destroy(gameObject);
     }
 

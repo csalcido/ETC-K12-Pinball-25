@@ -2618,6 +2618,7 @@ GameObject:
   - component: {fileID: 6166125471545761593}
   - component: {fileID: 1353627874915609935}
   - component: {fileID: 1268949482953871493}
+  - component: {fileID: 6370803739543134296}
   m_Layer: 0
   m_Name: Pinball
   m_TagString: Ball
@@ -2822,6 +2823,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buffSound: {fileID: 0}
   isBuffActive: 0
+--- !u!95 &6370803739543134296
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5679112124027733372}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9c0792c92a0542944806c5cc737c0b4b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5699395716529925531
 GameObject:
   m_ObjectHideFlags: 0
