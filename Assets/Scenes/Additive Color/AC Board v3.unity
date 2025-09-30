@@ -24805,6 +24805,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f3d5eb5de1c0194da44658e69474766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Sender: {fileID: 0}
+  m_Address: /
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &698111147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24817,6 +24823,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f3d5eb5de1c0194da44658e69474766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Sender: {fileID: 0}
+  m_Address: /
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &698111148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24829,6 +24841,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6e129f8c98ad6247b7bbd76a97ce3c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Protocol: 0
+  m_IpAddress: 255.255.255.255
+  m_Port: 8000
+  m_StreamType: 1
+  m_AutoBundleMessages: 0
 --- !u!4 &698111149
 Transform:
   m_ObjectHideFlags: 0
@@ -63227,6 +63244,7 @@ GameObject:
   - component: {fileID: 1483407587}
   - component: {fileID: 1483407586}
   - component: {fileID: 1483407588}
+  - component: {fileID: 1483407589}
   m_Layer: 0
   m_Name: Photo Camera Manager
   m_TagString: Untagged
@@ -63249,8 +63267,8 @@ MonoBehaviour:
   photoDisplayArea: {fileID: 1147942155}
   photoFrame: {fileID: 32133861}
   webCameraFeed: {fileID: 1698725872}
-  silhouetteMaterial: {fileID: 0}
-  ndiSenderSilhouette: {fileID: 0}
+  silhouetteMaterial: {fileID: 2100000, guid: c3c8e9c1ebbe72344aada2d3b56d98c2, type: 2}
+  ndiSenderSilhouette: {fileID: 1483407587}
   cameraFlash: {fileID: 1208426546}
   flashTime: 0.2
   flashSound: {fileID: 172214542}
@@ -63306,7 +63324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a09ab5fc64402d49b12d170a7577986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ndiName: ETC-PINBALL-02 (TouchDesigner)
+  _ndiName: ETC-PINBALL-05 (TouchDesigner)
   _targetTexture: {fileID: 0}
   _targetRenderer: {fileID: 102875310}
   _targetMaterialProperty: _MainTex
@@ -63346,6 +63364,24 @@ MonoBehaviour:
   _captureMethod: 2
   _sourceCamera: {fileID: 0}
   _sourceTexture: {fileID: 0}
+  _resources: {fileID: 11400000, guid: 69304b86950074db7ba8caba75214004, type: 2}
+--- !u!114 &1483407589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483407583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2d98e5bfcdff4847ad69efa861a8e7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ndiName: Ball Silhouette Send
+  _keepAlpha: 0
+  _captureMethod: 2
+  _sourceCamera: {fileID: 0}
+  _sourceTexture: {fileID: 8400000, guid: fca764db92fe7f444aff4ec28129f410, type: 2}
   _resources: {fileID: 11400000, guid: 69304b86950074db7ba8caba75214004, type: 2}
 --- !u!1 &1483423678
 GameObject:
