@@ -69,7 +69,7 @@ public class GameStateManager : MonoBehaviour
     }
 
     public void GoToPowerUpStation()
-    {
+    {               
         photoButton.onClick.Invoke();
         currentState = ScreenState.PowerUpStation;
     }
