@@ -179,6 +179,8 @@ private RenderTexture silhouetteRenderTexture; // stores just the ball silhouett
 
         // Blit into silhouette texture
         Graphics.Blit(null, silhouetteRenderTexture, silhouetteMaterial);
+        
+        
     }
 
 //PAT END
@@ -264,8 +266,11 @@ private RenderTexture silhouetteRenderTexture; // stores just the ball silhouett
     //PAT START
     void InitializeSilhouetteTexture()
     {
+        Debug.Log("InitializeSilhouetteTexture running");
+        
         silhouetteRenderTexture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
         silhouetteRenderTexture.Create();
+        
 
         // Clear once
         RenderTexture.active = silhouetteRenderTexture;
@@ -277,6 +282,9 @@ private RenderTexture silhouetteRenderTexture; // stores just the ball silhouett
             ndiSenderSilhouette.captureMethod = CaptureMethod.Texture;
             ndiSenderSilhouette.sourceTexture = silhouetteRenderTexture;
         }
+        
+        Debug.Log("Silhouette Sender component: " + ndiSenderSilhouette.name);
+        Debug.Log("Silhouette Sender NDI name: " + ndiSenderSilhouette.ndiName);
     }
 
 //PAT END

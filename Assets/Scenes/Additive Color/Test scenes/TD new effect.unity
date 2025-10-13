@@ -59019,7 +59019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a09ab5fc64402d49b12d170a7577986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ndiName: ETC-PINBALL-02 (TouchDesigner)
+  _ndiName: ETC-PINBALL-05 (TouchDesigner)
   _targetTexture: {fileID: 0}
   _targetRenderer: {fileID: 102875310}
   _targetMaterialProperty: _MainTex
@@ -66535,7 +66535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e68c6748f448b245b70ae985041556a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownTime: 70
+  countdownTime: 7000
   flashSound: {fileID: 831782323}
   countdownText: {fileID: 1575465616}
   endScreen: {fileID: 958865864}

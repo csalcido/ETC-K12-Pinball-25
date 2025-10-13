@@ -24758,7 +24758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b801ba94f70654ab9fbb09dbc4267e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: {fileID: 0}
+  timer: {fileID: 1964257235}
 --- !u!1 &698111144
 GameObject:
   m_ObjectHideFlags: 0
@@ -26228,6 +26228,7 @@ Transform:
   - {fileID: 829323130}
   - {fileID: 1845134472}
   - {fileID: 1483407585}
+  - {fileID: 1914717734}
   - {fileID: 989920489}
   - {fileID: 958865865}
   m_Father: {fileID: 0}
@@ -63244,7 +63245,6 @@ GameObject:
   - component: {fileID: 1483407587}
   - component: {fileID: 1483407586}
   - component: {fileID: 1483407588}
-  - component: {fileID: 1483407589}
   m_Layer: 0
   m_Name: Photo Camera Manager
   m_TagString: Untagged
@@ -63268,7 +63268,7 @@ MonoBehaviour:
   photoFrame: {fileID: 32133861}
   webCameraFeed: {fileID: 1698725872}
   silhouetteMaterial: {fileID: 2100000, guid: c3c8e9c1ebbe72344aada2d3b56d98c2, type: 2}
-  ndiSenderSilhouette: {fileID: 1483407587}
+  ndiSenderSilhouette: {fileID: 1914717733}
   cameraFlash: {fileID: 1208426546}
   flashTime: 0.2
   flashSound: {fileID: 172214542}
@@ -63324,7 +63324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a09ab5fc64402d49b12d170a7577986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ndiName: PINBALL (TouchDesigner)
+  _ndiName: ETC-PINBALL-05 (TouchDesigner)
   _targetTexture: {fileID: 0}
   _targetRenderer: {fileID: 102875310}
   _targetMaterialProperty: _MainTex
@@ -63345,7 +63345,7 @@ MonoBehaviour:
   _keepAlpha: 0
   _captureMethod: 2
   _sourceCamera: {fileID: 0}
-  _sourceTexture: {fileID: 8400000, guid: 3b459fea6213f0441a3eff3f7ff47a7e, type: 2}
+  _sourceTexture: {fileID: 8400000, guid: fca764db92fe7f444aff4ec28129f410, type: 2}
   _resources: {fileID: 11400000, guid: 69304b86950074db7ba8caba75214004, type: 2}
 --- !u!114 &1483407588
 MonoBehaviour:
@@ -63364,24 +63364,6 @@ MonoBehaviour:
   _captureMethod: 2
   _sourceCamera: {fileID: 0}
   _sourceTexture: {fileID: 0}
-  _resources: {fileID: 11400000, guid: 69304b86950074db7ba8caba75214004, type: 2}
---- !u!114 &1483407589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1483407583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2d98e5bfcdff4847ad69efa861a8e7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _ndiName: Ball Silhouette Send
-  _keepAlpha: 0
-  _captureMethod: 2
-  _sourceCamera: {fileID: 0}
-  _sourceTexture: {fileID: 8400000, guid: fca764db92fe7f444aff4ec28129f410, type: 2}
   _resources: {fileID: 11400000, guid: 69304b86950074db7ba8caba75214004, type: 2}
 --- !u!1 &1483423678
 GameObject:
@@ -79235,6 +79217,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c4eb557575ee5714d8228cb2e0988604, type: 3}
   m_PrefabInstance: {fileID: 622132259}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1914717732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1914717734}
+  - component: {fileID: 1914717733}
+  m_Layer: 0
+  m_Name: NDI Silhouette Send
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1914717733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914717732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2d98e5bfcdff4847ad69efa861a8e7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ndiName: Ball Silhouette
+  _keepAlpha: 0
+  _captureMethod: 2
+  _sourceCamera: {fileID: 0}
+  _sourceTexture: {fileID: 0}
+  _resources: {fileID: 11400000, guid: 69304b86950074db7ba8caba75214004, type: 2}
+--- !u!4 &1914717734
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914717732}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10.298115, y: 9.297859, z: 3.9826748}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 764988703}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1927328486
 GameObject:
   m_ObjectHideFlags: 0
@@ -79871,7 +79903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e68c6748f448b245b70ae985041556a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownTime: 75
+  countdownTime: 7500
   flashSound: {fileID: 831782323}
   countdownText: {fileID: 1964257238}
   endScreen: {fileID: 958865864}
