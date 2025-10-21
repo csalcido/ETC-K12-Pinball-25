@@ -16,13 +16,14 @@ public class TakePhotos : MonoBehaviour
     [SerializeField] private GameObject photoFrame; //this is a UI mask and image for the photo
     [SerializeField] private GameObject webCameraFeed; //this is the live feed
     private WebCamTest webCamTest; // reference to access the webcam texture
+    private RenderTexture photoRenderTexture;
 
     //PAT START
 
     [Header("Silhouette Tracking")]
-[SerializeField] private Material silhouetteMaterial; // shader/material for silhouette rendering
-[SerializeField] private NdiSender ndiSenderSilhouette; // new NDI sender for silhouette
-private RenderTexture silhouetteRenderTexture; // stores just the ball silhouette
+    [SerializeField] private Material silhouetteMaterial; // shader/material for silhouette rendering
+    [SerializeField] private NdiSender ndiSenderSilhouette; // new NDI sender for silhouette
+    private RenderTexture silhouetteRenderTexture; // stores just the ball silhouette
     //PAT END
 
 
@@ -266,8 +267,6 @@ private RenderTexture silhouetteRenderTexture; // stores just the ball silhouett
     //PAT START
     void InitializeSilhouetteTexture()
     {
-        Debug.Log("InitializeSilhouetteTexture running");
-        
         silhouetteRenderTexture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
         silhouetteRenderTexture.Create();
         
@@ -282,9 +281,6 @@ private RenderTexture silhouetteRenderTexture; // stores just the ball silhouett
             ndiSenderSilhouette.captureMethod = CaptureMethod.Texture;
             ndiSenderSilhouette.sourceTexture = silhouetteRenderTexture;
         }
-        
-        Debug.Log("Silhouette Sender component: " + ndiSenderSilhouette.name);
-        Debug.Log("Silhouette Sender NDI name: " + ndiSenderSilhouette.ndiName);
     }
 
 //PAT END
@@ -387,18 +383,66 @@ private RenderTexture silhouetteRenderTexture; // stores just the ball silhouett
     {
         StartCoroutine(CapturePhoto());
     }
-
-
-
+    
+    //Abby doing her best with the help of ChatGPT, trying to improve quality of photo sent through NDI
     IEnumerator CapturePhoto()
     {
         flashSound.PlaySound();
         viewingPhoto = true;
         yield return new WaitForEndOfFrame();
+        
+
+        if (webCamTest != null && webCamTest.webCam != null && webCamTest.webCam.isPlaying)
+        {
+            // Create the RenderTexture if needed
+            if (photoRenderTexture == null)
+            {
+                int width = 2560;  
+                int height = 1440;
+                photoRenderTexture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
+                photoRenderTexture.Create();
+
+                ndiSenderPhoto.captureMethod = CaptureMethod.Texture;
+                ndiSenderPhoto.sourceTexture = photoRenderTexture;
+            }
+
+            // Copy the current webcam frame into the RenderTexture ONCE
+            Graphics.Blit(webCamTest.webCam, photoRenderTexture);
+
+            // Also make a Texture2D copy so we can show it in the UI
+            if (screenCapture != null)
+                Destroy(screenCapture);
+
+            RenderTexture.active = photoRenderTexture;
+            screenCapture = new Texture2D(photoRenderTexture.width, photoRenderTexture.height, TextureFormat.RGB24, false);
+            screenCapture.ReadPixels(new Rect(0, 0, photoRenderTexture.width, photoRenderTexture.height), 0, 0);
+            screenCapture.Apply();
+            RenderTexture.active = null;
+
+            
+        }
+        
+        ShowPhoto();
+        webCameraFeed.SetActive(false);
+
+        //tell gameStateManager that photo has been taken, so no others fire off
+        gameStateManager.photoTaken = true;
+    }
+
+    //Abby over
+
+    //original function, works to take the photo but at lower quality. I'm (abby) just scared to delete anything
+    /*IEnumerator CapturePhoto()
+    {
+        flashSound.PlaySound();
+        viewingPhoto = true;
+        yield return new WaitForEndOfFrame();
+        
 
         // Capture from webcam texture instead of screen
         if (webCamTest != null && webCamTest.webCam != null && webCamTest.webCam.isPlaying)
         {
+            
             // Create or recreate the screen capture texture with webcam dimensions
             if (screenCapture != null)
             {
@@ -410,6 +454,7 @@ private RenderTexture silhouetteRenderTexture; // stores just the ball silhouett
             Color32[] pixels = webCamTest.webCam.GetPixels32();
             screenCapture.SetPixels32(pixels);
             screenCapture.Apply();
+            
         }
         else
         {
@@ -431,11 +476,18 @@ private RenderTexture silhouetteRenderTexture; // stores just the ball silhouett
 
           //tell gameStateManager that photo has been taken, so no others fire off
         gameStateManager.photoTaken = true;
-
-
-
-     
-
+    }
+    */
+    
+    private Texture2D TextureToTexture2D(RenderTexture rt)
+    {
+        RenderTexture currentRT = RenderTexture.active;
+        RenderTexture.active = rt;
+        Texture2D tex = new Texture2D(rt.width, rt.height, TextureFormat.RGB24, false);
+        tex.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
+        tex.Apply();
+        RenderTexture.active = currentRT;
+        return tex;
     }
 
     IEnumerator CountdownToPhoto()
@@ -459,9 +511,6 @@ private RenderTexture silhouetteRenderTexture; // stores just the ball silhouett
         buttonImage.enabled = true;
         buttonText.text = "Press the blue button to continue";
         gameStateManager.photoTaken = true;
-        
-
-
 
     }
 

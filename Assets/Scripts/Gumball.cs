@@ -18,6 +18,7 @@ public class Gumball : MonoBehaviour
     public GameObject gumballDrop;
     public Animator gumballAnimator;
     public GameStateManager gameStateManager;
+    public Transform gumballContainer;
 
     public GameObject pinballOne;
     public GameObject pinballTwo;
@@ -33,7 +34,7 @@ public class Gumball : MonoBehaviour
 
     IEnumerator startGumballMachine()
     {
-        yield return new WaitForSeconds(2f); //delay between camera transition and gumball generating
+        yield return new WaitForSeconds(1.5f); //delay between camera transition and gumball generating 
         //play lever animation
         leverAnimator.Play("leverAnim");
        
@@ -50,7 +51,8 @@ public class Gumball : MonoBehaviour
             
 
             //spawn buff at random
-            Instantiate(randomBuff, spawnLocations[i]);
+            //Instantiate(randomBuff, spawnLocations[i]);
+            
 
 
             //play animation and sound of it coming out of gumball machine
@@ -70,9 +72,19 @@ public class Gumball : MonoBehaviour
             yield return new WaitForSeconds(1f);
             buffText.gameObject.SetActive(false);
             
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(.25f);
+            
+            if (obj != null)
+            {
+                obj.SetActive(false);
+                Destroy(obj, 0.1f);
+                gumballAnimator.Rebind();
+            }
+            
             Destroy(obj, 0.1f);
+            
             gumballAnimator.Rebind();
+            yield return new WaitForSeconds(0.1f);
             
         }
 

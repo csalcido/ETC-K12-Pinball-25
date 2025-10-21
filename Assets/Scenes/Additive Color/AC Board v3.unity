@@ -6030,8 +6030,8 @@ Transform:
   m_GameObject: {fileID: 102875308}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000001490116}
-  m_LocalPosition: {x: -0.1016, y: -1.06, z: 12.5991}
-  m_LocalScale: {x: 2.5972362, y: 4.7359, z: 4.5575943}
+  m_LocalPosition: {x: -0.0552, y: -1.06, z: 11.9337}
+  m_LocalScale: {x: 2.6065862, y: 4.7359, z: 4.8238983}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 928500354}
@@ -11695,8 +11695,8 @@ MonoBehaviour:
   restart: {fileID: 1760345082}
   flipperUpSound: {fileID: 1064827175}
   flipperDownSound: {fileID: 856291695}
-  targetAngle: 45
-  flipSpeed: 20000
+  targetAngle: 60
+  flipSpeed: 100000
   gameStateManager: {fileID: 989920490}
 --- !u!4 &274475362
 Transform:
@@ -63028,6 +63028,7 @@ MonoBehaviour:
   gumballDrop: {fileID: 1642608508}
   gumballAnimator: {fileID: 1642608510}
   gameStateManager: {fileID: 989920490}
+  gumballContainer: {fileID: 1642608509}
   pinballOne: {fileID: 710256431}
   pinballTwo: {fileID: 512066678}
 --- !u!4 &1475238415
@@ -63291,7 +63292,7 @@ MonoBehaviour:
   ndiSenderPhoto: {fileID: 1483407588}
   ndiReceiver: {fileID: 1483407586}
   showRawTrackingTexture: 0
-  countdownTime: 5
+  countdownTime: 1
   countdownDisplay: {fileID: 1491257520}
   countdownDisplayBackground: {fileID: 34829640}
   countdownSound: {fileID: 831782323}
@@ -73057,7 +73058,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1642608508}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -79903,7 +79904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e68c6748f448b245b70ae985041556a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownTime: 7500
+  countdownTime: 30
   flashSound: {fileID: 831782323}
   countdownText: {fileID: 1964257238}
   endScreen: {fileID: 958865864}
