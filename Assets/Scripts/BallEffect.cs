@@ -49,8 +49,9 @@ public class BallEffect : MonoBehaviour
         achievementManager = FindObjectOfType<Achievement>();
 
         // Start the self-destruct timer
-        StartCoroutine(SelfDestructAfterDelay(15f));
+        //StartCoroutine(SelfDestructAfterDelay(15f));
     }
+    /*
     private IEnumerator SelfDestructAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -64,7 +65,7 @@ public class BallEffect : MonoBehaviour
         Destroy(gameObject);
     }
 
-
+*/
     // Update is called once per frame
     void Update()
     {

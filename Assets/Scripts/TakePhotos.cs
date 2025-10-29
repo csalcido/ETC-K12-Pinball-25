@@ -509,7 +509,7 @@ public class TakePhotos : MonoBehaviour
         countdownDisplayBackground.SetActive(false);
         countdownDisplay.text = "";
         buttonImage.enabled = true;
-        buttonText.text = "Press the blue button to continue";
+        buttonText.text = "Press the start/fire button to continue";
         gameStateManager.photoTaken = true;
 
     }

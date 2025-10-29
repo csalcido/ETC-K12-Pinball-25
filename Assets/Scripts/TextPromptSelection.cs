@@ -46,8 +46,8 @@ public class TextPromptSelection : MonoBehaviour
     // List of available prompt options
 
     private string[] randomPromptOne = {"galactic","magical","futuristic", "retro", "disco", "urban" };
-    private string[] randomPromptTwo = {"cowboy", "wizard", "mermaid", "pirate", "vampire", "robot", "alien"};
-    private string[] promptOptions = { "Comic Book", "Watercolor", "Vintage", "Pop Art", "Anime", "Cartoon", "16-Bit" };
+    private string[] randomPromptTwo = { "Comic Book", "Watercolor", "Vintage", "Pop Art", "Anime", "Cartoon", "16-Bit" };
+    private string[] promptOptions = {"Skeleton", "Wizard", "Jack-O-Lantern", "Zombie", "Vampire", "Scarecrow", "Mummy"};
 
 
     
@@ -61,7 +61,7 @@ public class TextPromptSelection : MonoBehaviour
 
     IEnumerator randomPromptSequence()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         yield return StartCoroutine(randomizePrompt(randomPromptOne, randomPromptOneText));
         yield return StartCoroutine(randomizePrompt(randomPromptTwo, randomPromptTwoText)); 
         gameStateManager.randomSelectionFinished = true;
@@ -92,7 +92,7 @@ public class TextPromptSelection : MonoBehaviour
         textObject.text = displayText;
         
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.2f);
         
         
     }
@@ -115,9 +115,6 @@ public class TextPromptSelection : MonoBehaviour
         UpdatePromptText();
     }
     
-    
-    
-
     #region TouchDesigner Prompts
     
     public string TdPromptTranslate(string partOne, string partTwo, string partThree)
@@ -125,21 +122,53 @@ public class TextPromptSelection : MonoBehaviour
         //first part
         switch (partOne)
         {
-            case "disco":
+            case "DISCO":
                 partOne = "disco diva in neon lights and glitter";
                 break;
-            case "magical":
+            case "MAGICAL":
                 partOne = "a magical fairy forest glowing with enchantment";
                 break;
-            case "futuristic":
+            case "FUTURISTIC":
                 partOne = "a neon cyberpunk futuristic city full of robots";
                 break;
-            case "retro":
+            case "RETRO":
                 partOne = "60s hippie flower vivid colors vibe";
+                break;
+            case "GALACTIC":
+                partOne = "galatic space with stars and galaxies";
+                break;
+            case "URBAN":
+                partOne = "urban city skyline and neon signs and buildings and people";
                 break;
         }
 
         //second part 
+        switch (partTwo)
+        {
+            case "COMIC BOOK":
+                partTwo = "illustrated in bold comic book marvel style";
+                break;
+            case "WATERCOLOR":
+                partTwo = "painted in dreamy watercolor textures";
+                break;
+            case "VINTAGE":
+                partTwo = "styled as a vintage faded photograph in black and white";
+                break;
+            case "POP ART":
+                partTwo = "rendered in pop art Andy Warhol style";
+                break;
+            case "ANIME":
+                partTwo = "drawn in ghibli anime style";
+                break;
+            case "CARTOON":
+                partTwo = "drawn in a disney cartoon style";
+                break;
+            case "16-BIT":
+                partTwo = "retro 16-bit pixel art";
+                break;
+        }
+        
+        /*
         switch (partTwo)
         {
             case "cowboy":
@@ -165,34 +194,38 @@ public class TextPromptSelection : MonoBehaviour
                 break;
 
         }
+        */
+        
 
         //third part
         switch (partThree)
         {
-            case "Comic Book":
-                partThree = "illustrated in bold comic book marvel style";
+            case "Skeleton":
+                partThree = "skeletons making friends in a graveyard";
                 break;
-            case "Watercolor":
-                partThree = "painted in dreamy watercolor textures";
+            case "Wizard":
+                partThree = "with a wise wizard casting powerful spells";
                 break;
-            case "Vintage":
-                partThree = "styled as a vintage faded photograph in black and white";
+            case "Jack-O-Lantern":
+                partThree = "cute orange jack o lantern on a doorstep with a candle";
                 break;
-            case "Pop Art":
-                partThree = "rendered in pop art Andy Warhol style";
+            case "Zombie":
+                partThree = "green rotting zombie";
                 break;
-            case "Anime":
-                partThree = "drawn in ghibli anime style";
+            case "Vampire":
+                partThree = "victorian era vampire in spooky mansion";
                 break;
-            case "Cartoon":
-                partThree = "drawn in a disney cartoon style";
+            case "Scarecrow":
+                partThree = "scarecrow with burlap and corn and hay and crows flying around";
                 break;
-            case "16-Bit":
-                partThree = "retro 16-bit pixel art";
+            case "Mummy":
+                partThree = "wrapped dusty mummy with bandages";
                 break;
+
+
         }
         string fullPrompt = $"{partThree}, {partTwo}, {partOne}."; //turn into interpolated string
-
+        Debug.Log(fullPrompt);
         return fullPrompt;
     }
 
@@ -218,13 +251,9 @@ public class TextPromptSelection : MonoBehaviour
         onScreenPrompt = onScreenPrompt.ToUpper(); //capitalizing all letters
         gameOverlayText.text = onScreenPrompt;
         endScreenOverlayText.text = onScreenPrompt;
-
-
-        
-
     }
-
-
+    
+    
     private bool isScrolling = false;
 
     // Update is called once per frame

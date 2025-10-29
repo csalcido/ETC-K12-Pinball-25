@@ -87,7 +87,7 @@ public class Timer : MonoBehaviour
     }
     private IEnumerator TurnOffDisplay()
     {
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(0f);
          overlayBackground.SetActive(false);
         overlayText.gameObject.SetActive(false);
                 viewingOverlay = false;

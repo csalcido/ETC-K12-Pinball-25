@@ -76,7 +76,7 @@ public class Gumball : MonoBehaviour
             
             if (obj != null)
             {
-                obj.SetActive(false);
+                obj.SetActive(false); //prevents flash of sphere after anim finishes
                 Destroy(obj, 0.1f);
                 gumballAnimator.Rebind();
             }

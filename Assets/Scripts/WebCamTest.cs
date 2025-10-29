@@ -13,7 +13,7 @@ public class WebCamTest : MonoBehaviour
     private void Start()
     {
         string nvidiaCam = "Camera (NVIDIA Broadcast)";
-        string externalWebCam = "HD Pro Webcam C920";
+       // string externalWebCam = "HD Pro Webcam C920";
 
         WebCamDevice[] devices = WebCamTexture.devices;
 
@@ -25,13 +25,13 @@ public class WebCamTest : MonoBehaviour
                 webCam = new WebCamTexture(device.name);
                 break;
             }
-
+/*
             else if (device.name == externalWebCam)
             {
                 webCam = new WebCamTexture(device.name);
                 break;
             }
-        
+        */
         }
 
         if (webCam == null)
