@@ -12,9 +12,8 @@ public class Flippers : MonoBehaviour
 
     public HingeJoint upperRightFlipperTwo;
     public HingeJoint upperLeftFlipperTwo;
-
     
-
+    
     public Restart restart;
 
     public SoundController flipperUpSound;
