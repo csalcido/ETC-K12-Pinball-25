@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using Klak.Ndi;
 using TMPro;
-using UnityEditor.Recorder.Input;
+//using UnityEditor.Recorder.Input;
 
 
 public class TakePhotos : MonoBehaviour
