@@ -25023,12 +25023,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f3d5eb5de1c0194da44658e69474766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Sender: {fileID: 0}
-  m_Address: /
-  m_Arguments: []
+  m_Sender: {fileID: 698111148}
+  m_Address: /pinball/gameOver
+  m_Arguments:
+  - m_Object: {fileID: 698111144}
+    m_Component: {fileID: 698111145}
+    m_MemberType: 1
+    m_MemberValueType: Int32
+    m_MemberName: gameOver
+    m_Output:
+      rid: 1400101786911244356
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 1400101786911244356
+      type: {class: ArgumentOutputInt32, ns: Unity.Media.Osc.Arguments, asm: Unity.Media.Osc.Components}
+      data: 
 --- !u!114 &698111147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25041,8 +25051,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f3d5eb5de1c0194da44658e69474766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Sender: {fileID: 0}
-  m_Address: /
+  m_Sender: {fileID: 698111148}
+  m_Address: /pinball/gameOver
   m_Arguments: []
   references:
     version: 2
@@ -25060,10 +25070,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Protocol: 0
-  m_IpAddress: 255.255.255.255
+  m_IpAddress: 127.0.0.1
   m_Port: 8000
   m_StreamType: 1
-  m_AutoBundleMessages: 0
+  m_AutoBundleMessages: 1
 --- !u!4 &698111149
 Transform:
   m_ObjectHideFlags: 0
@@ -63652,7 +63662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a09ab5fc64402d49b12d170a7577986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ndiName: ETC-PINBALL-05 (TouchDesigner)
+  _ndiName: ETC-PINBALL-02 (TouchDesigner)
   _targetTexture: {fileID: 0}
   _targetRenderer: {fileID: 102875310}
   _targetMaterialProperty: _MainTex
@@ -80231,7 +80241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e68c6748f448b245b70ae985041556a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownTime: 30
+  countdownTime: 5
   flashSound: {fileID: 831782323}
   countdownText: {fileID: 1964257238}
   endScreen: {fileID: 958865864}
