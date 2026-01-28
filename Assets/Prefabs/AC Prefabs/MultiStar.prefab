@@ -158,7 +158,7 @@ MonoBehaviour:
   buffType: 1
   buffDuration: 5
   buffValue: 2
-  disableAfterUse: 1
+  disableAfterUse: 0
   respawnTime: 10
   gameStateManager: {fileID: 0}
 --- !u!95 &6652553563601899920

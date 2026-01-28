@@ -71,7 +71,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buffType: 0
   buffDuration: 3
-  buffValue: 2
+  buffValue: 4
   disableAfterUse: 0
   respawnTime: 10
   gameStateManager: {fileID: 0}
