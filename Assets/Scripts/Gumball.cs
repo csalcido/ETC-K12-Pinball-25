@@ -51,7 +51,7 @@ public class Gumball : MonoBehaviour
             
 
             //spawn buff at random
-            //Instantiate(randomBuff, spawnLocations[i]);
+            Instantiate(randomBuff, spawnLocations[i]);
             
 
 
