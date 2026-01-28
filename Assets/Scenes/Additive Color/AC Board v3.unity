@@ -15194,7 +15194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717885d959c8483479d993699adc2650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonImage: {fileID: 0}
+  buttonImage: {fileID: 663776456}
   glowColor: {r: 0, g: 0.3971982, b: 1, a: 1}
   glowSpeed: 0.7
   minAlpha: 0.7
@@ -23302,67 +23302,6 @@ VisualEffect:
       m_Array: []
     m_Bool:
       m_Array: []
---- !u!1 &640567391
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 640567393}
-  - component: {fileID: 640567392}
-  - component: {fileID: 640567394}
-  m_Layer: 0
-  m_Name: ScoreManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &640567392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 640567391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dea68f1c188c6fb4ca93826811d541f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scoreText: {fileID: 0}
---- !u!4 &640567393
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 640567391}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.4621353, y: 19.943504, z: 1.2377155}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 764988703}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &640567394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 640567391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7599868f6bb13c646840060a4a4edfbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  popupPrefab: {fileID: 1165183905340116658, guid: 79df5a3d068adec46846eebc2b805a5a, type: 3}
-  worldSpaceCanvas: {fileID: 681796705}
-  mainCamera: {fileID: 330585545}
 --- !u!1 &641385150
 GameObject:
   m_ObjectHideFlags: 0
@@ -26452,7 +26391,6 @@ Transform:
   m_Children:
   - {fileID: 460106132}
   - {fileID: 274475362}
-  - {fileID: 640567393}
   - {fileID: 829323130}
   - {fileID: 1845134472}
   - {fileID: 1483407585}
@@ -53430,7 +53368,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1301729697}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b3f7c0209288464f89d74058d341b0f, type: 3}
   m_Name: 
@@ -63624,7 +63562,7 @@ MonoBehaviour:
   enablePinballTracking: 1
   trackingRadius: 30
   trackingMaterial: {fileID: 2100000, guid: c3c8e9c1ebbe72344aada2d3b56d98c2, type: 2}
-  trackingAnalysisShader: {fileID: 0}
+  trackingAnalysisShader: {fileID: 7200000, guid: 5987b0457ba3fe441b00c5e2f16560a1, type: 3}
   ndiSender: {fileID: 1483407587}
   ndiSenderPhoto: {fileID: 1483407588}
   ndiReceiver: {fileID: 1483407586}
