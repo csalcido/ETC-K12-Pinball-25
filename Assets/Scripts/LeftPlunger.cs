@@ -14,10 +14,10 @@ public class LeftPlunger : MonoBehaviour
     public KeyCode plungerKey;
     public float closeTime = 1.5f;
     public bool isLaunching = false;
-    private bool isWaitingForReturn = false;
+    //private bool isWaitingForReturn = false;
 
-    private float currentForce = 0f;
-    private bool isCharging = false;
+    //private float currentForce = 0f;
+    //private bool isCharging = false;
     private List<Rigidbody> ballsInContact = new List<Rigidbody>();
 
     public float minDistance = 4f;
@@ -32,9 +32,9 @@ public class LeftPlunger : MonoBehaviour
     public GameObject[] plungerVFX;
 
     public BallSwitchLeft ballSwitchLeft;
-    private int matIndex = 0;
+    //private int matIndex = 0;
 
-    private bool ballHasLeftPlunger = true;
+    //private bool ballHasLeftPlunger = true;
 
     public StartManager startManager;
 /*
@@ -147,4 +147,5 @@ public class LeftPlunger : MonoBehaviour
         isWaitingForReturn = false;
         respawnScript.SpawnBall(true);
     } */
+    
 }

@@ -46,7 +46,7 @@ public class BallEffect : MonoBehaviour
         //PAT END
         Transform impact = transform.Find("Ball_Impact");
         impactEffect = impact.gameObject;
-        achievementManager = FindObjectOfType<Achievement>();
+        //achievementManager = FindObjectOfType<Achievement>();
 
         // Start the self-destruct timer
         //StartCoroutine(SelfDestructAfterDelay(15f));

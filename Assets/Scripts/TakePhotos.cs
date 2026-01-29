@@ -884,7 +884,7 @@ public class TakePhotos : MonoBehaviour
         }
         
         stopwatch.Stop();
-        Debug.Log($"AnalyzeTrackingTexture (GPU) took: {stopwatch.Elapsed} (nonBlack: {nonBlackPixels}, red: {redCount}, green: {greenCount}, blue: {blueCount})");
+        //Debug.Log($"AnalyzeTrackingTexture (GPU) took: {stopwatch.Elapsed} (nonBlack: {nonBlackPixels}, red: {redCount}, green: {greenCount}, blue: {blueCount})");
         
         return new TrackingAnalysis 
         { 

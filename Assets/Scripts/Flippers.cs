@@ -81,7 +81,7 @@ public class Flippers : MonoBehaviour
             //control flippers
             if (Input.GetKey(KeyCode.LeftArrow) || xboxControls.Player.LeftArrow.IsPressed() || SerialManager.LeftFlipperPressed)
             {
-                Debug.Log("left arrow");
+                //Debug.Log("left arrow");
                 leftSpring.targetPosition = -targetAngle;
                 restart.RegisterLeftFlipper();
             }

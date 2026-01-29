@@ -4,8 +4,7 @@ using System.Collections;
 
 public class BumperEffect : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public GameObject[] impactEffects;
+/*    public GameObject[] impactEffects;
     void Start()
     {
         
@@ -39,5 +38,5 @@ public class BumperEffect : MonoBehaviour
         int index = int.Parse(numberPart);
 
         return index;
-    }
+    }*/
 }
