@@ -89,7 +89,10 @@ public class RightPlunger : MonoBehaviour
         ballsInContact.Clear();
         plungerSound.PlaySound();
 
-        respawn.SpawnBall();
+        if (respawn != null)
+        {
+            respawn.SpawnBall();
+        }
 
         StartCoroutine(DisableForSeconds(plungerClose, closeTime));
         StartCoroutine(EffectsTrigger(plungerVFX[matIndex], 1f));

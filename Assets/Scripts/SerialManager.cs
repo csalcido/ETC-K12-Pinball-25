@@ -79,8 +79,9 @@ public class SerialManager : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.LogError("Failed to open serial port: " + e.Message);
+            Debug.Log("Failed to open serial port: " + e.Message);
         }
+        
     }
 
     private void LateUpdate()

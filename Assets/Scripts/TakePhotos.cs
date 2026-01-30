@@ -52,7 +52,7 @@ public class TakePhotos : MonoBehaviour
 
     [Header("3D Plane Display")]
     [SerializeField] private GameObject displayPlane; // 3D plane to display the photo
-    [SerializeField] private Material planeMaterial; // material for the plane (this is set automatically)
+    private Material planeMaterial; // material for the plane (this is set automatically)
     
     [Header("Pinball Tracking")]
     [SerializeField] private bool enablePinballTracking = true;

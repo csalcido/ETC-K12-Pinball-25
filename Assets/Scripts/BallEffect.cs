@@ -16,7 +16,7 @@ public class BallEffect : MonoBehaviour
 
     public GameObject[] trails;
 
-    private Achievement achievementManager;
+    //private Achievement achievementManager;
     public GameStateManager gameStateManager;
 
     //PAT EDIT: changing color of ball based on current color
@@ -102,7 +102,7 @@ public class BallEffect : MonoBehaviour
             case "Bumper":
                 if (bumperSound != null) bumperSound.PlaySound();
                 StartCoroutine(EffectsTrigger(impactEffect, 0.3f));
-                achievementManager.RegisterBumperHit();
+                //achievementManager.RegisterBumperHit();
                 break;
 
             case "Slingshot":
@@ -124,7 +124,7 @@ public class BallEffect : MonoBehaviour
 
             case "Drop":
                 if (bumperSound != null) bumperSound.PlaySound();
-                achievementManager.regiserTarget();
+                //achievementManager.regiserTarget();
                 break;
         }
     }
@@ -139,11 +139,11 @@ public class BallEffect : MonoBehaviour
 
             case "Tunnel":
                 if (tunnelSound != null) tunnelSound.PlaySound();
-                achievementManager.RegisterTunnel();
+                //achievementManager.RegisterTunnel();
                 break;
 
             case "Gobbler":
-                achievementManager.registerGobble();
+                //achievementManager.registerGobble();
                 break;
         }
     }
