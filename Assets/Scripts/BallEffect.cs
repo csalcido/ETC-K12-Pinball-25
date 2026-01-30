@@ -43,56 +43,51 @@ public class BallEffect : MonoBehaviour
         {
             takePhotosScript = FindAnyObjectByType<TakePhotos>();
         }
+
+        // LOCK THE BALL'S COLOR ONCE AT LAUNCH: Assign material based on nextPinballColor at this moment
+        // Use Instantiate() to create unique material instances (prevents shared changes)
+        if (takePhotosScript != null && ballRenderer != null)
+        {
+            Color ballColor = takePhotosScript.nextPinballColor;  // Capture the color for this ball
+
+            if (ballColor.r > 0.8f && ballColor.g < 0.2f && ballColor.b < 0.2f)
+            {
+                ballRenderer.material = Instantiate(redMaterial);  // Unique red material
+                ActivateTrail(3);
+            }
+            else if (ballColor.g > 0.8f && ballColor.r < 0.2f && ballColor.b < 0.2f)
+            {
+                ballRenderer.material = Instantiate(greenMaterial);  // Unique green material
+                ActivateTrail(4);
+            }
+            else if (ballColor.b > 0.8f && ballColor.r < 0.2f && ballColor.g < 0.2f)
+            {
+                ballRenderer.material = Instantiate(blueMaterial);  // Unique blue material
+                ActivateTrail(5);
+            }
+            Debug.Log("Ball color locked at launch: " + ballColor + " | Material: " + ballRenderer.material.name);  // Debug: Confirm assignment
+        }
         //PAT END
+
         Transform impact = transform.Find("Ball_Impact");
-        impactEffect = impact.gameObject;
+        if (impact != null)
+        {
+            impactEffect = impact.gameObject;
+        }
+        else
+        {
+            Debug.LogWarning("Ball_Impact child not found on ball prefab");
+        }
         //achievementManager = FindObjectOfType<Achievement>();
 
         // Start the self-destruct timer
         //StartCoroutine(SelfDestructAfterDelay(15f));
     }
-    /*
-    private IEnumerator SelfDestructAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
 
-        // Play the pop animation
-        if (animator != null)
-        {
-            animator.Play("pinballPopAnim"); // must match the state name in Animator
-            yield return new WaitForSeconds(.5f);
-    }
-        Destroy(gameObject);
-    }
-
-*/
     // Update is called once per frame
     void Update()
     {
-        //PAT EDIT
-        if (takePhotosScript != null && ballRenderer != null)
-        {
-            Color nextColor = takePhotosScript.nextPinballColor;
-
-            if (nextColor.r > 0.8f && nextColor.g < 0.2f && nextColor.b < 0.2f)
-            {
-                ballRenderer.material = redMaterial;
-                ActivateTrail(3);
-            }
-            else if (nextColor.g > 0.8f && nextColor.r < 0.2f && nextColor.b < 0.2f)
-            {
-
-                ballRenderer.material = greenMaterial;
-                ActivateTrail(4);
-            }
-            else if (nextColor.b > 0.8f && nextColor.r < 0.2f && nextColor.g < 0.2f)
-            {
-                ballRenderer.material = blueMaterial;
-                ActivateTrail(5);
-            }
-        }
-
-        //PAT END
+        // REMOVED: Color-changing logic - balls now lock their color in Start() and don't change
     }
 
     private void OnCollisionEnter(Collision collision)
