@@ -35,7 +35,7 @@ public class BuffTrigger : MonoBehaviour
                 ballBuff.ApplyBuff(buffType, buffValue, buffDuration);
                 buffAnimator.SetBool("IsTriggered", true);
 
-                //Debug.Log("triggered!");
+                Debug.Log("triggered!");
 
                 if (disableAfterUse)
                 {
