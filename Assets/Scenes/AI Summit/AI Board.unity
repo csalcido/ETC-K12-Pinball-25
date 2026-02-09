@@ -704,7 +704,6 @@ MonoBehaviour:
   - {fileID: 1223301128}
   - {fileID: 353993463}
   - {fileID: 211692731}
-  rightGate: {fileID: 0}
   plungerSound: {fileID: 144605271}
   ballSwitchRight: {fileID: 2278951}
   startManager: {fileID: 694871614}
@@ -7274,7 +7273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.654902, b: 0.26666668, a: 1}
+  m_Color: {r: 0.08627451, g: 0.45490196, b: 0.92156863, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8196,10 +8195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c66b080fb5427e40a3c631ce8e0cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffects:
-  - {fileID: 310851313}
-  - {fileID: 2097025022}
-  - {fileID: 123637414}
 --- !u!114 &207024873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8812,6 +8807,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2278949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &217325917
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7788353473719271498, guid: bd7133301cd77c74bbcd039f4acf54d7, type: 3}
+      propertyPath: m_Name
+      value: Top of board
+      objectReference: {fileID: 0}
+    - target: {fileID: 9014534680973691908, guid: bd7133301cd77c74bbcd039f4acf54d7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.3512
+      objectReference: {fileID: 0}
+    - target: {fileID: 9014534680973691908, guid: bd7133301cd77c74bbcd039f4acf54d7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9014534680973691908, guid: bd7133301cd77c74bbcd039f4acf54d7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11.8936
+      objectReference: {fileID: 0}
+    - target: {fileID: 9014534680973691908, guid: bd7133301cd77c74bbcd039f4acf54d7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.0006927833
+      objectReference: {fileID: 0}
+    - target: {fileID: 9014534680973691908, guid: bd7133301cd77c74bbcd039f4acf54d7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0000065790077
+      objectReference: {fileID: 0}
+    - target: {fileID: 9014534680973691908, guid: bd7133301cd77c74bbcd039f4acf54d7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.00949602
+      objectReference: {fileID: 0}
+    - target: {fileID: 9014534680973691908, guid: bd7133301cd77c74bbcd039f4acf54d7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.99995476
+      objectReference: {fileID: 0}
+    - target: {fileID: 9014534680973691908, guid: bd7133301cd77c74bbcd039f4acf54d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 1.088
+      objectReference: {fileID: 0}
+    - target: {fileID: 9014534680973691908, guid: bd7133301cd77c74bbcd039f4acf54d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9014534680973691908, guid: bd7133301cd77c74bbcd039f4acf54d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -179.921
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bd7133301cd77c74bbcd039f4acf54d7, type: 3}
 --- !u!1 &223722468
 GameObject:
   m_ObjectHideFlags: 0
@@ -8992,8 +9044,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282689535
-  m_fontColor: {r: 1, g: 0.65428734, b: 0.26729542, a: 1}
+    rgba: 4287514603
+  m_fontColor: {r: 0.92156863, g: 0.2784314, b: 0.5568628, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -9563,10 +9615,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c66b080fb5427e40a3c631ce8e0cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffects:
-  - {fileID: 96109868}
-  - {fileID: 2136672696}
-  - {fileID: 71590394}
 --- !u!114 &264606236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11246,10 +11294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c66b080fb5427e40a3c631ce8e0cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffects:
-  - {fileID: 815722431}
-  - {fileID: 1357211596}
-  - {fileID: 379770383}
 --- !u!114 &329417769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12885,7 +12929,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4282689535
-  m_fontColor: {r: 1, g: 0.65428734, b: 0.26729542, a: 1}
+  m_fontColor: {r: 0.05490196, g: 0.3137255, b: 0.74509805, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -14423,10 +14467,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c66b080fb5427e40a3c631ce8e0cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffects:
-  - {fileID: 238810588}
-  - {fileID: 1965480965}
-  - {fileID: 358922556}
 --- !u!1 &463220983
 GameObject:
   m_ObjectHideFlags: 0
@@ -15248,7 +15288,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 0.654902, b: 0.27058825, a: 1}
+    m_NormalColor: {r: 0.73333335, g: 0.15686275, b: 0.4, a: 1}
     m_HighlightedColor: {r: 0.015686275, g: 0, b: 0.5176471, a: 1}
     m_PressedColor: {r: 0.50980395, g: 0.4156863, b: 1, a: 1}
     m_SelectedColor: {r: 0.50980395, g: 0.4156863, b: 1, a: 1}
@@ -15426,10 +15466,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c66b080fb5427e40a3c631ce8e0cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffects:
-  - {fileID: 1114737495}
-  - {fileID: 914800586}
-  - {fileID: 1726622130}
 --- !u!114 &488306506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15645,7 +15681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.654902, b: 0.27058825, a: 1}
+  m_Color: {r: 0.05490196, g: 0.3137255, b: 0.74509805, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -17110,10 +17146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c66b080fb5427e40a3c631ce8e0cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffects:
-  - {fileID: 1061805729}
-  - {fileID: 638113088}
-  - {fileID: 767815888}
 --- !u!1 &561121951
 GameObject:
   m_ObjectHideFlags: 0
@@ -17786,10 +17818,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c66b080fb5427e40a3c631ce8e0cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffects:
-  - {fileID: 552794133}
-  - {fileID: 655595646}
-  - {fileID: 223722468}
 --- !u!1 &590769085
 GameObject:
   m_ObjectHideFlags: 0
@@ -20762,10 +20790,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c66b080fb5427e40a3c631ce8e0cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffects:
-  - {fileID: 1651933885}
-  - {fileID: 622617274}
-  - {fileID: 1429225634}
 --- !u!114 &727479198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22168,7 +22192,6 @@ MonoBehaviour:
   - {fileID: 98209941}
   - {fileID: 1813118522}
   - {fileID: 1606407981}
-  rightGate: {fileID: 0}
   plungerSound: {fileID: 144605271}
   ballSwitchRight: {fileID: 774547395}
   startManager: {fileID: 694871614}
@@ -25097,10 +25120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c66b080fb5427e40a3c631ce8e0cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffects:
-  - {fileID: 204025455}
-  - {fileID: 1190153375}
-  - {fileID: 449970426}
 --- !u!114 &875541574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25598,10 +25617,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c66b080fb5427e40a3c631ce8e0cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffects:
-  - {fileID: 1866645434}
-  - {fileID: 1215527365}
-  - {fileID: 1872727677}
 --- !u!114 &877725801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27459,7 +27474,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 137.41048, w: 20.0559}
+  m_margin: {x: -5.101059, y: 0, z: 133.00197, w: 20.0559}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -35158,8 +35173,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282689535
-  m_fontColor: {r: 1, g: 0.65428734, b: 0.26729542, a: 1}
+    rgba: 4287514603
+  m_fontColor: {r: 0.92156863, g: 0.2784314, b: 0.5568628, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -50082,8 +50097,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282689535
-  m_fontColor: {r: 1, g: 0.654902, b: 0.26666668, a: 1}
+    rgba: 4287514603
+  m_fontColor: {r: 0.92156863, g: 0.2784314, b: 0.5568628, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -50670,10 +50685,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c66b080fb5427e40a3c631ce8e0cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffects:
-  - {fileID: 1696312178}
-  - {fileID: 1477804289}
-  - {fileID: 1906842757}
 --- !u!114 &1347587432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57103,10 +57114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c66b080fb5427e40a3c631ce8e0cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffects:
-  - {fileID: 16769088}
-  - {fileID: 1429924580}
-  - {fileID: 1268098122}
 --- !u!114 &1438554964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59422,7 +59429,6 @@ MonoBehaviour:
   gumballManager: {fileID: 1475238413}
   textSelectionManager: {fileID: 839990994}
   displayPlane: {fileID: 102875308}
-  planeMaterial: {fileID: 0}
   enablePinballTracking: 1
   trackingRadius: 35
   trackingMaterial: {fileID: 2100000, guid: c3c8e9c1ebbe72344aada2d3b56d98c2, type: 2}
@@ -59431,7 +59437,7 @@ MonoBehaviour:
   ndiSenderPhoto: {fileID: 1483407588}
   ndiReceiver: {fileID: 1483407586}
   showRawTrackingTexture: 0
-  countdownTime: 1
+  countdownTime: 3
   countdownDisplay: {fileID: 1491257520}
   countdownDisplayBackground: {fileID: 34829640}
   countdownSound: {fileID: 831782323}
@@ -67752,8 +67758,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282689535
-  m_fontColor: {r: 1, g: 0.654902, b: 0.26666668, a: 1}
+    rgba: 4290662414
+  m_fontColor: {r: 0.05490196, g: 0.3137255, b: 0.74509805, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -68727,7 +68733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: c70038180c885cc4ea6801a7245b856c, type: 2}
-  m_Color: {r: 1, g: 0.654902, b: 0.26666668, a: 1}
+  m_Color: {r: 0.73333335, g: 0.15686275, b: 0.4, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -70283,8 +70289,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282689535
-  m_fontColor: {r: 1, g: 0.654902, b: 0.26666668, a: 1}
+    rgba: 4287514603
+  m_fontColor: {r: 0.92156863, g: 0.2784314, b: 0.5568628, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -70856,7 +70862,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 0.654902, b: 0.27058825, a: 1}
+    m_NormalColor: {r: 0.73333335, g: 0.15686275, b: 0.4, a: 1}
     m_HighlightedColor: {r: 0.015686275, g: 0, b: 0.5176471, a: 1}
     m_PressedColor: {r: 0.49411768, g: 0.4039216, b: 0.9725491, a: 1}
     m_SelectedColor: {r: 0.50980395, g: 0.4156863, b: 1, a: 1}
@@ -71721,8 +71727,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282689535
-  m_fontColor: {r: 1, g: 0.654902, b: 0.26666668, a: 1}
+    rgba: 4290662414
+  m_fontColor: {r: 0.05490196, g: 0.3137255, b: 0.74509805, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -72711,10 +72717,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c66b080fb5427e40a3c631ce8e0cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffects:
-  - {fileID: 477559292}
-  - {fileID: 630475516}
-  - {fileID: 652360919}
 --- !u!114 &1856935868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74106,10 +74108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c66b080fb5427e40a3c631ce8e0cf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffects:
-  - {fileID: 2044711890}
-  - {fileID: 1162488074}
-  - {fileID: 654119632}
 --- !u!114 &1913980114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74611,8 +74609,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282689535
-  m_fontColor: {r: 1, g: 0.654902, b: 0.26666668, a: 1}
+    rgba: 4287514603
+  m_fontColor: {r: 0.92156863, g: 0.2784314, b: 0.5568628, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -74747,8 +74745,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282689535
-  m_fontColor: {r: 1, g: 0.654902, b: 0.26666668, a: 1}
+    rgba: 4287514603
+  m_fontColor: {r: 0.92156863, g: 0.2784314, b: 0.5568628, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -75076,7 +75074,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.654902, b: 0.27058825, a: 1}
+  m_Color: {r: 0.05490196, g: 0.3137255, b: 0.74509805, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -76231,7 +76229,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 0.654902, b: 0.27058825, a: 1}
+    m_NormalColor: {r: 0.05490196, g: 0.3137255, b: 0.74509805, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -77921,3 +77919,4 @@ SceneRoots:
   - {fileID: 1029638916}
   - {fileID: 1501143538}
   - {fileID: 2053943240}
+  - {fileID: 217325917}

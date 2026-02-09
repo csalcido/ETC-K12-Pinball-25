@@ -45,9 +45,9 @@ public class TextPromptSelection : MonoBehaviour
 
     // List of available prompt options
 
-    private string[] randomPromptOne = {"galactic","magical","futuristic", "retro", "disco", "urban" };
-    private string[] randomPromptTwo = { "Comic Book", "Watercolor", "Vintage", "Pop Art", "Anime", "Cartoon", "16-Bit" };
-    private string[] promptOptions = {"Skeleton", "Wizard", "Jack-O-Lantern", "Zombie", "Vampire", "Scarecrow", "Mummy"};
+    private string[] randomPromptOne = {"Pittsburgh"};
+    private string[] randomPromptTwo = {"Mr. Rogers"};
+    private string[] promptOptions = {"Warhol"};
 
 
     
@@ -116,10 +116,36 @@ public class TextPromptSelection : MonoBehaviour
     }
     
     #region TouchDesigner Prompts
-    
+
     public string TdPromptTranslate(string partOne, string partTwo, string partThree)
     {
-        //first part
+
+
+        switch (partOne)
+        {
+            case "PITTSBURGH":
+                partOne = "with pittsburgh skyline in the background";
+                break;
+        }
+
+        switch (partTwo)
+        {
+            case "MR. ROGERS":
+                partTwo = "on the set of mr. rogers neighborhood";
+                break;
+        }
+
+        switch (partThree)
+        {
+            case "WARHOL":
+                partThree = "rendered in the style of andy warhol pop art";
+                break;
+
+        }
+    
+
+    //first part
+        /*
         switch (partOne)
         {
             case "DISCO":
@@ -194,36 +220,11 @@ public class TextPromptSelection : MonoBehaviour
                 break;
 
         }
-        */
         
+        
+                */
 
-        //third part
-        switch (partThree)
-        {
-            case "Skeleton":
-                partThree = "skeletons making friends in a graveyard";
-                break;
-            case "Wizard":
-                partThree = "with a wise wizard casting powerful spells";
-                break;
-            case "Jack-O-Lantern":
-                partThree = "cute orange jack o lantern on a doorstep with a candle";
-                break;
-            case "Zombie":
-                partThree = "green rotting zombie";
-                break;
-            case "Vampire":
-                partThree = "victorian era vampire in spooky mansion";
-                break;
-            case "Scarecrow":
-                partThree = "scarecrow with burlap and corn and hay and crows flying around";
-                break;
-            case "Mummy":
-                partThree = "wrapped dusty mummy with bandages";
-                break;
-
-
-        }
+        
         string fullPrompt = $"{partThree}, {partTwo}, {partOne}."; //turn into interpolated string
         Debug.Log(fullPrompt);
         return fullPrompt;
