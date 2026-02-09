@@ -813,8 +813,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4293481385
-  m_fontColor: {r: 0.6632708, g: 0.32405752, b: 0.91194963, a: 1}
+    rgba: 4293620758
+  m_fontColor: {r: 0.08627451, g: 0.45490196, b: 0.92156863, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -930,7 +930,6 @@ MonoBehaviour:
   gumballManager: {fileID: 0}
   textSelectionManager: {fileID: 0}
   displayPlane: {fileID: 0}
-  planeMaterial: {fileID: 0}
   enablePinballTracking: 1
   trackingRadius: 10
   trackingMaterial: {fileID: 0}
@@ -1203,8 +1202,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278199408
-  m_fontColor: {r: 0.44025147, g: 0.1400001, b: 0, a: 1}
+    rgba: 4287514603
+  m_fontColor: {r: 0.92156863, g: 0.2784314, b: 0.5568628, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2198,8 +2197,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4290904135
-  m_fontColor: {r: 0.27708197, g: 0, b: 0.7610062, a: 1}
+    rgba: 4290662414
+  m_fontColor: {r: 0.05490196, g: 0.3137255, b: 0.74509805, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -8008,7 +8007,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Halloween Edition!
+  m_text: Pennsylvania Edition
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cd65948afc4c1f64386a790a8e38d68a, type: 2}
   m_sharedMaterial: {fileID: -5951673609026263188, guid: cd65948afc4c1f64386a790a8e38d68a, type: 2}
@@ -9065,8 +9064,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278213597
-  m_fontColor: {r: 0.8679245, g: 0.3554358, b: 0, a: 1}
+    rgba: 4279489415
+  m_fontColor: {r: 0.5294118, g: 0.827451, b: 0.07450981, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -9195,7 +9194,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 0.654902, b: 0.27058825, a: 1}
+    m_NormalColor: {r: 0.73333335, g: 0.15686275, b: 0.4, a: 1}
     m_HighlightedColor: {r: 0.015913023, g: 0, b: 0.5188679, a: 1}
     m_PressedColor: {r: 0.50980395, g: 0.41568628, b: 1, a: 1}
     m_SelectedColor: {r: 0.50980395, g: 0.41727704, b: 1, a: 1}
