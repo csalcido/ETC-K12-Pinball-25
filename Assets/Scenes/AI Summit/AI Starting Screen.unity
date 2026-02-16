@@ -813,8 +813,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4293620758
-  m_fontColor: {r: 0.08627451, g: 0.45490196, b: 0.92156863, a: 1}
+    rgba: 4280197565
+  m_fontColor: {r: 0.74213827, g: 0.63053656, b: 0.119022064, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1202,8 +1202,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4287514603
-  m_fontColor: {r: 0.92156863, g: 0.2784314, b: 0.5568628, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2197,8 +2197,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4290662414
-  m_fontColor: {r: 0.05490196, g: 0.3137255, b: 0.74509805, a: 1}
+    rgba: 4291781398
+  m_fontColor: {r: 0.08627451, g: 0.3882353, b: 0.8117647, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -8007,7 +8007,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Pennsylvania Edition
+  m_text: Pittsburgh Edition
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cd65948afc4c1f64386a790a8e38d68a, type: 2}
   m_sharedMaterial: {fileID: -5951673609026263188, guid: cd65948afc4c1f64386a790a8e38d68a, type: 2}
@@ -9064,8 +9064,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279489415
-  m_fontColor: {r: 0.5294118, g: 0.827451, b: 0.07450981, a: 1}
+    rgba: 4279229685
+  m_fontColor: {r: 0.9607843, g: 0.8627451, b: 0.05882353, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -9194,7 +9194,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.73333335, g: 0.15686275, b: 0.4, a: 1}
+    m_NormalColor: {r: 0.9607843, g: 0.8627451, b: 0.05882353, a: 1}
     m_HighlightedColor: {r: 0.015913023, g: 0, b: 0.5188679, a: 1}
     m_PressedColor: {r: 0.50980395, g: 0.41568628, b: 1, a: 1}
     m_SelectedColor: {r: 0.50980395, g: 0.41727704, b: 1, a: 1}
