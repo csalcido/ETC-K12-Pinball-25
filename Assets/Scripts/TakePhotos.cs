@@ -54,6 +54,9 @@ public class TakePhotos : MonoBehaviour
     [SerializeField] private GameObject displayPlane; // 3D plane to display the photo
     private Material planeMaterial; // material for the plane (this is set automatically)
     
+    [SerializeField] private GameObject displayPlaneEnd; // 3D plane to display the photo
+    private Material planeMaterialEnd; // material for the plane (this is set automatically)
+    
     [Header("Pinball Tracking")]
     [SerializeField] private bool enablePinballTracking = true;
     [SerializeField] private float trackingRadius = 10f; // radius around pinball to mark as visited (in pixels)
@@ -834,7 +837,7 @@ public class TakePhotos : MonoBehaviour
     {
         if (trackingAnalysisShader == null || resultBuffer == null)
         {
-            Debug.LogError("Compute shader or result buffer not initialized for pixel analysis");
+            //Debug.LogError("Compute shader or result buffer not initialized for pixel analysis");
             return new TrackingAnalysis { isEmpty = true, leastUsedColor = RandomColor() };
         }
         
