@@ -30,6 +30,7 @@ public class TextPromptSelection : MonoBehaviour
 
     [Header ("Text Objects")]
     public TextMeshProUGUI randomPromptOneText;
+    public TextMeshProUGUI randomPromptTwoText;
     public TextMeshProUGUI selectedPromptText;
     public TextMeshProUGUI gameOverlayText;
     public TextMeshProUGUI endScreenOverlayText;
@@ -45,7 +46,8 @@ public class TextPromptSelection : MonoBehaviour
     // List of available prompt options
 
     private string[] randomPromptOne = {"Pittsburgh"};
-    private string[] promptOptions = {"PGH Skyline", "Warhol", "Mr. Rogers", "Fallingwater", "PGH Bridges"};
+    private string[] randomPromptTwo = {"Mr. Rogers"};
+    private string[] promptOptions = {"Warhol"};
 
 
     
@@ -60,7 +62,8 @@ public class TextPromptSelection : MonoBehaviour
     IEnumerator randomPromptSequence()
     {
         yield return new WaitForSeconds(1f);
-        yield return StartCoroutine(randomizePrompt(randomPromptOne, randomPromptOneText)); 
+        yield return StartCoroutine(randomizePrompt(randomPromptOne, randomPromptOneText));
+        yield return StartCoroutine(randomizePrompt(randomPromptTwo, randomPromptTwoText)); 
         gameStateManager.randomSelectionFinished = true;
         thirdPromptUI.SetActive(true);
 
@@ -114,41 +117,32 @@ public class TextPromptSelection : MonoBehaviour
     
     #region TouchDesigner Prompts
 
-    public string TdPromptTranslate(string partOne, string partThree)
+    public string TdPromptTranslate(string partOne, string partTwo, string partThree)
     {
 
 
         switch (partOne)
         {
             case "PITTSBURGH":
-                partOne = "";
+                partOne = "with pittsburgh skyline in the background";
                 break;
         }
 
+        switch (partTwo)
+        {
+            case "MR. ROGERS":
+                partTwo = "on the set of mr. rogers neighborhood";
+                break;
+        }
 
         switch (partThree)
         {
-            case "SKYLINE":
-                partThree = "with the Pittsburgh skyline in the background";
-                break;
             case "WARHOL":
                 partThree = "rendered in the style of andy warhol pop art";
                 break;
-            case "MR. ROGERS":
-                partThree = "on the set of Mr. Rogers Neighborhood";
-                break;
-            case "FALLINGWATER":
-                partThree = "Fallingwater house Frank Lloyd Wright";
-                break;
-            case "BRIDGES":
-                partThree = "with Pittsburgh classic yellow bridges";
-                break;
-
-        
 
         }
     
-
 
     //first part
         /*
@@ -231,7 +225,7 @@ public class TextPromptSelection : MonoBehaviour
                 */
 
         
-        string fullPrompt = $"{partThree}, {partOne}."; //turn into interpolated string
+        string fullPrompt = $"{partThree}, {partTwo}, {partOne}."; //turn into interpolated string
         Debug.Log(fullPrompt);
         return fullPrompt;
     }
@@ -242,7 +236,7 @@ public class TextPromptSelection : MonoBehaviour
     public void ConfirmSelection()
     {
         //translate prompts to TD prompts
-        TdPrompt = TdPromptTranslate(randomPromptOneText.text, selectedPromptText.text);
+        TdPrompt = TdPromptTranslate(randomPromptOneText.text, randomPromptTwoText.text, selectedPromptText.text);
         //apply it to the oscmessage object
         gameStateManager.oscMessage.promptText = TdPrompt;
 
@@ -254,7 +248,7 @@ public class TextPromptSelection : MonoBehaviour
         cameraAnimator.SetBool("playGumballAnim", true);
         gumballManager.SetActive(true);
         //update text overlay on gameboard
-        string onScreenPrompt = $"{randomPromptOneText.text} in {selectedPromptText.text} style";
+        string onScreenPrompt = $"{randomPromptOneText.text} {randomPromptTwoText.text} in {selectedPromptText.text} style";
         onScreenPrompt = onScreenPrompt.ToUpper(); //capitalizing all letters
         gameOverlayText.text = onScreenPrompt;
         endScreenOverlayText.text = onScreenPrompt;
