@@ -8,7 +8,7 @@ using UnityEngine;
 public class SerialManager : MonoBehaviour
 {
 
-    public string portNameL = "COM3";
+    public string portNameL = "COM4";
    // public string portNameR = "COM3";
     public int baudRate = 9600;
 

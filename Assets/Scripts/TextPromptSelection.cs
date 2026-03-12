@@ -46,8 +46,8 @@ public class TextPromptSelection : MonoBehaviour
     // List of available prompt options
 
     private string[] randomPromptOne = {"Pittsburgh"};
-    private string[] randomPromptTwo = {"Mr. Rogers"};
-    private string[] promptOptions = {"Warhol"};
+    private string[] randomPromptTwo = {""};
+    private string[] promptOptions = {"SKYLINE", "WARHOL", "MR. ROGERS", "FALLINGWATER", "BRIDGES"};
 
 
     
@@ -124,23 +124,34 @@ public class TextPromptSelection : MonoBehaviour
         switch (partOne)
         {
             case "PITTSBURGH":
-                partOne = "with pittsburgh skyline in the background";
+                partOne = " ";
                 break;
         }
 
         switch (partTwo)
         {
-            case "MR. ROGERS":
-                partTwo = "on the set of mr. rogers neighborhood";
+            case "":
+                partTwo = "";
                 break;
         }
 
         switch (partThree)
         {
-            case "WARHOL":
-                partThree = "rendered in the style of andy warhol pop art";
+            case "SKYLINE":
+                partThree = "with the Pittsburgh skyline in the background";
                 break;
-
+            case "WARHOL":
+                partThree = "marilyn monroe pop art";
+                break;
+            case "MR. ROGERS":
+                partThree = "on the set of Mr. Rogers Neighborhood";
+                break;
+            case "FALLINGWATER":
+                partThree = "Fallingwater house Frank Lloyd Wright";
+                break;
+            case "BRIDGES":
+                partThree = "with Pittsburgh classic yellow bridges";
+                break;
         }
     
 
@@ -249,9 +260,11 @@ public class TextPromptSelection : MonoBehaviour
         gumballManager.SetActive(true);
         //update text overlay on gameboard
         string onScreenPrompt = $"{randomPromptOneText.text} {randomPromptTwoText.text} in {selectedPromptText.text} style";
+        string endScreenPrompt = $"{randomPromptOneText.text}'s {selectedPromptText.text}";
         onScreenPrompt = onScreenPrompt.ToUpper(); //capitalizing all letters
-        gameOverlayText.text = onScreenPrompt;
-        endScreenOverlayText.text = onScreenPrompt;
+        endScreenPrompt = endScreenPrompt.ToUpper(); //capitalizing all letters
+        gameOverlayText.text = endScreenPrompt;
+        endScreenOverlayText.text = endScreenPrompt;
     }
     
     
