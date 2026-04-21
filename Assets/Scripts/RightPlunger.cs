@@ -61,7 +61,7 @@ public class RightPlunger : MonoBehaviour
                 {
                     currentForce = Random.Range(minForce, maxForce);
                 }
-                //print(currentForce);
+                print(currentForce);
                 isLaunching = true;
                 startManager.RegisterStart();
                 LaunchBalls();
