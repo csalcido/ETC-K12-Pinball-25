@@ -63086,7 +63086,7 @@ MonoBehaviour:
   ndiSenderPhoto: {fileID: 1483407588}
   ndiReceiver: {fileID: 1483407586}
   showRawTrackingTexture: 0
-  countdownTime: 0
+  countdownTime: 1
   countdownDisplay: {fileID: 1491257520}
   countdownDisplayBackground: {fileID: 34829640}
   countdownSound: {fileID: 831782323}
