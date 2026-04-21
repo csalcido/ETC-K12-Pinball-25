@@ -40,13 +40,12 @@ public class BallSwitchRight : MonoBehaviour
         {
             if (pinball != null)
             {
-                // REMOVED: pinball.GetComponent<Renderer>().material = newMat;
-                // This was overriding the locked color from BallEffect. If you want dynamic ball colors, re-enable this and adjust BallEffect.
-
+                // Don't override the ball's locked material. Use the ball's current renderer material
+                var renderer = pinball.GetComponent<Renderer>();
                 var trailController = pinball.GetComponent<BallEffect>();
-                if (trailController != null)
+                if (trailController != null && renderer != null)
                 {
-                    trailController.SwitchTrail(materials[currentMaterialIndex]);  // Keep trail switching if desired
+                    trailController.SwitchTrail(renderer.material);
                 }
             }
         }

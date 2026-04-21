@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Klak.Ndi;
 using TMPro;
 //using UnityEditor.Recorder.Input;
@@ -92,6 +93,8 @@ public class TakePhotos : MonoBehaviour
     private Vector4[] pinballPositions = new Vector4[32];
     private Vector4[] previousPinballPositions = new Vector4[32];
     private Color[] pinballColors = new Color[32]; // individual colors for each pinball
+    private Dictionary<int, Color> assignedPinballColors = new Dictionary<int, Color>(); // stable color per ball instance
+    private int activePinballCount = 0;
     
     // Tracking color variables
     public enum TrackingColor { Red, Green, Blue }
@@ -602,6 +605,8 @@ public class TakePhotos : MonoBehaviour
             pinballColors[i] = Color.clear;
         }
         
+        // track active ids so we can prune assignedPinballColors later
+        HashSet<int> activeIds = new HashSet<int>();
         // Convert to plane-relative coords
         int activePinballs = 0;
         for (int i = 0; i < pinballs.Length && i < 32; i++)
@@ -624,10 +629,23 @@ public class TakePhotos : MonoBehaviour
                     // Use ball's InstanceID as a unique id for shader
                     // so that balls are not overwritten
                     int ballID = pinballs[i].GetInstanceID();
-                    
+
                     // Get the pinball's individual color from DynamicColor component
                     DynamicColor dynamicColor = pinballs[i].GetComponent<DynamicColor>();
-                    Color ballColor = (dynamicColor != null) ? dynamicColor.color : GetPinballColor();
+                    Color ballColor;
+                    if (dynamicColor != null)
+                    {
+                        // use the explicit color and store it
+                        ballColor = dynamicColor.color;
+                        assignedPinballColors[ballID] = ballColor;
+                    }
+                    else if (!assignedPinballColors.TryGetValue(ballID, out ballColor))
+                    {
+                        // assign a stable color the first time we see this ball
+                        ballColor = GetPinballColor();
+                        assignedPinballColors[ballID] = ballColor;
+                    }
+                    activeIds.Add(ballID);
                     
                     pinballPositions[activePinballs] = new Vector4(
                         textureX, 
@@ -661,6 +679,16 @@ public class TakePhotos : MonoBehaviour
         if (ndiSender != null)
         {
             ndiSender.sourceTexture = trackingRenderTexture;
+        }
+
+        // prune any assigned colors for balls that are no longer active
+        if (assignedPinballColors.Count > 0)
+        {
+            List<int> keys = new List<int>(assignedPinballColors.Keys);
+            foreach (int k in keys)
+            {
+                if (!activeIds.Contains(k)) assignedPinballColors.Remove(k);
+            }
         }
     }
     
@@ -905,6 +933,26 @@ public class TakePhotos : MonoBehaviour
             case 2: return blueColor;
             default: return redColor; // fallback
         }
+    }
+
+    // Return an assigned color for a ball, assigning one if necessary.
+    public Color GetOrAssignColorForBall(GameObject ball)
+    {
+        if (ball == null) return RandomColor();
+
+        int id = ball.GetInstanceID();
+        DynamicColor dynamicColor = ball.GetComponent<DynamicColor>();
+        if (dynamicColor != null)
+        {
+            assignedPinballColors[id] = dynamicColor.color;
+            return dynamicColor.color;
+        }
+
+        if (assignedPinballColors.TryGetValue(id, out Color c)) return c;
+
+        Color newColor = GetPinballColor();
+        assignedPinballColors[id] = newColor;
+        return newColor;
     }
 
     #endregion
