@@ -898,7 +898,7 @@ MonoBehaviour:
   gumballManager: {fileID: 0}
   textSelectionManager: {fileID: 0}
   displayPlane: {fileID: 0}
-  planeMaterial: {fileID: 0}
+  displayPlaneEnd: {fileID: 0}
   enablePinballTracking: 1
   trackingRadius: 10
   trackingMaterial: {fileID: 0}
@@ -9429,7 +9429,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Click the button to start
+  m_text: hit PLAY to start
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cd65948afc4c1f64386a790a8e38d68a, type: 2}
   m_sharedMaterial: {fileID: -5951673609026263188, guid: cd65948afc4c1f64386a790a8e38d68a, type: 2}
